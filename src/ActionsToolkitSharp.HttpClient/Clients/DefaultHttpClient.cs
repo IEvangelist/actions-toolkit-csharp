@@ -162,12 +162,19 @@ internal sealed class DefaultHttpClient(NetClient client, IRequestHandler? reque
             method,
             requestUri);
 
-        var requestHeaders =
-            requestHandler?.PrepareRequestHeaders(headers ?? []);
+        var preparedHeaders = headers ?? [];
 
-        foreach (var (headerKey, headerValues) in requestHeaders ?? [])
+        if (requestHandler is not null)
         {
-            request.Headers.Add(headerKey, headerValues);
+            preparedHeaders = requestHandler.PrepareRequestHeaders(preparedHeaders);
+        }
+
+        foreach (var (headerKey, headerValues) in preparedHeaders)
+        {
+            // Use TryAddWithoutValidation so consumers can pass headers (e.g.
+            // "Accept: foo") that don't satisfy strict HttpRequestHeaders
+            // parsing rules. This mirrors upstream's permissive header dict.
+            request.Headers.TryAddWithoutValidation(headerKey, headerValues);
         }
 
         return request;

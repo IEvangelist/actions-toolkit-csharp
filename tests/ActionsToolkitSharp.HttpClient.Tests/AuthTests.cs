@@ -3,6 +3,12 @@
 
 namespace ActionsToolkitSharp.HttpClient.Tests;
 
+/// <summary>
+/// C# port of <see href="https://github.com/actions/toolkit/blob/main/packages/http-client/__tests__/auth.test.ts"/>.
+/// Network-bound tests are marked <c>[Trait("Category", "RequiresEnvVar")]</c> and
+/// require live access to <c>postman-echo.com</c>; pure-unit equivalents using
+/// <see cref="TestHttpMessageHandler"/> exercise the same handler logic offline.
+/// </summary>
 [Trait("Category", "RequiresEnvVar")]
 public class AuthTests
 {
@@ -13,7 +19,7 @@ public class AuthTests
         Environment.SetEnvironmentVariable("https_proxy", null);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic http get request with basic auth")]
     public async Task HttpGetRequestWithBasicAuthCorrectlyDeserializesTypedResponse()
     {
         using var client = new ServiceCollection()
@@ -34,7 +40,7 @@ public class AuthTests
         Assert.Equal("johndoe:password", creds);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic http get request with bearer auth")]
     public async Task HttpGetRequestWithBearerAuthCorrectlyDeserializesTypedResponse()
     {
         var token = "scbfb44vxzku5l4xgc3qfazn3lpk4awflfryc76esaiq7aypcbhs";
@@ -56,7 +62,7 @@ public class AuthTests
         Assert.Equal($"Bearer {token}", auth);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic http get request with pat token auth")]
     public async Task HttpGetRequestWithPatAuthCorrectlyDeserializesTypedResponse()
     {
         var pat = "scbfb44vxzku5l4xgc3qfazn3lpk4awflfryc76esaiq7aypcbhs";
@@ -79,3 +85,4 @@ public class AuthTests
         Assert.Equal($"PAT:{pat}", creds);
     }
 }
+
