@@ -6,10 +6,14 @@ using System.Text.Json;
 namespace ActionsToolkitSharp.Artifact.Tests;
 
 /// <summary>
-/// Mirrors upstream <c>__tests__/artifact-http-client.test.ts</c>: covers the
-/// REST surface (list/download/delete) routed through
-/// <see cref="DefaultPublicArtifactsApi"/>. The handler is fed scripted
-/// responses; assertions inspect the outgoing requests for correctness.
+/// Covers the cross-workflow public REST surface (list/download/delete)
+/// routed through <see cref="DefaultPublicArtifactsApi"/>. There is no 1:1
+/// upstream test file for this helper — the corresponding upstream coverage
+/// lives across <c>__tests__/list-artifacts.test.ts</c>,
+/// <c>__tests__/download-artifact.test.ts</c>, and
+/// <c>__tests__/delete-artifact.test.ts</c> at the higher
+/// <c>ArtifactClient</c> level. The handler is fed scripted responses;
+/// assertions inspect the outgoing requests for correctness.
 /// </summary>
 public sealed class PublicArtifactsApiTests
 {
