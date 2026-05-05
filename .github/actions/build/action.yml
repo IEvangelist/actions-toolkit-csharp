@@ -15,7 +15,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7 # v5.2.0
       with:
         global-json-file: global.json
 
@@ -33,7 +33,7 @@ runs:
       # but is deterministic enough to fail consistently in CI; see PR #49.
       run: dotnet build --configuration Release --no-restore -m:1
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       if: inputs.upload-artifacts == 'true'
       with:
         name: nuget

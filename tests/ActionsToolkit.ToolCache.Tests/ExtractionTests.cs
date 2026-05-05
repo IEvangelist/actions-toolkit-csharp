@@ -83,7 +83,7 @@ public sealed class ExtractionTests : IDisposable
         var tarPath = Path.Combine(_root, "archive.tar");
 
         using (var fs = File.Create(tarPath))
-        using (var writer = WriterFactory.Open(fs, ArchiveType.Tar, new WriterOptions(CompressionType.None)))
+        using (var writer = WriterFactory.OpenWriter(fs, ArchiveType.Tar, new WriterOptions(CompressionType.None)))
         {
             writer.Write("a.txt", srcA);
             writer.Write("b.txt", srcB);
@@ -103,7 +103,7 @@ public sealed class ExtractionTests : IDisposable
         var tarPath = Path.Combine(_root, "archive.tar.gz");
 
         using (var fs = File.Create(tarPath))
-        using (var writer = WriterFactory.Open(fs, ArchiveType.Tar, new WriterOptions(CompressionType.GZip)))
+        using (var writer = WriterFactory.OpenWriter(fs, ArchiveType.Tar, new WriterOptions(CompressionType.GZip)))
         {
             writer.Write("inner.txt", src);
         }
@@ -120,7 +120,7 @@ public sealed class ExtractionTests : IDisposable
         var src = MakeFile("flags.txt", "flagged");
         var tarPath = Path.Combine(_root, "flags.tar");
         using (var fs = File.Create(tarPath))
-        using (var writer = WriterFactory.Open(fs, ArchiveType.Tar, new WriterOptions(CompressionType.None)))
+        using (var writer = WriterFactory.OpenWriter(fs, ArchiveType.Tar, new WriterOptions(CompressionType.None)))
         {
             writer.Write("flags.txt", src);
         }

@@ -138,7 +138,7 @@ internal sealed class DefaultToolCacheService(
         await Task.Run(() =>
         {
             using var stream = File.OpenRead(file);
-            using var reader = ReaderFactory.Open(stream);
+            using var reader = ReaderFactory.OpenReader(stream);
             var opts = new ExtractionOptions
             {
                 ExtractFullPath = true,
@@ -185,7 +185,7 @@ internal sealed class DefaultToolCacheService(
 
         await Task.Run(() =>
         {
-            using var archive = ArchiveFactory.Open(file);
+            using var archive = ArchiveFactory.OpenArchive(file);
             var opts = new ExtractionOptions
             {
                 ExtractFullPath = true,
