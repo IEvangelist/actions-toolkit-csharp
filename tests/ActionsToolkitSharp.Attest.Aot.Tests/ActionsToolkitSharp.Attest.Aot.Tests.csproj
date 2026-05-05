@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+        <NoWarn>$(NoWarn);IDE0005</NoWarn>
+        <RootNamespace>ActionsToolkitSharp.Attest.Aot.Tests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Remove="AotConsumer\**" />
+        <None Remove="AotConsumer\**" />
+        <Content Remove="AotConsumer\**" />
+        <EmbeddedResource Remove="AotConsumer\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="..\AotTestSupport\AotPublishFixture.cs" Link="AotTestSupport\AotPublishFixture.cs" />
+        <Compile Include="..\AotTestSupport\AotConsumerCollection.cs" Link="AotTestSupport\AotConsumerCollection.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="AotConsumer\Attest.AotConsumer.csproj">
+            <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+            <Private>false</Private>
+            <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+        </ProjectReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+            <_Parameter1>AotConsumerProject</_Parameter1>
+            <_Parameter2>$(MSBuildProjectDirectory)\AotConsumer\Attest.AotConsumer.csproj</_Parameter2>
+        </AssemblyAttribute>
+        <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+            <_Parameter1>AotConsumerExecutable</_Parameter1>
+            <_Parameter2>ats-attest-aot-consumer</_Parameter2>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Update="xunit.runner.visualstudio">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+</Project>

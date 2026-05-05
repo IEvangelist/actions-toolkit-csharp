@@ -13,4 +13,8 @@
     <ItemGroup>
         <ProjectReference Include="..\ActionsToolkitSharp.Octokit\ActionsToolkitSharp.Octokit.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="ats-attest-aot-consumer" />
+    </ItemGroup>
 </Project>
