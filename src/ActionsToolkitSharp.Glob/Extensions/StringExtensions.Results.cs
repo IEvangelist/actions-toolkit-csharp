@@ -45,6 +45,9 @@ public static partial class StringExtensions
         this string? directory,
         params string[] includePatterns)
     {
-        return directory.GetGlobResult(includePatterns);
+        // Cast to IEnumerable<string> so overload resolution picks the
+        // (IEnumerable<string>, IEnumerable<string>?) sibling instead of
+        // recursively binding back to this same params overload.
+        return directory.GetGlobResult((IEnumerable<string>)includePatterns);
     }
 }

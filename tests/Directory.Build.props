@@ -1,15 +1,21 @@
 <Project>
     <PropertyGroup>
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <!--
+            Allow test-adjacent projects (e.g. AotConsumer apps published as native
+            executables by the AOT test fixtures) to opt out of the xUnit/test SDK
+            convention by setting <EnableTestSdk>false</EnableTestSdk>.
+        -->
+        <EnableTestSdk Condition="'$(EnableTestSdk)' == ''">true</EnableTestSdk>
     </PropertyGroup>
     
     <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))" />
 
-    <ItemGroup>
+    <ItemGroup Condition="'$(EnableTestSdk)' == 'true'">
         <Using Include="Xunit" />
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="'$(EnableTestSdk)' == 'true'">
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="xunit" />
         <PackageReference Include="xunit.runner.visualstudio" />

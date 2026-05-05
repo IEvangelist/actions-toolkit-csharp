@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>$(DefaultTargetFrameworks)</TargetFramework>
+        <PublishAot>true</PublishAot>
+        <SelfContained>true</SelfContained>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <TrimmerSingleWarn>false</TrimmerSingleWarn>
+        <RootNamespace>ActionsToolkitSharp.Core.AotConsumer</RootNamespace>
+        <AssemblyName>ats-core-aot-consumer</AssemblyName>
+        <IsPackable>false</IsPackable>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>false</GenerateDocumentationFile>
+        <EnableTestSdk>false</EnableTestSdk>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\src\ActionsToolkitSharp.Core\ActionsToolkitSharp.Core.csproj" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    </ItemGroup>
+</Project>
