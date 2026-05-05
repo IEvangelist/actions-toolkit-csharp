@@ -1,0 +1,192 @@
+name: aot-publish
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - 'feature/**'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'The reason for running a build?'
+        required: true
+        default: 'Manual build'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: aot-publish-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+      # Surface AOT/Trim analyzer diagnostics fully (no single-warning collapsing).
+      TrimmerSingleWarn: 'false'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            rid: linux-x64
+          - os: windows-latest
+            rid: win-x64
+          - os: macos-latest
+            rid: osx-arm64
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: tree:0
+
+      - name: 'Print manual build reason'
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        shell: bash
+        run: |
+          echo 'Reason: ${{ github.event.inputs.reason }}'
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        shell: bash
+        run: dotnet restore
+
+      - name: Publish AOT consumers and assert no AOT/Trim warnings
+        shell: bash
+        env:
+          RID: ${{ matrix.rid }}
+        run: |
+          set -euo pipefail
+
+          # Discover every AOT consumer project under tests/ActionsToolkitSharp.*.Aot.Tests/AotConsumer/.
+          # Done dynamically so adding a new package's AOT consumer requires no workflow change.
+          mapfile -t projects < <(find tests -type f -path '*Aot.Tests/AotConsumer/*.csproj' | sort)
+
+          if [ "${#projects[@]}" -eq 0 ]; then
+            echo "::error::No AOT consumer projects found under tests/*Aot.Tests/AotConsumer/. The discovery glob may be broken."
+            exit 1
+          fi
+
+          echo "Discovered ${#projects[@]} AOT consumer project(s) for RID=$RID:"
+          for proj in "${projects[@]}"; do
+            echo "  - $proj"
+          done
+
+          mkdir -p aot-publish-logs
+          overall_rc=0
+          warnings_total=0
+
+          for proj in "${projects[@]}"; do
+            name=$(basename "$proj" .csproj)
+            log="aot-publish-logs/${name}.${RID}.log"
+
+            echo "::group::Publishing $proj ($RID)"
+            set +e
+            dotnet publish "$proj" \
+              -c Release \
+              -r "$RID" \
+              --self-contained \
+              -p:PublishAot=true \
+              -p:TreatWarningsAsErrors=true \
+              -p:TrimmerSingleWarn=false \
+              -m:1 \
+              -nologo \
+              2>&1 | tee "$log"
+            rc=${PIPESTATUS[0]}
+            set -e
+            echo "::endgroup::"
+
+            # Defense in depth: even though TreatWarningsAsErrors=true converts AOT/Trim
+            # analyzer warnings into errors, we additionally scan the publish log so a
+            # silently-suppressed warning still fails the job and is surfaced inline.
+            # Codes covered: IL2026/IL2104/IL3050/IL3051/IL3053/IL3055 plus the broader
+            # IL2xxx/IL3xxx (trim/AOT analyzer) and AOTxxxx ranges.
+            if grep -E -n ': (warning|error) (IL(2[0-9]{3}|3[0-9]{3})|AOT[0-9]+|TRIM[0-9]+)' "$log" > "$log.diags" || true; then
+              :
+            fi
+
+            if [ -s "$log.diags" ]; then
+              count=$(wc -l < "$log.diags" | tr -d ' ')
+              warnings_total=$((warnings_total + count))
+              echo "::error file=$proj::$count AOT/Trim analyzer diagnostic(s) emitted while publishing $name for $RID:"
+              while IFS= read -r line; do
+                echo "::error file=$proj::$line"
+              done < "$log.diags"
+            fi
+
+            if [ "$rc" -ne 0 ]; then
+              echo "::error file=$proj::dotnet publish failed for $name on $RID (exit code $rc)."
+              overall_rc=1
+              continue
+            fi
+
+            # Verify the native binary exists and looks like a real executable artifact.
+            publish_dir="artifacts/publish/${name}/release_${RID}"
+            if [ ! -d "$publish_dir" ]; then
+              echo "::error file=$proj::Expected publish directory '$publish_dir' was not produced."
+              overall_rc=1
+              continue
+            fi
+
+            shopt -s nullglob
+            if [ "$RID" = "win-x64" ]; then
+              produced=( "$publish_dir"/*.exe )
+            else
+              # On Linux/macOS the AOT-published binary has no extension. Filter out
+              # *.dll/*.pdb/*.dbg sidecars to find the actual executable image.
+              produced=()
+              for f in "$publish_dir"/*; do
+                base=$(basename "$f")
+                case "$base" in
+                  *.dll|*.pdb|*.dbg|*.dwarf|*.dsym|*.so|*.dylib|*.xml|*.json) ;;
+                  *) [ -f "$f" ] && produced+=( "$f" ) ;;
+                esac
+              done
+            fi
+            shopt -u nullglob
+
+            if [ "${#produced[@]}" -eq 0 ]; then
+              echo "::error file=$proj::No native executable was produced in '$publish_dir' for $RID."
+              overall_rc=1
+              continue
+            fi
+
+            for bin in "${produced[@]}"; do
+              if [ "$RID" != "win-x64" ]; then
+                chmod +x "$bin" || true
+              fi
+              size=$(wc -c < "$bin" | tr -d ' ')
+              echo "Published $name ($RID): $bin (${size} bytes)"
+            done
+          done
+
+          if [ "$warnings_total" -gt 0 ]; then
+            echo "::error::$warnings_total AOT/Trim analyzer diagnostic(s) detected across consumers for $RID. See annotations above."
+            overall_rc=1
+          fi
+
+          if [ "$overall_rc" -ne 0 ]; then
+            echo "::error::One or more AOT consumer publishes failed for $RID."
+            exit "$overall_rc"
+          fi
+
+          echo "All ${#projects[@]} AOT consumer(s) published cleanly for $RID with no AOT/Trim diagnostics."
+
+      - name: Upload publish logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: aot-publish-logs-${{ matrix.os }}-${{ matrix.rid }}
+          path: aot-publish-logs/**
+          if-no-files-found: ignore
+          retention-days: 7
