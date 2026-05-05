@@ -38,6 +38,12 @@
 #   * `ToolCache.Sample/download-and-cache.cs` downloads a multi-MB
 #     archive from github.com on every run -- too slow and too flaky
 #     for a per-PR smoketest.
+#   * All `Cache.Sample/*.cs` scripts (`cross-os-archive`, `lookup-only`,
+#     `restore-and-save`, `with-options`) require both a positional
+#     `<cache-key>` argument and a real `ACTIONS_RUNTIME_TOKEN` JWT to
+#     authenticate against the cache service. Both are absent in a
+#     generic PR smoketest, so these scripts are exercised by the
+#     `Cache.Tests` + `Cache.Aot.Tests` projects (88 + 7 facts) instead.
 
 name: examples-smoketest
 
@@ -198,6 +204,10 @@ jobs:
             "samples/ActionsToolkitSharp.Attest.Sample/file-based/attest-custom.cs"
             "samples/ActionsToolkitSharp.Attest.Sample/file-based/attest-provenance.cs"
             "samples/ActionsToolkitSharp.Attest.Sample/file-based/attest-with-headers.cs"
+            "samples/ActionsToolkitSharp.Cache.Sample/file-based/cross-os-archive.cs"
+            "samples/ActionsToolkitSharp.Cache.Sample/file-based/lookup-only.cs"
+            "samples/ActionsToolkitSharp.Cache.Sample/file-based/restore-and-save.cs"
+            "samples/ActionsToolkitSharp.Cache.Sample/file-based/with-options.cs"
             "samples/ActionsToolkitSharp.Octokit.Sample/file-based/get-octokit.cs"
             "samples/ActionsToolkitSharp.ToolCache.Sample/file-based/download-and-cache.cs"
           )
