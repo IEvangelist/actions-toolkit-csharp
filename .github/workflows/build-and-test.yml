@@ -13,8 +13,55 @@ on:
         default: 'Manual build'
 
 jobs:
+  verify-test-projects:
+    name: verify-test-projects
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          filter: tree:0
+
+      - name: Verify all test projects are registered in ActionsToolkitSharp.sln
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # ActionsToolkitSharp.sln is the source of truth for the test
+          # projects executed by `dotnet test`. Any test project on disk
+          # under tests/ActionsToolkitSharp.*.Tests/ that is not in the
+          # solution would be silently skipped by CI, so fail fast here.
+          # This covers both managed (*.Tests) and NativeAOT (*.Aot.Tests)
+          # test projects, so adding a new package's test project does not
+          # require editing this workflow -- only `dotnet sln add` is needed.
+
+          missing=0
+          found=0
+          while IFS= read -r proj; do
+            found=$((found + 1))
+            name=$(basename "$proj")
+            if ! grep -Fq "$name" ActionsToolkitSharp.sln; then
+              echo "::error file=$proj::Test project '$name' is not registered in ActionsToolkitSharp.sln. Run: dotnet sln add \"$proj\""
+              missing=$((missing + 1))
+            fi
+          done < <(find tests -type f -name 'ActionsToolkitSharp.*.Tests.csproj' | sort)
+
+          if [ "$found" -eq 0 ]; then
+            echo "::error::No test projects found under tests/ActionsToolkitSharp.*.Tests/. The discovery glob may be broken."
+            exit 1
+          fi
+
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::$missing test project(s) on disk are missing from ActionsToolkitSharp.sln. See tests/README.md for the convention."
+            exit 1
+          fi
+
+          echo "All $found test project(s) under tests/ActionsToolkitSharp.*.Tests/ are registered in ActionsToolkitSharp.sln."
+
   build:
     name: build-${{matrix.os}}
+    needs: verify-test-projects
     runs-on: ${{ matrix.os }}
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: '1'
