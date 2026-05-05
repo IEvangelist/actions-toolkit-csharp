@@ -10,24 +10,24 @@ The following table tracks the various packages' development progress. Each pack
 - **AOT-tested**: The package has a dedicated AOT consumer test project (`tests/<pkg>.Aot.Tests`) that publishes a tiny consumer with `PublishAot=true` + `TreatWarningsAsErrors=true` and asserts on its native binary output, proving the SDK is Native AOT-clean for end consumers.
 
 > [!NOTE]
-> The packages listed below are part of the in-progress rename to `ActionsToolkitSharp.*` ([#5][issue-5]). The previously published packages
+> The packages listed below are part of the in-progress rename to `ActionsToolkit.*` ([#5][issue-5]). The previously published packages
 > `GitHub.Actions.Core` and `GitHub.Actions.Glob` will receive a final v10.x release with `[Obsolete]` annotations,
-> and the new `ActionsToolkitSharp.*` packages will ship together as **v1.0.0** once every row below is fully ✅.
+> and the new `ActionsToolkit.*` packages will ship together as **v1.0.0** once every row below is fully ✅.
 
 [issue-5]: https://github.com/IEvangelist/dotnet-github-actions-sdk/issues/5
 
 | `@actions/toolkit` | Package | Exists? | Testable? | DI Friendly? | README? | Tests? | Attribution? | AOT-tested? |
 |--|--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| `@actions/attest` | `ActionsToolkitSharp.Attest` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `@actions/cache` | `ActionsToolkitSharp.Cache` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `@actions/core` | `ActionsToolkitSharp.Core` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
-| `@actions/artifact` | `ActionsToolkitSharp.Artifact` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `@actions/exec` | `ActionsToolkitSharp.Exec` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `@actions/github` | `ActionsToolkitSharp.Octokit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
-| `@actions/glob` | `ActionsToolkitSharp.Glob` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
-| `@actions/http-client` | `ActionsToolkitSharp.HttpClient` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
-| `@actions/io` | `ActionsToolkitSharp.IO` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
-| `@actions/tool-cache` | `ActionsToolkitSharp.ToolCache` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/attest` | `ActionsToolkit.Attest` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/cache` | `ActionsToolkit.Cache` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/core` | `ActionsToolkit.Core` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/artifact` | `ActionsToolkit.Artifact` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/exec` | `ActionsToolkit.Exec` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/github` | `ActionsToolkit.Octokit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/glob` | `ActionsToolkit.Glob` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/http-client` | `ActionsToolkit.HttpClient` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/io` | `ActionsToolkit.IO` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/tool-cache` | `ActionsToolkit.ToolCache` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 **Legend**
 
@@ -59,7 +59,7 @@ Each package is built atop various other packages, and it's important to give cr
 
 ## AOT-tested
 
-Each package ships a dedicated `tests/ActionsToolkitSharp.<Pkg>.Aot.Tests` project that:
+Each package ships a dedicated `tests/ActionsToolkit.<Pkg>.Aot.Tests` project that:
 
 1. Builds a tiny consumer console app with `<PublishAot>true</PublishAot>` + `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>` + `<TrimmerSingleWarn>false</TrimmerSingleWarn>`.
 2. Statically references every public API surface we want to validate from `Main` (the "dispatcher" pattern), so the trimmer roots all of them.

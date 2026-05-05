@@ -1,0 +1,41 @@
+# Copyright (c) David Pine. All rights reserved.
+# Licensed under the MIT License.
+#
+# Workflow snippet showing how to call a file-based ActionsToolkit.Octokit
+# script from a GitHub Actions `run:` step. Drop this into
+# .github/workflows/<your-workflow>.yml.
+
+name: actions-toolkit-sharp-octokit-file-based
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  octokit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Inspect the GitHub Actions context
+        shell: bash
+        run: |
+          dotnet run \
+            samples/ActionsToolkit.Octokit.Sample/file-based/context.cs
+
+      - name: Fetch a pull request via the hydrated Octokit client
+        shell: bash
+        env:
+          INPUT_MYTOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dotnet run \
+            samples/ActionsToolkit.Octokit.Sample/file-based/get-octokit.cs

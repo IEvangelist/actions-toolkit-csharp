@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+        <NoWarn>$(NoWarn);IDE0005</NoWarn>
+        <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\ActionsToolkit.HttpClient\ActionsToolkit.HttpClient.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="$(ProjectDir)parent\**" CopyToOutputDirectory="Always" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="xunit.runner.visualstudio">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+</Project>

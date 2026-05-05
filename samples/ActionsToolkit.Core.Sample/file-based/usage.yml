@@ -1,0 +1,49 @@
+# Copyright (c) David Pine. All rights reserved.
+# Licensed under the MIT License.
+#
+# Workflow snippet showing how to call a file-based ActionsToolkit.Core
+# script from a GitHub Actions `run:` step. Drop this into
+# .github/workflows/<your-workflow>.yml.
+#
+# Reference: https://devblogs.microsoft.com/dotnet/announcing-dotnet-run-app/
+
+name: actions-toolkit-sharp-core-file-based
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Read inputs and write outputs
+        id: greet
+        shell: bash
+        env:
+          INPUT_INPUTNAME: ${{ inputs.who-to-greet || 'World' }}
+          INPUT_BOOLINPUTNAME: 'true'
+          INPUT_MULTILINEINPUTNAME: |
+            one
+            two
+            three
+        run: |
+          dotnet run \
+            samples/ActionsToolkit.Core.Sample/file-based/inputs-and-outputs.cs
+
+      - name: Emit a job summary
+        shell: bash
+        run: |
+          dotnet run \
+            samples/ActionsToolkit.Core.Sample/file-based/job-summary.cs
+
+      - name: Use the output from the greet step
+        shell: bash
+        run: echo "outputKey was ${{ steps.greet.outputs.outputKey }}"

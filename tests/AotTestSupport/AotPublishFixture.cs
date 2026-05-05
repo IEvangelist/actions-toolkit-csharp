@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ActionsToolkitSharp.AotTestSupport;
+namespace ActionsToolkit.AotTestSupport;
 
 /// <summary>
 /// xUnit collection fixture that publishes the per-package <c>AotConsumer</c> project
@@ -76,7 +76,7 @@ public sealed class AotPublishFixture : IDisposable
 
         _publishDir = Path.Combine(
             Path.GetTempPath(),
-            $"ats-aot-{executableName}-{Guid.NewGuid():N}");
+            $"actions-toolkit-aot-{executableName}-{Guid.NewGuid():N}");
         Directory.CreateDirectory(_publishDir);
 
         var binFileName = OperatingSystem.IsWindows()

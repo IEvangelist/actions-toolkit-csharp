@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace ActionsToolkitSharp.AotTestSupport;
+namespace ActionsToolkit.AotTestSupport;
 
 /// <summary>
 /// xUnit collection that ensures the package's <c>AotConsumer</c> binary is

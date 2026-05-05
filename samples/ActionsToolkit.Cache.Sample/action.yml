@@ -1,0 +1,5 @@
+name: 'Cache'
+description: 'Show how ActionsToolkit.Cache works'
+runs:
+  using: docker
+  image: Dockerfile

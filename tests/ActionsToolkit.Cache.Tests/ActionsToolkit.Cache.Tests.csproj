@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+        <NoWarn>$(NoWarn);IDE0005;CA1707</NoWarn>
+        <RootNamespace>ActionsToolkit.Cache.Tests</RootNamespace>
+        <IsAotCompatible>false</IsAotCompatible>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\ActionsToolkit.Cache\ActionsToolkit.Cache.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="RichardSzalay.MockHttp" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Update="xunit.runner.visualstudio">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+</Project>

@@ -1,0 +1,35 @@
+name: attest-samples
+on:
+  workflow_dispatch:
+permissions:
+  id-token: write
+  contents: read
+  attestations: write
+
+jobs:
+  attest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.x
+
+      - name: Produce a fake artifact
+        run: echo "hello attestations" > artifact.txt
+
+      - name: Attest provenance
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet run samples/ActionsToolkit.Attest.Sample/file-based/attest-provenance.cs artifact.txt
+
+      - name: Attest custom predicate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet run samples/ActionsToolkit.Attest.Sample/file-based/attest-custom.cs artifact.txt
+
+      - name: Attest with custom headers
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GHE_REGION: us-east-1
+        run: dotnet run samples/ActionsToolkit.Attest.Sample/file-based/attest-with-headers.cs artifact.txt

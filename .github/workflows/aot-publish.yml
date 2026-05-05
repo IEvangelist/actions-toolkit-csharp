@@ -71,7 +71,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Discover every AOT consumer project under tests/ActionsToolkitSharp.*.Aot.Tests/AotConsumer/.
+          # Discover every AOT consumer project under tests/ActionsToolkit.*.Aot.Tests/AotConsumer/.
           # Done dynamically so adding a new package's AOT consumer requires no workflow change.
           # Note: `mapfile`/`readarray` is bash 4+, but macos-latest still ships bash 3.2 by
           # default — use a portable `while read` loop instead.

@@ -1,5 +1,0 @@
-name: 'Cache'
-description: 'Show how ActionsToolkitSharp.Cache works'
-runs:
-  using: docker
-  image: Dockerfile

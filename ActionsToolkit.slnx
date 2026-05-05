@@ -1,0 +1,79 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/playground/">
+    <Project Path="playground/Octokit.Sandbox/Octokit.Sandbox.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <File Path="samples/Directory.Build.props" />
+    <Project Path="samples/ActionsToolkit.Artifact.Sample/ActionsToolkit.Artifact.Sample.csproj" />
+    <Project Path="samples/ActionsToolkit.Attest.Sample/ActionsToolkit.Attest.Sample.csproj" />
+    <Project Path="samples/ActionsToolkit.Cache.Sample/ActionsToolkit.Cache.Sample.csproj" />
+    <Project Path="samples/ActionsToolkit.Core.Sample/ActionsToolkit.Core.Sample.csproj" />
+    <Project Path="samples/ActionsToolkit.Glob.Sample/ActionsToolkit.Glob.Sample.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".github/actions/build/action.yml" />
+    <File Path=".github/workflows/build-and-test.yml" />
+    <File Path=".github/workflows/codeql-analysis.yml" />
+    <File Path=".github/workflows/publish.yml" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="PACKAGES.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <File Path="src/Directory.Build.targets" />
+    <Project Path="src/ActionsToolkit.Artifact/ActionsToolkit.Artifact.csproj" />
+    <Project Path="src/ActionsToolkit.Attest/ActionsToolkit.Attest.csproj" />
+    <Project Path="src/ActionsToolkit.Cache/ActionsToolkit.Cache.csproj" />
+    <Project Path="src/ActionsToolkit.Core/ActionsToolkit.Core.csproj" />
+    <Project Path="src/ActionsToolkit.Exec/ActionsToolkit.Exec.csproj" />
+    <Project Path="src/ActionsToolkit.Glob/ActionsToolkit.Glob.csproj" />
+    <Project Path="src/ActionsToolkit.HttpClient/ActionsToolkit.HttpClient.csproj" />
+    <Project Path="src/ActionsToolkit.IO/ActionsToolkit.IO.csproj" />
+    <Project Path="src/ActionsToolkit.Octokit/ActionsToolkit.Octokit.csproj" />
+    <Project Path="src/ActionsToolkit.ToolCache/ActionsToolkit.ToolCache.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <File Path="tests/Directory.Build.props" />
+    <Project Path="tests/ActionsToolkit.Artifact.Aot.Tests/ActionsToolkit.Artifact.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Artifact.Aot.Tests/AotConsumer/Artifact.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.Artifact.Tests/ActionsToolkit.Artifact.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Attest.Aot.Tests/ActionsToolkit.Attest.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Attest.Aot.Tests/AotConsumer/Attest.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.Attest.Tests/ActionsToolkit.Attest.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Cache.Aot.Tests/ActionsToolkit.Cache.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Cache.Aot.Tests/AotConsumer/Cache.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.Cache.Tests/ActionsToolkit.Cache.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Core.Aot.Tests/ActionsToolkit.Core.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Core.Aot.Tests/AotConsumer/Core.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.Core.Tests/ActionsToolkit.Core.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Exec.Aot.Tests/ActionsToolkit.Exec.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Exec.Aot.Tests/AotConsumer/Exec.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.Exec.Tests/ActionsToolkit.Exec.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Glob.Aot.Tests/ActionsToolkit.Glob.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Glob.Aot.Tests/AotConsumer/Glob.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.Glob.Tests/ActionsToolkit.Glob.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.HttpClient.Aot.Tests/ActionsToolkit.HttpClient.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.HttpClient.Aot.Tests/AotConsumer/HttpClient.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.HttpClient.Tests/ActionsToolkit.HttpClient.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.IO.Aot.Tests/ActionsToolkit.IO.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.IO.Aot.Tests/AotConsumer/IO.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.IO.Tests/ActionsToolkit.IO.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Octokit.Aot.Tests/ActionsToolkit.Octokit.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.Octokit.Aot.Tests/AotConsumer/Octokit.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.Octokit.Tests/ActionsToolkit.Octokit.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.ToolCache.Aot.Tests/ActionsToolkit.ToolCache.Aot.Tests.csproj" />
+    <Project Path="tests/ActionsToolkit.ToolCache.Aot.Tests/AotConsumer/ToolCache.AotConsumer.csproj" />
+    <Project Path="tests/ActionsToolkit.ToolCache.Tests/ActionsToolkit.ToolCache.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -7,7 +7,7 @@
 [![build-and-test](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/build-and-test.yml)
 [![code analysis](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/codeql-analysis.yml)
 [![publish nuget](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/publish.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/publish.yml)
-[![NuGet](https://img.shields.io/nuget/v/ActionsToolkitSharp.Core.svg?style=flat)](https://www.nuget.org/packages/ActionsToolkitSharp.Core) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![NuGet](https://img.shields.io/nuget/v/ActionsToolkit.Core.svg?style=flat)](https://www.nuget.org/packages/ActionsToolkit.Core) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -15,8 +15,8 @@ The .NET equivalent of the official GitHub [actions/toolkit](https://github.com/
 
 > [!IMPORTANT]
 > This repository is in the middle of a rename and feature-parity initiative ([#5][issue-5]).
-> NuGet package IDs are moving from `GitHub.Actions.*` to `ActionsToolkitSharp.*`, and all ten
-> upstream `@actions/toolkit` packages will ship together as **v1.0.0** of `ActionsToolkitSharp.*`
+> NuGet package IDs are moving from `GitHub.Actions.*` to `ActionsToolkit.*`, and all ten
+> upstream `@actions/toolkit` packages will ship together as **v1.0.0** of `ActionsToolkit.*`
 > once each row in [PACKAGES.md](PACKAGES.md) is fully ✅. Native AOT correctness is verified per
 > package via dedicated `tests/<pkg>.Aot.Tests` projects.
 
@@ -32,85 +32,85 @@ The GitHub Actions .NET ToolKit provides a set of packages to make creating acti
 
 ## Packages
 
-:heavy_check_mark: [`ActionsToolkitSharp.Core`](src/ActionsToolkitSharp.Core)
+:heavy_check_mark: [`ActionsToolkit.Core`](src/ActionsToolkit.Core)
 
-Provides functions for inputs, outputs, results, logging, secrets and variables. Read more [here](src/ActionsToolkitSharp.Core)
-
-```
-dotnet add package ActionsToolkitSharp.Core
-```
-
-For more information, see [📦 ActionsToolkitSharp.Core](https://www.nuget.org/packages/ActionsToolkitSharp.Core).
-
-:ice_cream: [`ActionsToolkitSharp.Glob`](src/ActionsToolkitSharp.Glob)
-
-Provides functions to search for files matching glob patterns. Read more [here](src/ActionsToolkitSharp.Glob)
+Provides functions for inputs, outputs, results, logging, secrets and variables. Read more [here](src/ActionsToolkit.Core)
 
 ```
-dotnet add package ActionsToolkitSharp.Glob
+dotnet add package ActionsToolkit.Core
 ```
 
-For more information, see [📦 ActionsToolkitSharp.Glob](https://www.nuget.org/packages/ActionsToolkitSharp.Glob).
+For more information, see [📦 ActionsToolkit.Core](https://www.nuget.org/packages/ActionsToolkit.Core).
 
-:pencil2: [`ActionsToolkitSharp.IO`](src/ActionsToolkitSharp.IO)
+:ice_cream: [`ActionsToolkit.Glob`](src/ActionsToolkit.Glob)
 
-Provides disk i/o functions like cp, mv, rmRF, which etc. Read more [here](src/ActionsToolkitSharp.IO)
+Provides functions to search for files matching glob patterns. Read more [here](src/ActionsToolkit.Glob)
+
+```
+dotnet add package ActionsToolkit.Glob
+```
+
+For more information, see [📦 ActionsToolkit.Glob](https://www.nuget.org/packages/ActionsToolkit.Glob).
+
+:pencil2: [`ActionsToolkit.IO`](src/ActionsToolkit.IO)
+
+Provides disk i/o functions like cp, mv, rmRF, which etc. Read more [here](src/ActionsToolkit.IO)
 
 ```bash
-dotnet add package ActionsToolkitSharp.IO
+dotnet add package ActionsToolkit.IO
 ```
 
-For more information, see [📦 ActionsToolkitSharp.IO](https://www.nuget.org/packages/ActionsToolkitSharp.IO).
+For more information, see [📦 ActionsToolkit.IO](https://www.nuget.org/packages/ActionsToolkit.IO).
 
-:rocket: [`ActionsToolkitSharp.Exec`](src/ActionsToolkitSharp.Exec)
+:rocket: [`ActionsToolkit.Exec`](src/ActionsToolkit.Exec)
 
-Provides functions to exec command-line tools and process their output. Read more [here](src/ActionsToolkitSharp.Exec)
+Provides functions to exec command-line tools and process their output. Read more [here](src/ActionsToolkit.Exec)
 
 ```bash
-dotnet add package ActionsToolkitSharp.Exec
+dotnet add package ActionsToolkit.Exec
 ```
 
-For more information, see [📦 ActionsToolkitSharp.Exec](https://www.nuget.org/packages/ActionsToolkitSharp.Exec).
+For more information, see [📦 ActionsToolkit.Exec](https://www.nuget.org/packages/ActionsToolkit.Exec).
 
-:octocat: [`ActionsToolkitSharp.Octokit`](src/ActionsToolkitSharp.Octokit)
+:octocat: [`ActionsToolkit.Octokit`](src/ActionsToolkit.Octokit)
 
-Provides an Octokit client hydrated with the context that the current action is being run in. Read more [here](src/ActionsToolkitSharp.Octokit)
+Provides an Octokit client hydrated with the context that the current action is being run in. Read more [here](src/ActionsToolkit.Octokit)
 
 ```bash
-dotnet add package ActionsToolkitSharp.Octokit
+dotnet add package ActionsToolkit.Octokit
 ```
 
-For more information, see [📦 ActionsToolkitSharp.Octokit](https://www.nuget.org/packages/ActionsToolkitSharp.Octokit).
+For more information, see [📦 ActionsToolkit.Octokit](https://www.nuget.org/packages/ActionsToolkit.Octokit).
 
-:package: [`ActionsToolkitSharp.ToolCache`](src/ActionsToolkitSharp.ToolCache)
+:package: [`ActionsToolkit.ToolCache`](src/ActionsToolkit.ToolCache)
 
-Provides functions for downloading, extracting, and caching tools (such as language runtimes) on the runner — the .NET equivalent of `@actions/tool-cache`. Read more [here](src/ActionsToolkitSharp.ToolCache).
+Provides functions for downloading, extracting, and caching tools (such as language runtimes) on the runner — the .NET equivalent of `@actions/tool-cache`. Read more [here](src/ActionsToolkit.ToolCache).
 
 ```bash
-dotnet add package ActionsToolkitSharp.ToolCache
+dotnet add package ActionsToolkit.ToolCache
 ```
 
-For more information, see [📦 ActionsToolkitSharp.ToolCache](https://www.nuget.org/packages/ActionsToolkitSharp.ToolCache).
+For more information, see [📦 ActionsToolkit.ToolCache](https://www.nuget.org/packages/ActionsToolkit.ToolCache).
 
-:lock: [`ActionsToolkitSharp.Attest`](src/ActionsToolkitSharp.Attest)
+:lock: [`ActionsToolkit.Attest`](src/ActionsToolkit.Attest)
 
-Provides functions for generating signed artifact attestations — Sigstore keyless signing of in-toto statements (including SLSA-style provenance) and persistence to GitHub's attestations REST endpoint. Read more [here](src/ActionsToolkitSharp.Attest).
+Provides functions for generating signed artifact attestations — Sigstore keyless signing of in-toto statements (including SLSA-style provenance) and persistence to GitHub's attestations REST endpoint. Read more [here](src/ActionsToolkit.Attest).
 
 ```bash
-dotnet add package ActionsToolkitSharp.Attest
+dotnet add package ActionsToolkit.Attest
 ```
 
-For more information, see [📦 ActionsToolkitSharp.Attest](https://www.nuget.org/packages/ActionsToolkitSharp.Attest).
+For more information, see [📦 ActionsToolkit.Attest](https://www.nuget.org/packages/ActionsToolkit.Attest).
 
-:floppy_disk: [`ActionsToolkitSharp.Cache`](src/ActionsToolkitSharp.Cache)
+:floppy_disk: [`ActionsToolkit.Cache`](src/ActionsToolkit.Cache)
 
-Provides functions for saving and restoring caches against the GitHub Actions cache service — the .NET equivalent of `@actions/cache`. Tar+zstd archive pipeline (managed via `System.Formats.Tar` + `ZstdSharp.Port`), Twirp+signed-URL transport for the V2 cache backend, and AOT-clean source-gen JSON. Read more [here](src/ActionsToolkitSharp.Cache).
+Provides functions for saving and restoring caches against the GitHub Actions cache service — the .NET equivalent of `@actions/cache`. Tar+zstd archive pipeline (managed via `System.Formats.Tar` + `ZstdSharp.Port`), Twirp+signed-URL transport for the V2 cache backend, and AOT-clean source-gen JSON. Read more [here](src/ActionsToolkit.Cache).
 
 ```bash
-dotnet add package ActionsToolkitSharp.Cache
+dotnet add package ActionsToolkit.Cache
 ```
 
-For more information, see [📦 ActionsToolkitSharp.Cache](https://www.nuget.org/packages/ActionsToolkitSharp.Cache).
+For more information, see [📦 ActionsToolkit.Cache](https://www.nuget.org/packages/ActionsToolkit.Cache).
 
 ## Contributors ✨
 

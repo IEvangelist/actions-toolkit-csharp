@@ -1,7 +1,7 @@
-# `ActionsToolkitSharp` samples
+# `ActionsToolkit` samples
 
 This directory hosts runnable samples for the
-[`ActionsToolkitSharp`](../README.md) family of NuGet packages — the
+[`ActionsToolkit`](../README.md) family of NuGet packages — the
 modern .NET port of the official
 [`@actions/toolkit`](https://github.com/actions/toolkit) JavaScript
 toolkit used by GitHub Actions authors.
@@ -11,7 +11,7 @@ Each package has two flavors of sample:
 1. A traditional **project sample** (`Program.cs` + `.csproj`) that
    builds as part of the solution and runs in a Docker container as a
    container action. Existing examples live under
-   `ActionsToolkitSharp.Core.Sample` and `ActionsToolkitSharp.Glob.Sample`.
+   `ActionsToolkit.Core.Sample` and `ActionsToolkit.Glob.Sample`.
 2. A new **file-based sample** under each package's `file-based/` sub-folder.
    These are single-file C# scripts that take advantage of .NET 10's
    [`dotnet run app.cs`](https://devblogs.microsoft.com/dotnet/announcing-dotnet-run-app/)
@@ -27,16 +27,16 @@ modern C# API maps over.
 
 | Package | Folder | Examples |
 | --- | --- | --- |
-| `ActionsToolkitSharp.Core` | [`ActionsToolkitSharp.Core.Sample/file-based/`](./ActionsToolkitSharp.Core.Sample/file-based/) | [`inputs-and-outputs.cs`](./ActionsToolkitSharp.Core.Sample/file-based/inputs-and-outputs.cs), [`export-variable.cs`](./ActionsToolkitSharp.Core.Sample/file-based/export-variable.cs), [`set-secret.cs`](./ActionsToolkitSharp.Core.Sample/file-based/set-secret.cs), [`add-path.cs`](./ActionsToolkitSharp.Core.Sample/file-based/add-path.cs), [`exit-codes.cs`](./ActionsToolkitSharp.Core.Sample/file-based/exit-codes.cs), [`logging.cs`](./ActionsToolkitSharp.Core.Sample/file-based/logging.cs), [`groups.cs`](./ActionsToolkitSharp.Core.Sample/file-based/groups.cs), [`annotations.cs`](./ActionsToolkitSharp.Core.Sample/file-based/annotations.cs), [`styling-output.cs`](./ActionsToolkitSharp.Core.Sample/file-based/styling-output.cs), [`action-state.cs`](./ActionsToolkitSharp.Core.Sample/file-based/action-state.cs), [`job-summary.cs`](./ActionsToolkitSharp.Core.Sample/file-based/job-summary.cs) |
-| `ActionsToolkitSharp.Glob` | [`ActionsToolkitSharp.Glob.Sample/file-based/`](./ActionsToolkitSharp.Glob.Sample/file-based/) | [`basic.cs`](./ActionsToolkitSharp.Glob.Sample/file-based/basic.cs), [`recursive.cs`](./ActionsToolkitSharp.Glob.Sample/file-based/recursive.cs), [`iterator.cs`](./ActionsToolkitSharp.Glob.Sample/file-based/iterator.cs), [`glob-with-input.cs`](./ActionsToolkitSharp.Glob.Sample/file-based/glob-with-input.cs), [`builder.cs`](./ActionsToolkitSharp.Glob.Sample/file-based/builder.cs) |
-| `ActionsToolkitSharp.IO` | [`ActionsToolkitSharp.IO.Sample/file-based/`](./ActionsToolkitSharp.IO.Sample/file-based/) | [`mkdir.cs`](./ActionsToolkitSharp.IO.Sample/file-based/mkdir.cs), [`cp-mv.cs`](./ActionsToolkitSharp.IO.Sample/file-based/cp-mv.cs), [`rm-rf.cs`](./ActionsToolkitSharp.IO.Sample/file-based/rm-rf.cs), [`which.cs`](./ActionsToolkitSharp.IO.Sample/file-based/which.cs) |
-| `ActionsToolkitSharp.Exec` | [`ActionsToolkitSharp.Exec.Sample/file-based/`](./ActionsToolkitSharp.Exec.Sample/file-based/) | [`exec-basic.cs`](./ActionsToolkitSharp.Exec.Sample/file-based/exec-basic.cs), [`get-output.cs`](./ActionsToolkitSharp.Exec.Sample/file-based/get-output.cs), [`with-listeners.cs`](./ActionsToolkitSharp.Exec.Sample/file-based/with-listeners.cs), [`with-env.cs`](./ActionsToolkitSharp.Exec.Sample/file-based/with-env.cs), [`with-cwd.cs`](./ActionsToolkitSharp.Exec.Sample/file-based/with-cwd.cs) |
-| `ActionsToolkitSharp.Octokit` | [`ActionsToolkitSharp.Octokit.Sample/file-based/`](./ActionsToolkitSharp.Octokit.Sample/file-based/) | [`get-octokit.cs`](./ActionsToolkitSharp.Octokit.Sample/file-based/get-octokit.cs), [`context.cs`](./ActionsToolkitSharp.Octokit.Sample/file-based/context.cs), [`create-issue.cs`](./ActionsToolkitSharp.Octokit.Sample/file-based/create-issue.cs) |
-| `ActionsToolkitSharp.HttpClient` | [`ActionsToolkitSharp.HttpClient.Sample/file-based/`](./ActionsToolkitSharp.HttpClient.Sample/file-based/) | [`get-todos.cs`](./ActionsToolkitSharp.HttpClient.Sample/file-based/get-todos.cs), [`bearer-token.cs`](./ActionsToolkitSharp.HttpClient.Sample/file-based/bearer-token.cs) |
-| `ActionsToolkitSharp.Attest` | [`ActionsToolkitSharp.Attest.Sample/file-based/`](./ActionsToolkitSharp.Attest.Sample/file-based/) | [`attest-provenance.cs`](./ActionsToolkitSharp.Attest.Sample/file-based/attest-provenance.cs), [`attest-custom.cs`](./ActionsToolkitSharp.Attest.Sample/file-based/attest-custom.cs), [`attest-with-headers.cs`](./ActionsToolkitSharp.Attest.Sample/file-based/attest-with-headers.cs) |
-| `ActionsToolkitSharp.Cache` | [`ActionsToolkitSharp.Cache.Sample/file-based/`](./ActionsToolkitSharp.Cache.Sample/file-based/) | [`restore-and-save.cs`](./ActionsToolkitSharp.Cache.Sample/file-based/restore-and-save.cs), [`lookup-only.cs`](./ActionsToolkitSharp.Cache.Sample/file-based/lookup-only.cs), [`cross-os-archive.cs`](./ActionsToolkitSharp.Cache.Sample/file-based/cross-os-archive.cs), [`with-options.cs`](./ActionsToolkitSharp.Cache.Sample/file-based/with-options.cs) |
+| `ActionsToolkit.Core` | [`ActionsToolkit.Core.Sample/file-based/`](./ActionsToolkit.Core.Sample/file-based/) | [`inputs-and-outputs.cs`](./ActionsToolkit.Core.Sample/file-based/inputs-and-outputs.cs), [`export-variable.cs`](./ActionsToolkit.Core.Sample/file-based/export-variable.cs), [`set-secret.cs`](./ActionsToolkit.Core.Sample/file-based/set-secret.cs), [`add-path.cs`](./ActionsToolkit.Core.Sample/file-based/add-path.cs), [`exit-codes.cs`](./ActionsToolkit.Core.Sample/file-based/exit-codes.cs), [`logging.cs`](./ActionsToolkit.Core.Sample/file-based/logging.cs), [`groups.cs`](./ActionsToolkit.Core.Sample/file-based/groups.cs), [`annotations.cs`](./ActionsToolkit.Core.Sample/file-based/annotations.cs), [`styling-output.cs`](./ActionsToolkit.Core.Sample/file-based/styling-output.cs), [`action-state.cs`](./ActionsToolkit.Core.Sample/file-based/action-state.cs), [`job-summary.cs`](./ActionsToolkit.Core.Sample/file-based/job-summary.cs) |
+| `ActionsToolkit.Glob` | [`ActionsToolkit.Glob.Sample/file-based/`](./ActionsToolkit.Glob.Sample/file-based/) | [`basic.cs`](./ActionsToolkit.Glob.Sample/file-based/basic.cs), [`recursive.cs`](./ActionsToolkit.Glob.Sample/file-based/recursive.cs), [`iterator.cs`](./ActionsToolkit.Glob.Sample/file-based/iterator.cs), [`glob-with-input.cs`](./ActionsToolkit.Glob.Sample/file-based/glob-with-input.cs), [`builder.cs`](./ActionsToolkit.Glob.Sample/file-based/builder.cs) |
+| `ActionsToolkit.IO` | [`ActionsToolkit.IO.Sample/file-based/`](./ActionsToolkit.IO.Sample/file-based/) | [`mkdir.cs`](./ActionsToolkit.IO.Sample/file-based/mkdir.cs), [`cp-mv.cs`](./ActionsToolkit.IO.Sample/file-based/cp-mv.cs), [`rm-rf.cs`](./ActionsToolkit.IO.Sample/file-based/rm-rf.cs), [`which.cs`](./ActionsToolkit.IO.Sample/file-based/which.cs) |
+| `ActionsToolkit.Exec` | [`ActionsToolkit.Exec.Sample/file-based/`](./ActionsToolkit.Exec.Sample/file-based/) | [`exec-basic.cs`](./ActionsToolkit.Exec.Sample/file-based/exec-basic.cs), [`get-output.cs`](./ActionsToolkit.Exec.Sample/file-based/get-output.cs), [`with-listeners.cs`](./ActionsToolkit.Exec.Sample/file-based/with-listeners.cs), [`with-env.cs`](./ActionsToolkit.Exec.Sample/file-based/with-env.cs), [`with-cwd.cs`](./ActionsToolkit.Exec.Sample/file-based/with-cwd.cs) |
+| `ActionsToolkit.Octokit` | [`ActionsToolkit.Octokit.Sample/file-based/`](./ActionsToolkit.Octokit.Sample/file-based/) | [`get-octokit.cs`](./ActionsToolkit.Octokit.Sample/file-based/get-octokit.cs), [`context.cs`](./ActionsToolkit.Octokit.Sample/file-based/context.cs), [`create-issue.cs`](./ActionsToolkit.Octokit.Sample/file-based/create-issue.cs) |
+| `ActionsToolkit.HttpClient` | [`ActionsToolkit.HttpClient.Sample/file-based/`](./ActionsToolkit.HttpClient.Sample/file-based/) | [`get-todos.cs`](./ActionsToolkit.HttpClient.Sample/file-based/get-todos.cs), [`bearer-token.cs`](./ActionsToolkit.HttpClient.Sample/file-based/bearer-token.cs) |
+| `ActionsToolkit.Attest` | [`ActionsToolkit.Attest.Sample/file-based/`](./ActionsToolkit.Attest.Sample/file-based/) | [`attest-provenance.cs`](./ActionsToolkit.Attest.Sample/file-based/attest-provenance.cs), [`attest-custom.cs`](./ActionsToolkit.Attest.Sample/file-based/attest-custom.cs), [`attest-with-headers.cs`](./ActionsToolkit.Attest.Sample/file-based/attest-with-headers.cs) |
+| `ActionsToolkit.Cache` | [`ActionsToolkit.Cache.Sample/file-based/`](./ActionsToolkit.Cache.Sample/file-based/) | [`restore-and-save.cs`](./ActionsToolkit.Cache.Sample/file-based/restore-and-save.cs), [`lookup-only.cs`](./ActionsToolkit.Cache.Sample/file-based/lookup-only.cs), [`cross-os-archive.cs`](./ActionsToolkit.Cache.Sample/file-based/cross-os-archive.cs), [`with-options.cs`](./ActionsToolkit.Cache.Sample/file-based/with-options.cs) |
 
-> **Phase 2 package — `ActionsToolkitSharp.ToolCache` —
+> **Phase 2 package — `ActionsToolkit.ToolCache` —
 > does not exist yet.** Its file-based samples will be added when that
 > package lands.
 
@@ -46,11 +46,11 @@ Every file-based example can be run directly with `dotnet run` —
 no scaffold project needed:
 
 ```bash
-cd samples/ActionsToolkitSharp.Core.Sample/file-based
+cd samples/ActionsToolkit.Core.Sample/file-based
 dotnet run logging.cs
 ```
 
-The `#:package ActionsToolkitSharp.<Pkg>@*` directives at the top of
+The `#:package ActionsToolkit.<Pkg>@*` directives at the top of
 each script declare inline NuGet references. `@*` resolves to the
 latest available version on whichever feeds your `nuget.config` lists.
 In CI we rewrite `@*` to the locally packed version published to a
@@ -72,4 +72,4 @@ Each sub-folder also ships:
 
 * Upstream JavaScript toolkit: <https://github.com/actions/toolkit>
 * `dotnet run app.cs` announcement: <https://devblogs.microsoft.com/dotnet/announcing-dotnet-run-app/>
-* Each package's own README in `src/ActionsToolkitSharp.<Pkg>/README.md`
+* Each package's own README in `src/ActionsToolkit.<Pkg>/README.md`

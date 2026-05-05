@@ -26,14 +26,14 @@ jobs:
           fetch-depth: 1
           filter: tree:0
 
-      - name: Verify all test projects are registered in ActionsToolkitSharp.slnx
+      - name: Verify all test projects are registered in ActionsToolkit.slnx
         shell: bash
         run: |
           set -euo pipefail
 
-          # ActionsToolkitSharp.slnx is the source of truth for the test
+          # ActionsToolkit.slnx is the source of truth for the test
           # projects executed by `dotnet test`. Any test project on disk
-          # under tests/ActionsToolkitSharp.*.Tests/ that is not in the
+          # under tests/ActionsToolkit.*.Tests/ that is not in the
           # solution would be silently skipped by CI, so fail fast here.
           # This covers both managed (*.Tests) and NativeAOT (*.Aot.Tests)
           # test projects, so adding a new package's test project does not
@@ -44,23 +44,23 @@ jobs:
           while IFS= read -r proj; do
             found=$((found + 1))
             name=$(basename "$proj")
-            if ! grep -Fq "$name" ActionsToolkitSharp.slnx; then
-              echo "::error file=$proj::Test project '$name' is not registered in ActionsToolkitSharp.slnx. Run: dotnet sln add \"$proj\""
+            if ! grep -Fq "$name" ActionsToolkit.slnx; then
+              echo "::error file=$proj::Test project '$name' is not registered in ActionsToolkit.slnx. Run: dotnet sln add \"$proj\""
               missing=$((missing + 1))
             fi
-          done < <(find tests -type f -name 'ActionsToolkitSharp.*.Tests.csproj' | sort)
+          done < <(find tests -type f -name 'ActionsToolkit.*.Tests.csproj' | sort)
 
           if [ "$found" -eq 0 ]; then
-            echo "::error::No test projects found under tests/ActionsToolkitSharp.*.Tests/. The discovery glob may be broken."
+            echo "::error::No test projects found under tests/ActionsToolkit.*.Tests/. The discovery glob may be broken."
             exit 1
           fi
 
           if [ "$missing" -ne 0 ]; then
-            echo "::error::$missing test project(s) on disk are missing from ActionsToolkitSharp.slnx. See tests/README.md for the convention."
+            echo "::error::$missing test project(s) on disk are missing from ActionsToolkit.slnx. See tests/README.md for the convention."
             exit 1
           fi
 
-          echo "All $found test project(s) under tests/ActionsToolkitSharp.*.Tests/ are registered in ActionsToolkitSharp.slnx."
+          echo "All $found test project(s) under tests/ActionsToolkit.*.Tests/ are registered in ActionsToolkit.slnx."
 
   build:
     name: build-${{matrix.os}}
@@ -99,11 +99,11 @@ jobs:
 
       - name: Build
         run: |
-          docker build -f samples/ActionsToolkitSharp.Core.Sample/Dockerfile . -t actions-toolkit-sharp-core-sample:latest
-          docker build -f samples/ActionsToolkitSharp.Glob.Sample/Dockerfile . -t actions-toolkit-sharp-glob-sample:latest
+          docker build -f samples/ActionsToolkit.Core.Sample/Dockerfile . -t actions-toolkit-sharp-core-sample:latest
+          docker build -f samples/ActionsToolkit.Glob.Sample/Dockerfile . -t actions-toolkit-sharp-glob-sample:latest
 
-      - uses: ./samples/ActionsToolkitSharp.Core.Sample
+      - uses: ./samples/ActionsToolkit.Core.Sample
 
-      - uses: ./samples/ActionsToolkitSharp.Glob.Sample
+      - uses: ./samples/ActionsToolkit.Glob.Sample
         with:
           files: "**/*.cs"

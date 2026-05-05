@@ -1,7 +1,7 @@
 ﻿// Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
-using ActionsToolkitSharp.Octokit;
+using ActionsToolkit.Octokit;
 using GitHub.Models;
 
 var token = Environment.GetEnvironmentVariable("GITHUB_TOKEN")

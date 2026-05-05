@@ -3,7 +3,7 @@
 #
 # examples-smoketest
 #
-# Runs every `samples/ActionsToolkitSharp.*.Sample/file-based/*.cs`
+# Runs every `samples/ActionsToolkit.*.Sample/file-based/*.cs`
 # file-based example as a real GitHub Actions step on
 # (ubuntu-latest, windows-latest, macos-latest) and asserts each script
 # exits 0. This proves the file-based, single-file `#:package` flavor of
@@ -11,7 +11,7 @@
 # realistic smoke signal we can produce short of publishing to nuget.org.
 #
 # How it works:
-#   1. Pack the local `src/ActionsToolkitSharp.*` projects to produce
+#   1. Pack the local `src/ActionsToolkit.*` projects to produce
 #      nupkgs in `artifacts/package/release/`. Their MinVer-derived
 #      version (e.g. `9.0.1-alpha.0.16`) drives the rewrite below.
 #   2. Stage each script in its own per-script temp directory outside
@@ -99,7 +99,7 @@ jobs:
           dotnet build --configuration Release --nologo -m:1
           # Defense-in-depth: explicitly re-pack each project with `--no-build` so that a
           # missing nupkg is a hard failure rather than a silent pass.
-          for csproj in src/ActionsToolkitSharp.*/ActionsToolkitSharp.*.csproj; do
+          for csproj in src/ActionsToolkit.*/ActionsToolkit.*.csproj; do
             dotnet pack "$csproj" --configuration Release --no-build --nologo
           done
 
@@ -152,17 +152,17 @@ jobs:
           repo_root="$(pwd)"
           feed_dir="$repo_root/artifacts/package/release"
 
-          # Derive the locally-built ActionsToolkitSharp version from
-          # any ActionsToolkitSharp.Core.*.nupkg in the feed directory.
-          core_pkg="$(ls -1 "$feed_dir"/ActionsToolkitSharp.Core.*.nupkg | head -n1)"
-          version="${core_pkg##*/ActionsToolkitSharp.Core.}"
+          # Derive the locally-built ActionsToolkit version from
+          # any ActionsToolkit.Core.*.nupkg in the feed directory.
+          core_pkg="$(ls -1 "$feed_dir"/ActionsToolkit.Core.*.nupkg | head -n1)"
+          version="${core_pkg##*/ActionsToolkit.Core.}"
           version="${version%.nupkg}"
           echo "Local feed:    $feed_dir"
           echo "Local version: $version"
 
           # Per-script staging area. Each script gets a fresh subdir so
           # `dotnet run` does not see a parent project's CPM rules.
-          stage_root="${RUNNER_TEMP}/ats-smoketest"
+          stage_root="${RUNNER_TEMP}/actions-toolkit-smoketest"
           rm -rf "$stage_root"
           mkdir -p "$stage_root"
 
@@ -201,15 +201,15 @@ jobs:
           # secrets, network calls, or external artifacts. Keep this
           # list paired with the comment block at the top of this file.
           SKIP_LIST=(
-            "samples/ActionsToolkitSharp.Attest.Sample/file-based/attest-custom.cs"
-            "samples/ActionsToolkitSharp.Attest.Sample/file-based/attest-provenance.cs"
-            "samples/ActionsToolkitSharp.Attest.Sample/file-based/attest-with-headers.cs"
-            "samples/ActionsToolkitSharp.Cache.Sample/file-based/cross-os-archive.cs"
-            "samples/ActionsToolkitSharp.Cache.Sample/file-based/lookup-only.cs"
-            "samples/ActionsToolkitSharp.Cache.Sample/file-based/restore-and-save.cs"
-            "samples/ActionsToolkitSharp.Cache.Sample/file-based/with-options.cs"
-            "samples/ActionsToolkitSharp.Octokit.Sample/file-based/get-octokit.cs"
-            "samples/ActionsToolkitSharp.ToolCache.Sample/file-based/download-and-cache.cs"
+            "samples/ActionsToolkit.Attest.Sample/file-based/attest-custom.cs"
+            "samples/ActionsToolkit.Attest.Sample/file-based/attest-provenance.cs"
+            "samples/ActionsToolkit.Attest.Sample/file-based/attest-with-headers.cs"
+            "samples/ActionsToolkit.Cache.Sample/file-based/cross-os-archive.cs"
+            "samples/ActionsToolkit.Cache.Sample/file-based/lookup-only.cs"
+            "samples/ActionsToolkit.Cache.Sample/file-based/restore-and-save.cs"
+            "samples/ActionsToolkit.Cache.Sample/file-based/with-options.cs"
+            "samples/ActionsToolkit.Octokit.Sample/file-based/get-octokit.cs"
+            "samples/ActionsToolkit.ToolCache.Sample/file-based/download-and-cache.cs"
           )
 
           is_skipped() {
@@ -264,12 +264,12 @@ jobs:
             cp "$script" "$work/$base"
             printf '%s\n' "$nuget_config_template" > "$work/NuGet.Config"
 
-            # Rewrite `#:package ActionsToolkitSharp.*@*` to the locally
+            # Rewrite `#:package ActionsToolkit.*@*` to the locally
             # packed version. Other `#:package Foo@*` directives (DI,
             # Microsoft.Extensions.Http, etc.) are left alone and resolve
             # from nuget.org as normal.
             sed -E -i.bak \
-              "s|(#:package ActionsToolkitSharp\.[A-Za-z]+)@\*|\1@$version|g" \
+              "s|(#:package ActionsToolkit\.[A-Za-z]+)@\*|\1@$version|g" \
               "$work/$base"
             rm -f "$work/$base.bak"
 
