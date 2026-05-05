@@ -1,0 +1,36 @@
+name: dependabot auto-merge
+
+# Auto-merges Dependabot pull requests once required CI checks pass.
+#
+# - Triggers on PR open/sync from the `dependabot[bot]` actor.
+# - Calls `gh pr merge --auto --squash`, which queues the merge to fire as
+#   soon as every required status check is green; if a check fails the merge
+#   never happens and the PR stays open for manual review.
+# - All third-party actions are SHA-pinned (security best practice).
+
+on: pull_request
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'IEvangelist/actions-toolkit-csharp'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge --auto --squash "$PR_URL"
