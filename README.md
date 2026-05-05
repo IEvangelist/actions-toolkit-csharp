@@ -72,6 +72,16 @@ dotnet add package ActionsToolkitSharp.Octokit
 
 For more information, see [📦 ActionsToolkitSharp.Octokit](https://www.nuget.org/packages/ActionsToolkitSharp.Octokit).
 
+:package: [`ActionsToolkitSharp.ToolCache`](src/ActionsToolkitSharp.ToolCache)
+
+Provides functions for downloading, extracting, and caching tools (such as language runtimes) on the runner — the .NET equivalent of `@actions/tool-cache`. Read more [here](src/ActionsToolkitSharp.ToolCache).
+
+```bash
+dotnet add package ActionsToolkitSharp.ToolCache
+```
+
+For more information, see [📦 ActionsToolkitSharp.ToolCache](https://www.nuget.org/packages/ActionsToolkitSharp.ToolCache).
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

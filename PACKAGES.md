@@ -27,7 +27,7 @@ The following table tracks the various packages' development progress. Each pack
 | `@actions/glob` | `ActionsToolkitSharp.Glob` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/http-client` | `ActionsToolkitSharp.HttpClient` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/io` | `ActionsToolkitSharp.IO` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
-| `@actions/tool-cache` | `ActionsToolkitSharp.ToolCache` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
+| `@actions/tool-cache` | `ActionsToolkitSharp.ToolCache` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 **Legend**
 
