@@ -1,0 +1,35 @@
+# Copyright (c) David Pine. All rights reserved.
+# Licensed under the MIT License.
+#
+# Workflow snippet showing how to call a file-based ActionsToolkitSharp.IO
+# script from a GitHub Actions `run:` step. Drop this into
+# .github/workflows/<your-workflow>.yml.
+
+name: actions-toolkit-sharp-io-file-based
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  filesystem-ops:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Resolve dotnet on PATH (which)
+        shell: bash
+        run: |
+          dotnet run \
+            samples/ActionsToolkitSharp.IO.Sample/file-based/which.cs
+
+      - name: Make a directory tree (mkdir -p)
+        shell: bash
+        run: |
+          dotnet run \
+            samples/ActionsToolkitSharp.IO.Sample/file-based/mkdir.cs

@@ -1,0 +1,35 @@
+# Copyright (c) David Pine. All rights reserved.
+# Licensed under the MIT License.
+#
+# Workflow snippet showing how to call a file-based ActionsToolkitSharp.HttpClient
+# script from a GitHub Actions `run:` step. Drop this into
+# .github/workflows/<your-workflow>.yml.
+
+name: actions-toolkit-sharp-http-client-file-based
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  http-call:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Issue a typed GET request
+        shell: bash
+        run: |
+          dotnet run \
+            samples/ActionsToolkitSharp.HttpClient.Sample/file-based/get-todos.cs
+
+      - name: Demonstrate credentialed client factories
+        shell: bash
+        run: |
+          dotnet run \
+            samples/ActionsToolkitSharp.HttpClient.Sample/file-based/bearer-token.cs
