@@ -106,6 +106,33 @@ internal sealed class DefaultHttpClient(NetClient client, IRequestHandler? reque
         return await client.SendAsync(request, cancellationToken);
     }
 
+    async ValueTask<HttpResponseMessage> IHttpClient.SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        if (requestHandler is not null)
+        {
+            var existing = request.Headers
+                .ToDictionary(h => h.Key, h => h.Value);
+
+            var prepared = requestHandler.PrepareRequestHeaders(existing);
+
+            foreach (var (headerKey, headerValues) in prepared)
+            {
+                if (request.Headers.Contains(headerKey))
+                {
+                    request.Headers.Remove(headerKey);
+                }
+
+                request.Headers.Add(headerKey, headerValues);
+            }
+        }
+
+        return await client.SendAsync(request, cancellationToken);
+    }
+
     private async ValueTask<TypedResponse<TResult>> RequestAsync<TData, TResult>(
         string requestUri,
         HttpMethod method,

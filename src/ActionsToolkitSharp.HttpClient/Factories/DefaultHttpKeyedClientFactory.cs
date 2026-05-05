@@ -34,7 +34,7 @@ internal sealed class DefaultHttpKeyedClientFactory(
     IHttpClient IHttpCredentialClientFactory.CreatePersonalAccessTokenClient(string pat)
     {
         var client = clientFactory.CreateClient(ClientNames.Pat);
-        var requestHandler = new PersonalAccessTokenHandler(pat);
+        var requestHandler = new PersonalAccessTokenCredentialHandler(pat);
 
         return new DefaultHttpClient(client, requestHandler);
     }
