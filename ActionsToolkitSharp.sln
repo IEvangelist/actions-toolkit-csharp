@@ -83,6 +83,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionsToolkitSharp.Octokit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.AotConsumer", "tests\ActionsToolkitSharp.Octokit.Aot.Tests\AotConsumer\Octokit.AotConsumer.csproj", "{557BF16C-2DAC-40C3-A753-F7902D1D1D67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionsToolkitSharp.ToolCache", "src\ActionsToolkitSharp.ToolCache\ActionsToolkitSharp.ToolCache.csproj", "{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -369,6 +371,18 @@ Global
 		{557BF16C-2DAC-40C3-A753-F7902D1D1D67}.Release|x64.Build.0 = Release|Any CPU
 		{557BF16C-2DAC-40C3-A753-F7902D1D1D67}.Release|x86.ActiveCfg = Release|Any CPU
 		{557BF16C-2DAC-40C3-A753-F7902D1D1D67}.Release|x86.Build.0 = Release|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Debug|x64.Build.0 = Debug|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Debug|x86.Build.0 = Debug|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|x64.ActiveCfg = Release|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|x64.Build.0 = Release|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|x86.ActiveCfg = Release|Any CPU
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -397,6 +411,7 @@ Global
 		{D54AA665-0990-4B3D-B5FB-476843421437} = {795A1BB4-B65E-4455-B041-DEBCC6543B36}
 		{107B02CB-0A0B-426D-A070-EB2376C0C12B} = {795A1BB4-B65E-4455-B041-DEBCC6543B36}
 		{557BF16C-2DAC-40C3-A753-F7902D1D1D67} = {795A1BB4-B65E-4455-B041-DEBCC6543B36}
+		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F} = {05787D83-7374-483A-A42C-E9A53EA5B224}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49382294-2F91-4B26-B415-0933D5DF38E1}
