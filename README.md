@@ -62,6 +62,16 @@ dotnet add package ActionsToolkitSharp.IO
 
 For more information, see [📦 ActionsToolkitSharp.IO](https://www.nuget.org/packages/ActionsToolkitSharp.IO).
 
+:rocket: [`ActionsToolkitSharp.Exec`](src/ActionsToolkitSharp.Exec)
+
+Provides functions to exec command-line tools and process their output. Read more [here](src/ActionsToolkitSharp.Exec)
+
+```bash
+dotnet add package ActionsToolkitSharp.Exec
+```
+
+For more information, see [📦 ActionsToolkitSharp.Exec](https://www.nuget.org/packages/ActionsToolkitSharp.Exec).
+
 :octocat: [`ActionsToolkitSharp.Octokit`](src/ActionsToolkitSharp.Octokit)
 
 Provides an Octokit client hydrated with the context that the current action is being run in. Read more [here](src/ActionsToolkitSharp.Octokit)

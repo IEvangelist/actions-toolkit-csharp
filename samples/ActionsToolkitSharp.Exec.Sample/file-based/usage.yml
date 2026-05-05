@@ -1,0 +1,35 @@
+# Copyright (c) David Pine. All rights reserved.
+# Licensed under the MIT License.
+#
+# Workflow snippet showing how to call a file-based ActionsToolkitSharp.Exec
+# script from a GitHub Actions `run:` step. Drop this into
+# .github/workflows/<your-workflow>.yml.
+
+name: actions-toolkit-sharp-exec-file-based
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  process-exec:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Run a child process and stream output
+        shell: bash
+        run: |
+          dotnet run \
+            samples/ActionsToolkitSharp.Exec.Sample/file-based/exec-basic.cs
+
+      - name: Capture stdout / stderr from a child process
+        shell: bash
+        run: |
+          dotnet run \
+            samples/ActionsToolkitSharp.Exec.Sample/file-based/get-output.cs

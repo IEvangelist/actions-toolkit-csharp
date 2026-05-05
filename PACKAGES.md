@@ -22,7 +22,7 @@ The following table tracks the various packages' development progress. Each pack
 | `@actions/cache` | `ActionsToolkitSharp.Cache` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
 | `@actions/core` | `ActionsToolkitSharp.Core` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/artifact` | `ActionsToolkitSharp.Artifact` | 🟡 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/exec` | `ActionsToolkitSharp.Exec` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
+| `@actions/exec` | `ActionsToolkitSharp.Exec` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `@actions/github` | `ActionsToolkitSharp.Octokit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/glob` | `ActionsToolkitSharp.Glob` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/http-client` | `ActionsToolkitSharp.HttpClient` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
