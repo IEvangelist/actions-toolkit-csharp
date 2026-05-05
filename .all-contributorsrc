@@ -50,6 +50,6 @@
   "skipCi": true,
   "repoType": "github",
   "repoHost": "https://github.com",
-  "projectName": "dotnet-github-actions-sdk",
+  "projectName": "actions-toolkit-csharp",
   "projectOwner": "IEvangelist"
 }

@@ -18,7 +18,7 @@ public class GitHubClientTests
         var client = GitHubClientFactory.Create(token);
 
         var owner = "IEvangelist";
-        var repo = "dotnet-github-actions-sdk";
+        var repo = "actions-toolkit-csharp";
         var pullNumber = 1;
 
         var firstPullRequest = await client.Repos[owner][repo].Pulls[pullNumber].GetAsync();

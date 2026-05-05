@@ -1,12 +1,12 @@
-<!-- https://socialify.git.ci/IEvangelist/dotnet-github-actions-sdk?description=1&font=Rokkitt&language=1&name=1&owner=1&pattern=Plus&theme=Dark -->
+<!-- https://socialify.git.ci/IEvangelist/actions-toolkit-csharp?description=1&font=Rokkitt&language=1&name=1&owner=1&pattern=Plus&theme=Dark -->
 
-![dotnet-github-actions-sdk](https://socialify.git.ci/IEvangelist/dotnet-github-actions-sdk/image?description=1&font=Rokkitt&language=1&name=1&owner=1&pattern=Plus&theme=Dark)
+![actions-toolkit-csharp](https://socialify.git.ci/IEvangelist/actions-toolkit-csharp/image?description=1&font=Rokkitt&language=1&name=1&owner=1&pattern=Plus&theme=Dark)
 
 # GitHub Actions Workflow .NET SDK
 
-[![build-and-test](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/build-and-test.yml)
-[![code analysis](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/codeql-analysis.yml)
-[![publish nuget](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/publish.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/publish.yml)
+[![build-and-test](https://github.com/IEvangelist/actions-toolkit-csharp/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/IEvangelist/actions-toolkit-csharp/actions/workflows/build-and-test.yml)
+[![code analysis](https://github.com/IEvangelist/actions-toolkit-csharp/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/IEvangelist/actions-toolkit-csharp/actions/workflows/codeql-analysis.yml)
+[![publish nuget](https://github.com/IEvangelist/actions-toolkit-csharp/actions/workflows/publish.yml/badge.svg)](https://github.com/IEvangelist/actions-toolkit-csharp/actions/workflows/publish.yml)
 [![NuGet](https://img.shields.io/nuget/v/ActionsToolkit.Core.svg?style=flat)](https://www.nuget.org/packages/ActionsToolkit.Core) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -20,7 +20,7 @@ The .NET equivalent of the official GitHub [actions/toolkit](https://github.com/
 > once each row in [PACKAGES.md](PACKAGES.md) is fully ✅. Native AOT correctness is verified per
 > package via dedicated `tests/<pkg>.Aot.Tests` projects.
 
-[issue-5]: https://github.com/IEvangelist/dotnet-github-actions-sdk/issues/5
+[issue-5]: https://github.com/IEvangelist/actions-toolkit-csharp/issues/5
 
 ## Blog
 
@@ -122,10 +122,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="http://www.chethusk.com"><img src="https://avatars.githubusercontent.com/u/573979?v=4?s=100" width="100px;" alt="Chet Husk"/><br /><sub><b>Chet Husk</b></sub></a><br /><a href="https://github.com/IEvangelist/dotnet-github-actions-sdk/commits?author=baronfel" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/js6pak"><img src="https://avatars.githubusercontent.com/u/35262707?v=4?s=100" width="100px;" alt="js6pak"/><br /><sub><b>js6pak</b></sub></a><br /><a href="https://github.com/IEvangelist/dotnet-github-actions-sdk/commits?author=js6pak" title="Code">💻</a> <a href="https://github.com/IEvangelist/dotnet-github-actions-sdk/commits?author=js6pak" title="Tests">⚠️</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://david.gardiner.net.au"><img src="https://avatars.githubusercontent.com/u/384747?v=4?s=100" width="100px;" alt="David Gardiner"/><br /><sub><b>David Gardiner</b></sub></a><br /><a href="https://github.com/IEvangelist/dotnet-github-actions-sdk/commits?author=flcdrg" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://thnetii.td.org.uit.no/"><img src="https://avatars.githubusercontent.com/u/8759693?v=4?s=100" width="100px;" alt="Fredrik Høisæther Rasch"/><br /><sub><b>Fredrik Høisæther Rasch</b></sub></a><br /><a href="https://github.com/IEvangelist/dotnet-github-actions-sdk/commits?author=fredrikhr" title="Code">💻</a> <a href="#ideas-fredrikhr" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.chethusk.com"><img src="https://avatars.githubusercontent.com/u/573979?v=4?s=100" width="100px;" alt="Chet Husk"/><br /><sub><b>Chet Husk</b></sub></a><br /><a href="https://github.com/IEvangelist/actions-toolkit-csharp/commits?author=baronfel" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/js6pak"><img src="https://avatars.githubusercontent.com/u/35262707?v=4?s=100" width="100px;" alt="js6pak"/><br /><sub><b>js6pak</b></sub></a><br /><a href="https://github.com/IEvangelist/actions-toolkit-csharp/commits?author=js6pak" title="Code">💻</a> <a href="https://github.com/IEvangelist/actions-toolkit-csharp/commits?author=js6pak" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://david.gardiner.net.au"><img src="https://avatars.githubusercontent.com/u/384747?v=4?s=100" width="100px;" alt="David Gardiner"/><br /><sub><b>David Gardiner</b></sub></a><br /><a href="https://github.com/IEvangelist/actions-toolkit-csharp/commits?author=flcdrg" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://thnetii.td.org.uit.no/"><img src="https://avatars.githubusercontent.com/u/8759693?v=4?s=100" width="100px;" alt="Fredrik Høisæther Rasch"/><br /><sub><b>Fredrik Høisæther Rasch</b></sub></a><br /><a href="https://github.com/IEvangelist/actions-toolkit-csharp/commits?author=fredrikhr" title="Code">💻</a> <a href="#ideas-fredrikhr" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>

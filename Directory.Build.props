@@ -21,13 +21,24 @@
         <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors> 
 
+        <!--
+          MinVer reads version from git tags. The legacy `9.0.0` and `10.0` tags
+          (no `v` prefix) belong to the previous `GitHub.Actions.*` lineage; the
+          `ActionsToolkit.*` packages start a new versioning epoch using `v*`
+          tags so MinVer ignores those legacy anchors. The first new tag will
+          be `v0.0.1-pre.0` (or `v1.0.0` when ready); until then MinVer falls
+          back to a default `0.0.0-alpha.0.X` height-derived version, which is
+          fine because publish.yml only fires on `push: tags: '**'`.
+        -->
+        <MinVerTagPrefix>v</MinVerTagPrefix>
+
         <Authors>David Pine</Authors>
         <Copyright>© 2022-$([System.DateTime]::Now.ToString('yyyy')) David Pine</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>dotnet;dotnetcore;csharp;github;actions;devops;</PackageTags>
-        <PackageProjectUrl>https://github.com/IEvangelist/dotnet-github-actions-sdk</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/IEvangelist/dotnet-github-actions-sdk</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/IEvangelist/actions-toolkit-csharp</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/IEvangelist/actions-toolkit-csharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
 
         <EmbedUntrackedSources>true</EmbedUntrackedSources>

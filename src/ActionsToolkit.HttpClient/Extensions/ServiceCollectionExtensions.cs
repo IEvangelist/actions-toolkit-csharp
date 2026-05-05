@@ -9,9 +9,9 @@ namespace ActionsToolkit.HttpClient.Extensions;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// The default <c>user-agent</c> HTTP header value, <c>"dotnet-github-actions-sdk"</c>.
+    /// The default <c>user-agent</c> HTTP header value, <c>"actions-toolkit-csharp"</c>.
     /// </summary>
-    public const string UserAgentHeader = "dotnet-github-actions-sdk";
+    public const string UserAgentHeader = "actions-toolkit-csharp";
 
     /// <summary>
     /// Adds the required HTTP client services to the <see cref="IServiceCollection"/>.
