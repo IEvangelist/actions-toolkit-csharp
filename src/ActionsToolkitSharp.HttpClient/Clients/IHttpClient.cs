@@ -123,4 +123,17 @@ public interface IHttpClient : IDisposable
         string requestUri,
         Dictionary<string, IEnumerable<string>>? additionalHeaders = null,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sends a raw <see cref="HttpRequestMessage"/> through the underlying
+    /// HTTP client, applying any configured credential headers via the
+    /// associated <see cref="IRequestHandler"/>. The .NET equivalent of the
+    /// upstream <c>requestRaw</c> / <c>requestRawWithCallback</c> APIs.
+    /// </summary>
+    /// <param name="request">The fully-formed <see cref="HttpRequestMessage"/> to send.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+    /// <returns>The <see cref="HttpResponseMessage"/> returned by the server.</returns>
+    ValueTask<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken = default);
 }

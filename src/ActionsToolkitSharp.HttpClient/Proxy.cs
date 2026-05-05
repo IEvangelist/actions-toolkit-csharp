@@ -3,10 +3,26 @@
 
 namespace ActionsToolkitSharp.HttpClient;
 
-internal sealed class Proxy
+/// <summary>
+/// Provides proxy configuration utilities that consult the standard
+/// <c>http_proxy</c>, <c>https_proxy</c>, and <c>no_proxy</c>
+/// environment variables. Mirrors the upstream <c>proxy</c> module from
+/// <see href="https://github.com/actions/toolkit/blob/main/packages/http-client/src/proxy.ts">@actions/http-client</see>.
+/// </summary>
+public static class Proxy
 {
+    /// <summary>
+    /// Returns the configured proxy <see cref="Uri"/> for the given
+    /// <paramref name="requestUrl"/>, or <see langword="null"/> if no proxy
+    /// applies (either none is configured or the host is in the bypass list).
+    /// </summary>
+    /// <param name="requestUrl">The request URL whose scheme is used to choose
+    /// between <c>https_proxy</c> and <c>http_proxy</c>.</param>
+    /// <returns>The resolved proxy URI, or <see langword="null"/> when no proxy applies.</returns>
     public static Uri? GetProxyUrl(Uri requestUrl)
     {
+        ArgumentNullException.ThrowIfNull(requestUrl);
+
         var usingSsl = requestUrl.Scheme is "https";
 
         if (CheckBypass(requestUrl))
@@ -44,8 +60,18 @@ internal sealed class Proxy
         return null;
     }
 
-    internal static bool CheckBypass(Uri requestUrl)
+    /// <summary>
+    /// Determines whether the supplied <paramref name="requestUrl"/> should
+    /// bypass any configured proxy because its host matches an entry in the
+    /// <c>no_proxy</c> environment variable, is a loopback address, or
+    /// <c>no_proxy</c> contains <c>"*"</c>.
+    /// </summary>
+    /// <param name="requestUrl">The request URL to test.</param>
+    /// <returns><see langword="true"/> when the request should bypass the proxy.</returns>
+    public static bool CheckBypass(Uri requestUrl)
     {
+        ArgumentNullException.ThrowIfNull(requestUrl);
+
         var hostName = requestUrl.Host;
 
         if (hostName is null)
@@ -88,5 +114,18 @@ internal sealed class Proxy
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Returns <see langword="true"/> if the supplied <paramref name="requestUrl"/>
+    /// uses the <c>https</c> scheme. Mirrors the upstream <c>isHttps</c> helper.
+    /// </summary>
+    /// <param name="requestUrl">The request URL to inspect.</param>
+    /// <returns><see langword="true"/> if the URL is HTTPS; otherwise <see langword="false"/>.</returns>
+    public static bool IsHttps(string requestUrl)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(requestUrl);
+
+        return new Uri(requestUrl).Scheme is "https";
     }
 }

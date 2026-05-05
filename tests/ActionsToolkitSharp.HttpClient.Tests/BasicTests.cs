@@ -1,8 +1,13 @@
-﻿// Copyright (c) David Pine. All rights reserved.
+// Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
 namespace ActionsToolkitSharp.HttpClient.Tests;
 
+/// <summary>
+/// C# port of <see href="https://github.com/actions/toolkit/blob/main/packages/http-client/__tests__/basics.test.ts"/>.
+/// Network-bound tests are skipped when <c>postman-echo.com</c> behaves
+/// inconsistently (e.g., HTTP→HTTPS redirects).
+/// </summary>
 public class BasicTests
 {
     public BasicTests()
@@ -12,7 +17,7 @@ public class BasicTests
         Environment.SetEnvironmentVariable("https_proxy", null);
     }
 
-    [Theory(Skip = "postman-echo.com redirects HTTP to HTTPS")]
+    [Theory(DisplayName = "does basic http get request", Skip = "postman-echo.com redirects HTTP to HTTPS")]
     [InlineData("http://postman-echo.com/get", "functional-test-agent")]
     [InlineData("http://postman-echo.com/get", "test-agent")]
     public async Task DoesBasicGetRequestWithUserAgent(string requestUri, string userAgent)
@@ -34,7 +39,7 @@ public class BasicTests
         Assert.Equal(userAgent, response.Result.Headers["user-agent"]);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic http get request with no user agent")]
     public async Task DoesBasicHttpGetRequestWithNoUserAgent()
     {
         using var client = new ServiceCollection()
@@ -53,7 +58,7 @@ public class BasicTests
         Assert.False(response.Result.Headers.ContainsKey("user-agent"));
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic http get request with default headers")]
     public async Task DoesBasicHttpGetRequestWithDefaultHeaders()
     {
         using var client = new ServiceCollection()
@@ -72,7 +77,7 @@ public class BasicTests
         Assert.Equal("application/json", response.Result.Headers["accept"]);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic http get request with merged headers")]
     public async Task DoesBasicHttpGetRequestWithMergedHeaders()
     {
         using var client = new ServiceCollection()
@@ -90,7 +95,7 @@ public class BasicTests
         Assert.NotNull(response.Result);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic get request with redirects (303)")]
     public async Task DoesBasicGetRequestWithRedirect()
     {
         using var client = new ServiceCollection()
@@ -108,7 +113,7 @@ public class BasicTests
         Assert.NotNull(response.Result);
     }
 
-    [Fact]
+    [Fact(DisplayName = "returns 404 for not found get request on redirect")]
     public async Task ReturnsNotFoundGetRequestOnRedirect()
     {
         using var client = new ServiceCollection()
@@ -126,7 +131,7 @@ public class BasicTests
         Assert.Null(response.Result);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does not pass auth with diff hostname redirects")]
     public async Task DoesNotPassAuthWithDiffHostnameRedirects()
     {
         using var client = new ServiceCollection()
@@ -147,7 +152,7 @@ public class BasicTests
         Assert.False(response.Result.Headers.ContainsKey("Authorization"));
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic head request")]
     public async Task DoesBasicHeadRequest()
     {
         using var client = new ServiceCollection()
@@ -162,7 +167,7 @@ public class BasicTests
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic http delete request")]
     public async Task DoesBasicDeleteRequest()
     {
         using var client = new ServiceCollection()
@@ -177,7 +182,7 @@ public class BasicTests
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
-    [Fact(Skip = "postman-echo.com redirects HTTP to HTTPS")]
+    [Fact(DisplayName = "does basic http post request", Skip = "postman-echo.com redirects HTTP to HTTPS")]
     public async Task DoesBasicHttpPostRequest()
     {
         using var client = new ServiceCollection()
@@ -199,7 +204,7 @@ public class BasicTests
         Assert.Equal(data, response.Result!.Data);
     }
 
-    [Fact]
+    [Fact(DisplayName = "does basic http patch request")]
     public async Task DoesBasicHttpPatchRequest()
     {
         using var client = new ServiceCollection()
@@ -221,7 +226,7 @@ public class BasicTests
         Assert.Equal(data, response.Result!.Data);
     }
 
-    [Fact]
+    [Fact(DisplayName = "puts a json object")]
     public async Task DoesBasicHttpPutRequest()
     {
         using var client = new ServiceCollection()
@@ -243,7 +248,7 @@ public class BasicTests
         Assert.Equal(data, response.Result!.Data);
     }
 
-    [Fact(Skip = "postman-echo.com redirects HTTP to HTTPS")]
+    [Fact(DisplayName = "does basic http options request", Skip = "postman-echo.com redirects HTTP to HTTPS")]
     public async Task DoesBasicOptionsRequest()
     {
         using var client = new ServiceCollection()
@@ -258,7 +263,7 @@ public class BasicTests
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
-    [Fact]
+    [Fact(DisplayName = "returns 404 for not found get request")]
     public async Task ReturnsNotFoundGetRequest()
     {
         using var client = new ServiceCollection()

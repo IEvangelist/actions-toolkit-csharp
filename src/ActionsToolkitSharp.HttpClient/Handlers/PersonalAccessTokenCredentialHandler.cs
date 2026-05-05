@@ -5,14 +5,13 @@ namespace ActionsToolkitSharp.HttpClient.Handlers;
 
 /// <summary>
 /// An <see cref="IRequestHandler"/> that injects an HTTP Basic
-/// <c>Authorization</c> header derived from the supplied
-/// <paramref name="username"/> and <paramref name="password"/>. Mirrors the upstream
-/// <c>BasicCredentialHandler</c> from
+/// <c>Authorization</c> header derived from a personal access token (PAT),
+/// using the literal username <c>"PAT"</c>. Mirrors the upstream
+/// <c>PersonalAccessTokenCredentialHandler</c> from
 /// <see href="https://github.com/actions/toolkit/blob/main/packages/http-client/src/auth.ts">@actions/http-client</see>.
 /// </summary>
-/// <param name="username">The username portion of the Basic credential.</param>
-/// <param name="password">The password portion of the Basic credential.</param>
-public sealed class BasicCredentialHandler(string username, string password) : IRequestHandler
+/// <param name="pat">The personal access token used to authenticate requests.</param>
+public sealed class PersonalAccessTokenCredentialHandler(string pat) : IRequestHandler
 {
     /// <inheritdoc />
     public Dictionary<string, IEnumerable<string>> PrepareRequestHeaders(
@@ -24,7 +23,7 @@ public sealed class BasicCredentialHandler(string username, string password) : I
         [
             new AuthenticationHeaderValue(
                 "Basic",
-                $"{username}:{password}".ToBase64()
+                $"PAT:{pat}".ToBase64()
             )
             .ToString()
         ];
