@@ -12,4 +12,8 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="SharpCompress" />
     </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="ats-toolcache-aot-consumer" />
+    </ItemGroup>
 </Project>
