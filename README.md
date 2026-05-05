@@ -52,19 +52,15 @@ dotnet add package ActionsToolkitSharp.Glob
 
 For more information, see [📦 ActionsToolkitSharp.Glob](https://www.nuget.org/packages/ActionsToolkitSharp.Glob).
 
-<!--
-
 :pencil2: [`ActionsToolkitSharp.IO`](src/ActionsToolkitSharp.IO)
 
 Provides disk i/o functions like cp, mv, rmRF, which etc. Read more [here](src/ActionsToolkitSharp.IO)
 
-```
+```bash
 dotnet add package ActionsToolkitSharp.IO
 ```
 
 For more information, see [📦 ActionsToolkitSharp.IO](https://www.nuget.org/packages/ActionsToolkitSharp.IO).
-
--->
 
 :octocat: [`ActionsToolkitSharp.Octokit`](src/ActionsToolkitSharp.Octokit)
 

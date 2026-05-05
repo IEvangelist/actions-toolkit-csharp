@@ -14,7 +14,7 @@ dotnet add package ActionsToolkitSharp.Octokit
 
 ## `ActionsToolkitSharp.Octokit`
 
-This was modified, but borrowed from the [_glob/README.md_](https://github.com/actions/toolkit/blob/main/packages/github/README.md).
+This was modified, but borrowed from the [_github/README.md_](https://github.com/actions/toolkit/blob/main/packages/github/README.md).
 
 > You can use this package to access a hydrated Octokit client with authentication and a set of useful defaults for GitHub Actions.
 
@@ -40,3 +40,7 @@ var pullRequest = client.Repos["octokit"]["rest.js"].Pulls[123].GetAsync();
 
 Console.WriteLine(pullRequest.Title);
 ```
+
+## Attribution
+
+This package is a .NET port of the official [`@actions/github`](https://github.com/actions/toolkit/tree/main/packages/github) Node.js package by GitHub, licensed under the [MIT License](https://github.com/actions/toolkit/blob/main/LICENSE.md). The underlying GitHub API client is provided by the [GitHub.Octokit.SDK](https://www.nuget.org/packages/GitHub.Octokit.SDK) NuGet package.

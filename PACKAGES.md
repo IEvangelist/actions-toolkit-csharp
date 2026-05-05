@@ -23,10 +23,10 @@ The following table tracks the various packages' development progress. Each pack
 | `@actions/core` | `ActionsToolkitSharp.Core` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/artifact` | `ActionsToolkitSharp.Artifact` | 🟡 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
 | `@actions/exec` | `ActionsToolkitSharp.Exec` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/github` | `ActionsToolkitSharp.Octokit` | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 | 🔳 |
+| `@actions/github` | `ActionsToolkitSharp.Octokit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/glob` | `ActionsToolkitSharp.Glob` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/http-client` | `ActionsToolkitSharp.HttpClient` | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 | 🔳 |
-| `@actions/io` | `ActionsToolkitSharp.IO` | ✅ | ✅ | 🔳 | ✅ | ✅ | 🔳 | 🔳 |
+| `@actions/io` | `ActionsToolkitSharp.IO` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/tool-cache` | `ActionsToolkitSharp.ToolCache` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
 
 **Legend**
