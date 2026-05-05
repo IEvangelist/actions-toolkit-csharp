@@ -21,5 +21,6 @@
     <PackageVersion Include="Pathological.Globbing" Version="9.0.0" />
     <PackageVersion Include="System.Text.Json" Version="9.0.0" />
     <PackageVersion Include="SharpCompress" Version="0.40.0" />
+    <PackageVersion Include="ZstdSharp.Port" Version="0.8.6" />
   </ItemGroup>
 </Project>

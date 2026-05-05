@@ -19,7 +19,7 @@ The following table tracks the various packages' development progress. Each pack
 | `@actions/toolkit` | Package | Exists? | Testable? | DI Friendly? | README? | Tests? | Attribution? | AOT-tested? |
 |--|--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | `@actions/attest` | `ActionsToolkitSharp.Attest` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `@actions/cache` | `ActionsToolkitSharp.Cache` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
+| `@actions/cache` | `ActionsToolkitSharp.Cache` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `@actions/core` | `ActionsToolkitSharp.Core` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/artifact` | `ActionsToolkitSharp.Artifact` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `@actions/exec` | `ActionsToolkitSharp.Exec` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |

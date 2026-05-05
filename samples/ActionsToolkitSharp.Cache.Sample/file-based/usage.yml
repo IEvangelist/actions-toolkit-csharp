@@ -1,0 +1,26 @@
+name: cache-samples
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.x
+
+      - name: Restore + save cache
+        run: dotnet run samples/ActionsToolkitSharp.Cache.Sample/file-based/restore-and-save.cs build-linux-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+
+      - name: Lookup-only cache check
+        run: dotnet run samples/ActionsToolkitSharp.Cache.Sample/file-based/lookup-only.cs build-linux-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+
+      - name: Cross-OS shared cache
+        run: dotnet run samples/ActionsToolkitSharp.Cache.Sample/file-based/cross-os-archive.cs build-shared-${{ hashFiles('**/*.csproj') }}
+
+      - name: Save with custom upload options
+        run: dotnet run samples/ActionsToolkitSharp.Cache.Sample/file-based/with-options.cs build-linux-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}

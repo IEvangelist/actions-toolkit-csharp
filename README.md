@@ -102,6 +102,16 @@ dotnet add package ActionsToolkitSharp.Attest
 
 For more information, see [📦 ActionsToolkitSharp.Attest](https://www.nuget.org/packages/ActionsToolkitSharp.Attest).
 
+:floppy_disk: [`ActionsToolkitSharp.Cache`](src/ActionsToolkitSharp.Cache)
+
+Provides functions for saving and restoring caches against the GitHub Actions cache service — the .NET equivalent of `@actions/cache`. Tar+zstd archive pipeline (managed via `System.Formats.Tar` + `ZstdSharp.Port`), Twirp+signed-URL transport for the V2 cache backend, and AOT-clean source-gen JSON. Read more [here](src/ActionsToolkitSharp.Cache).
+
+```bash
+dotnet add package ActionsToolkitSharp.Cache
+```
+
+For more information, see [📦 ActionsToolkitSharp.Cache](https://www.nuget.org/packages/ActionsToolkitSharp.Cache).
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
