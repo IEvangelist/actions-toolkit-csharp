@@ -49,6 +49,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -83,10 +86,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          dotnet pack src/ActionsToolkitSharp.Core/ActionsToolkitSharp.Core.csproj --configuration Release --nologo
-          # The first pack triggers a build of every transitively-referenced
-          # `src/ActionsToolkitSharp.*` project, but to be defensive we
-          # explicitly pack each one so a missing nupkg is a hard failure.
+          # Build once first; `GeneratePackageOnBuild=true` (set in src/Directory.Build.props)
+          # produces every src project's nupkg as a side effect of the Release build, so this
+          # is the source of truth. Running `dotnet pack` *without* `--no-build` here would
+          # collide with that build-time pack and trigger NU5026 ("dll to be packed not found").
+          dotnet build --configuration Release --nologo -m:1
+          # Defense-in-depth: explicitly re-pack each project with `--no-build` so that a
+          # missing nupkg is a hard failure rather than a silent pass.
           for csproj in src/ActionsToolkitSharp.*/ActionsToolkitSharp.*.csproj; do
             dotnet pack "$csproj" --configuration Release --no-build --nologo
           done

@@ -16,6 +16,9 @@ on:
         required: true
         default: 'Manual build'
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -70,7 +73,12 @@ jobs:
 
           # Discover every AOT consumer project under tests/ActionsToolkitSharp.*.Aot.Tests/AotConsumer/.
           # Done dynamically so adding a new package's AOT consumer requires no workflow change.
-          mapfile -t projects < <(find tests -type f -path '*Aot.Tests/AotConsumer/*.csproj' | sort)
+          # Note: `mapfile`/`readarray` is bash 4+, but macos-latest still ships bash 3.2 by
+          # default — use a portable `while read` loop instead.
+          projects=()
+          while IFS= read -r line; do
+            projects+=("$line")
+          done < <(find tests -type f -path '*Aot.Tests/AotConsumer/*.csproj' | sort)
 
           if [ "${#projects[@]}" -eq 0 ]; then
             echo "::error::No AOT consumer projects found under tests/*Aot.Tests/AotConsumer/. The discovery glob may be broken."
