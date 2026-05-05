@@ -31,8 +31,10 @@ var destination = Path.Combine(root, "path", "to", "dest");
 io.MakeDirectory(source);
 File.WriteAllText(Path.Combine(source, "hello.txt"), "Hello!");
 
-// Recursive must be true for directories.
-var options = new CopyOptions(Recursive: true, Force: false);
+// Recursive must be true for directories. CopySourceDirectory: false
+// matches the upstream `io.cp(src, dest, { recursive: true })` behavior
+// of placing source contents directly into dest.
+var options = new CopyOptions(Recursive: true, Force: false, CopySourceDirectory: false);
 io.Copy(source, destination, options);
 
 Console.WriteLine($"Copied {source} -> {destination}");

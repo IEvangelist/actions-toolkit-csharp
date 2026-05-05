@@ -29,19 +29,19 @@ var sandbox = Path.Combine(Path.GetTempPath(), "actions-toolkit-sharp-exec-sampl
 Directory.CreateDirectory(sandbox);
 
 string commandLine;
-string[] args;
+string[] commandArgs;
 if (OperatingSystem.IsWindows())
 {
     commandLine = "cmd";
-    args = ["/c", "cd"];
+    commandArgs = ["/c", "cd"];
 }
 else
 {
     commandLine = "/bin/sh";
-    args = ["-c", "pwd"];
+    commandArgs = ["-c", "pwd"];
 }
 
-var output = await exec.GetExecOutputAsync(commandLine, args, new ExecOptions
+var output = await exec.GetExecOutputAsync(commandLine, commandArgs, new ExecOptions
 {
     Silent = true,
     Cwd = sandbox,

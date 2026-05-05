@@ -32,19 +32,19 @@ var env = new Dictionary<string, string>(StringComparer.Ordinal)
 };
 
 string commandLine;
-string[] args;
+string[] commandArgs;
 if (OperatingSystem.IsWindows())
 {
     commandLine = "cmd";
-    args = ["/c", "echo %ATS_EXEC_SAMPLE_VAR%"];
+    commandArgs = ["/c", "echo %ATS_EXEC_SAMPLE_VAR%"];
 }
 else
 {
     commandLine = "/bin/sh";
-    args = ["-c", "printf '%s\\n' \"$ATS_EXEC_SAMPLE_VAR\""];
+    commandArgs = ["-c", "printf '%s\\n' \"$ATS_EXEC_SAMPLE_VAR\""];
 }
 
-var output = await exec.GetExecOutputAsync(commandLine, args, new ExecOptions
+var output = await exec.GetExecOutputAsync(commandLine, commandArgs, new ExecOptions
 {
     Silent = true,
     Env = env,
