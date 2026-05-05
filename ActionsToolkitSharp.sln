@@ -85,6 +85,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.AotConsumer", "test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionsToolkitSharp.ToolCache", "src\ActionsToolkitSharp.ToolCache\ActionsToolkitSharp.ToolCache.csproj", "{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionsToolkitSharp.ToolCache.Tests", "tests\ActionsToolkitSharp.ToolCache.Tests\ActionsToolkitSharp.ToolCache.Tests.csproj", "{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -383,6 +385,18 @@ Global
 		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|x64.Build.0 = Release|Any CPU
 		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|x86.ActiveCfg = Release|Any CPU
 		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F}.Release|x86.Build.0 = Release|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Debug|x64.Build.0 = Debug|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Debug|x86.Build.0 = Debug|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Release|x64.ActiveCfg = Release|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Release|x64.Build.0 = Release|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Release|x86.ActiveCfg = Release|Any CPU
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -412,6 +426,7 @@ Global
 		{107B02CB-0A0B-426D-A070-EB2376C0C12B} = {795A1BB4-B65E-4455-B041-DEBCC6543B36}
 		{557BF16C-2DAC-40C3-A753-F7902D1D1D67} = {795A1BB4-B65E-4455-B041-DEBCC6543B36}
 		{463C9BAB-3AFB-4681-AA6A-946A5ECF076F} = {05787D83-7374-483A-A42C-E9A53EA5B224}
+		{ED5B7FB5-7017-4DF4-B57E-ED054D68ECB0} = {795A1BB4-B65E-4455-B041-DEBCC6543B36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49382294-2F91-4B26-B415-0933D5DF38E1}
