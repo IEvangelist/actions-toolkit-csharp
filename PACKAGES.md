@@ -14,7 +14,7 @@ The following table tracks the various packages' development progress. Each pack
 > `GitHub.Actions.Core` and `GitHub.Actions.Glob` will receive a final v10.x release with `[Obsolete]` annotations,
 > and the new `ActionsToolkit.*` packages will ship together as **v1.0.0** once every row below is fully ✅.
 
-[issue-5]: https://github.com/IEvangelist/dotnet-github-actions-sdk/issues/5
+[issue-5]: https://github.com/IEvangelist/actions-toolkit-csharp/issues/5
 
 | `@actions/toolkit` | Package | Exists? | Testable? | DI Friendly? | README? | Tests? | Attribution? | AOT-tested? |
 |--|--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|

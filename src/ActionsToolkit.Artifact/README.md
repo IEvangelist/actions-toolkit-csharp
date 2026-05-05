@@ -164,5 +164,5 @@ Based on the original Node.js
 [`@actions/artifact`](https://github.com/actions/toolkit/tree/main/packages/artifact)
 package by GitHub. The original C# upload skeleton was contributed by
 [@js6pak](https://github.com/js6pak) in
-[#4](https://github.com/IEvangelist/dotnet-github-actions-sdk/pull/4) and
+[#4](https://github.com/IEvangelist/actions-toolkit-csharp/pull/4) and
 is preserved as the first commit on the adoption branch.
