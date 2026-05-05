@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Description>This is an unofficial .NET SDK for GitHub Actions workflows (based on @actions/artifact).</Description>
+        <Copyright>Copyright © David Pine. All rights reserved. Licensed under the MIT License.</Copyright>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <CurrentDate>$([System.DateTime]::Now.ToString(yyyyMMdd))</CurrentDate>
+        <ClientVersion Condition=" '$(IsPreview)' != 'true' ">$(ClientOfficialVersion)</ClientVersion>
+        <ClientVersion Condition=" '$(IsPreview)' == 'true' ">$(ClientPreviewVersion)</ClientVersion>
+        <VersionSuffix Condition=" '$(IsNightly)' == 'true' ">nightly-$(CurrentDate)</VersionSuffix>
+        <VersionSuffix Condition=" '$(IsPreview)' == 'true' ">preview</VersionSuffix>
+        <Version Condition=" '$(VersionSuffix)' == '' ">$(ClientVersion)</Version>
+        <Version Condition=" '$(VersionSuffix)' != '' ">$(ClientVersion)-$(VersionSuffix)</Version>
+        <FileVersion>$(ClientVersion)</FileVersion>
+        <Authors>David Pine</Authors>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <AssemblyName>Actions.Artifact</AssemblyName>
+        <Title>GitHub Actions: Artifact .NET SDK (@actions/artifact)</Title>
+        <PackageId>GitHub.Actions.Artifact</PackageId>
+        <PackageTags>dotnet;dotnetcore;csharp;github;actions;devops;</PackageTags>
+        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageProjectUrl>https://github.com/IEvangelist/dotnet-github-actions-sdk</PackageProjectUrl>
+        <PublishRepositoryUrl Condition=" '$(ProjectRef)' != 'True' ">true</PublishRepositoryUrl>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <ShippingScope>External</ShippingScope>
+        <SigningType>Product</SigningType>
+        <DebugType>embedded</DebugType>
+        <IncludeSymbols>false</IncludeSymbols>
+        <IncludeSource>false</IncludeSource>
+        <RootNamespace>Actions.Artifact</RootNamespace>
+        <NoWarn>NU5104;NU5125;NU5039</NoWarn>
+        <Optimize Condition="'$(Configuration)'=='Release'">true</Optimize>
+        <RepositoryUrl>https://github.com/IEvangelist/dotnet-github-actions-sdk</RepositoryUrl>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <RepositoryType>git</RepositoryType>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <!--<IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>-->
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <IsPackable>true</IsPackable>
+        <!--<PackageIcon>logo.png</PackageIcon>-->
+        <IsAotCompatible>true</IsAotCompatible>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="MinVer">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="Azure.Storage.Blobs" />
+        <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Actions.Artifact.Tests" />
+    </ItemGroup>
+
+    <ItemGroup Label="Files">
+        <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+        <None Include="README.md" Pack="true" PackagePath="\" />
+        <None Include="build/**" Pack="true" PackagePath="build/" />
+    </ItemGroup>
+
+</Project>
