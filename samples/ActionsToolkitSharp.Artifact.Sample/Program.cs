@@ -1,8 +1,6 @@
 // Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO.Compression;
-
 using var provider = new ServiceCollection()
     .AddGitHubActionsCore()
     .AddGitHubActionsArtifact()
@@ -15,20 +13,55 @@ try
 {
     var artifactName = args is [var name, ..] ? name : "sample-artifact";
 
-    using var zip = new MemoryStream();
+    // Stage a small set of files under a temp root, then upload them. This
+    // mirrors the upstream `@actions/artifact` README's "Upload an Artifact"
+    // example: build a list of file paths, then call `uploadArtifact(name,
+    // files, rootDirectory)`.
+    var rootDirectory = Path.Combine(Path.GetTempPath(), $"artifact-sample-{Guid.NewGuid():N}");
+    Directory.CreateDirectory(rootDirectory);
 
-    using (var archive = new ZipArchive(zip, ZipArchiveMode.Create, leaveOpen: true))
-    {
-        var entry = archive.CreateEntry("test.txt");
-        await using var entryStream = new StreamWriter(entry.Open());
-        await entryStream.WriteAsync("test");
-    }
+    var helloPath = Path.Combine(rootDirectory, "hello.txt");
+    var jsonPath = Path.Combine(rootDirectory, "data", "payload.json");
+    Directory.CreateDirectory(Path.GetDirectoryName(jsonPath)!);
 
-    zip.Position = 0;
+    await File.WriteAllTextAsync(helloPath, "Hello from ActionsToolkitSharp.Artifact!\n");
+    await File.WriteAllTextAsync(jsonPath, "{\"sample\":true}");
 
-    var response = await artifactClient.UploadArtifactAsync(artifactName, zip);
+    string[] files = [helloPath, jsonPath];
 
-    core.WriteInfo($"Uploaded artifact {response.ArtifactId}");
+    var uploadResponse = await artifactClient.UploadArtifactAsync(
+        artifactName,
+        files,
+        rootDirectory,
+        new UploadArtifactOptions
+        {
+            RetentionDays = 1,
+            CompressionLevel = 6,
+        });
+
+    core.WriteInfo(
+        $"Uploaded artifact {uploadResponse.Id} ({uploadResponse.Size} bytes, digest={uploadResponse.Digest}).");
+
+    // Fetch the metadata back via GetArtifact/ListArtifacts.
+    var listResponse = await artifactClient.ListArtifactsAsync(new ListArtifactsOptions { Latest = true });
+    core.WriteInfo($"List returned {listResponse.Artifacts.Count} artifact(s) in the current run.");
+
+    var getResponse = await artifactClient.GetArtifactAsync(artifactName);
+    core.WriteInfo($"Get returned artifact id={getResponse.Artifact.Id}, size={getResponse.Artifact.Size}.");
+
+    // Download into a fresh directory, then optionally clean up.
+    var downloadDirectory = Path.Combine(Path.GetTempPath(), $"artifact-sample-dl-{Guid.NewGuid():N}");
+    var downloadResponse = await artifactClient.DownloadArtifactAsync(
+        getResponse.Artifact.Id,
+        new DownloadArtifactOptions { Path = downloadDirectory });
+    core.WriteInfo($"Downloaded artifact into {downloadResponse.DownloadPath}.");
+
+    var deleteResponse = await artifactClient.DeleteArtifactAsync(artifactName);
+    core.WriteInfo($"Deleted artifact id={deleteResponse.Id}.");
+}
+catch (GhesNotSupportedException ex)
+{
+    core.SetFailed($"GHES is not supported: {ex.Message}");
 }
 catch (Exception ex)
 {

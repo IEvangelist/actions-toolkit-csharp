@@ -53,9 +53,39 @@ public static class ServiceCollectionExtensions
             return new DefaultArtifactService(client);
         });
 
-        services.TryAddSingleton<IArtifactClient, DefaultArtifactClient>();
+        services.AddHttpClient(DefaultPublicArtifactsApi.HttpClientName, ConfigurePublicApiHttpClient)
+                .ConfigurePrimaryHttpMessageHandler(static () => new SocketsHttpHandler
+                {
+                    AllowAutoRedirect = false,
+                })
+                .AddStandardResilienceHandler();
+
+        services.AddHttpClient(DefaultArtifactClient.BlobHttpClientName, static client =>
+        {
+            client.DefaultRequestHeaders.UserAgent.Add(
+                new ProductInfoHeaderValue("ActionsToolkitSharp.Artifact", productVersion: null));
+        });
+
+        services.TryAddSingleton<IPublicArtifactsApi, DefaultPublicArtifactsApi>();
+        services.TryAddSingleton<IArtifactClient>(static sp =>
+        {
+            var artifactService = sp.GetRequiredService<IArtifactService>();
+            var backendIds = sp.GetRequiredService<IBackendIdsProvider>();
+            var factory = sp.GetRequiredService<IHttpClientFactory>();
+            var publicApi = sp.GetRequiredService<IPublicArtifactsApi>();
+            return new DefaultArtifactClient(artifactService, backendIds, factory, publicApi);
+        });
 
         return services;
+    }
+
+    private static void ConfigurePublicApiHttpClient(NetClient client)
+    {
+        client.BaseAddress = new Uri("https://api.github.com/");
+        client.DefaultRequestHeaders.UserAgent.Add(
+            new ProductInfoHeaderValue("ActionsToolkitSharp.Artifact", productVersion: null));
+        client.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/vnd.github+json"));
     }
 
     private static void ConfigureArtifactHttpClient(NetClient client)

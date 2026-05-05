@@ -1,7 +1,7 @@
 // Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
-namespace ActionsToolkitSharp.Artifact;
+namespace ActionsToolkitSharp.Artifact.Internal;
 
 /// <summary>
 /// Resolves the <see cref="BackendIds"/> required by every Twirp RPC against

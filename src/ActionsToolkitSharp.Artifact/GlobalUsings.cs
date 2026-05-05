@@ -2,12 +2,16 @@
 // Licensed under the MIT License.
 
 global using System.Buffers.Text;
+global using System.IO.Compression;
+global using System.Net.Http;
 global using System.Net.Http.Headers;
 global using System.Net.Http.Json;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
 global using System.Text.Json.Serialization.Metadata;
 
+global using ActionsToolkitSharp.Artifact.Internal;
+global using ActionsToolkitSharp.Artifact.Internal.Twirp;
 global using ActionsToolkitSharp.HttpClient;
 global using ActionsToolkitSharp.HttpClient.Extensions;
 
