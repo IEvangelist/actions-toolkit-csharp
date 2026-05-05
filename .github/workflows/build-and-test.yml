@@ -12,6 +12,9 @@ on:
         required: true
         default: 'Manual build'
 
+permissions:
+  contents: read
+
 jobs:
   verify-test-projects:
     name: verify-test-projects
