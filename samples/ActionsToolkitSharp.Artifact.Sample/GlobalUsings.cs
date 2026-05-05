@@ -1,8 +1,8 @@
-﻿// Copyright (c) David Pine. All rights reserved.
+// Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
-global using Actions.Core.Extensions;
-global using Actions.Core.Services;
-global using Actions.Artifact;
-
 global using Microsoft.Extensions.DependencyInjection;
+
+global using ActionsToolkitSharp.Artifact;
+global using ActionsToolkitSharp.Core.Extensions;
+global using ActionsToolkitSharp.Core.Services;

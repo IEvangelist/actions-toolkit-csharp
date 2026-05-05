@@ -1,22 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <DockerfileContext>..\..</DockerfileContext>
+        <NoWarn>$(NoWarn);IDE0005</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-    </ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\Actions.Core\Actions.Core.csproj" />
-        <ProjectReference Include="..\..\src\Actions.Artifact\Actions.Artifact.csproj" />
+        <ProjectReference Include="..\..\src\ActionsToolkitSharp.Core\ActionsToolkitSharp.Core.csproj" />
+        <ProjectReference Include="..\..\src\ActionsToolkitSharp.Artifact\ActionsToolkitSharp.Artifact.csproj" />
     </ItemGroup>
-
 </Project>

@@ -1,32 +1,36 @@
-﻿// Copyright (c) David Pine. All rights reserved.
+// Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
 using System.IO.Compression;
 
 using var provider = new ServiceCollection()
     .AddGitHubActionsCore()
+    .AddGitHubActionsArtifact()
     .BuildServiceProvider();
 
 var core = provider.GetRequiredService<ICoreService>();
+var artifactClient = provider.GetRequiredService<IArtifactClient>();
 
-var runtimeToken = Environment.GetEnvironmentVariable("ACTIONS_RUNTIME_TOKEN") ?? throw new Exception("Failed to get ACTIONS_RUNTIME_TOKEN");
-var resultsServiceUrl = Environment.GetEnvironmentVariable("ACTIONS_RESULTS_URL") ?? throw new Exception("Failed to get ACTIONS_RESULTS_URL");
-
-using var artifactClient = new ArtifactClient(runtimeToken, new Uri(resultsServiceUrl));
-
-using var stream = new MemoryStream();
-
-using (var archive = new ZipArchive(stream, ZipArchiveMode.Create, true))
+try
 {
-    var entry = archive.CreateEntry("test.txt");
-    await using (var entryStream = new StreamWriter(entry.Open()))
+    var artifactName = args is [var name, ..] ? name : "sample-artifact";
+
+    using var zip = new MemoryStream();
+
+    using (var archive = new ZipArchive(zip, ZipArchiveMode.Create, leaveOpen: true))
     {
+        var entry = archive.CreateEntry("test.txt");
+        await using var entryStream = new StreamWriter(entry.Open());
         await entryStream.WriteAsync("test");
     }
+
+    zip.Position = 0;
+
+    var response = await artifactClient.UploadArtifactAsync(artifactName, zip);
+
+    core.WriteInfo($"Uploaded artifact {response.ArtifactId}");
 }
-
-stream.Position = 0;
-
-var response = await artifactClient.UploadArtifactAsync(args[0], stream);
-
-Console.WriteLine($"Uploaded artifact {response.ArtifactId}");
+catch (Exception ex)
+{
+    core.SetFailed(ex.ToString());
+}

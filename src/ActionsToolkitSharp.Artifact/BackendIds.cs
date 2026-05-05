@@ -1,38 +1,18 @@
-using Microsoft.IdentityModel.JsonWebTokens;
+// Copyright (c) David Pine. All rights reserved.
+// Licensed under the MIT License.
 
-namespace Actions.Artifact;
+namespace ActionsToolkitSharp.Artifact;
 
-internal sealed class BackendIds
-{
-    public required string WorkflowRunBackendId { get; init; }
-    public required string WorkflowJobRunBackendId { get; init; }
-
-    public static BackendIds FromToken(string token)
-    {
-        var jsonWebToken = new JsonWebToken(token);
-
-        var scp = jsonWebToken.GetPayloadValue<string>("scp");
-
-        foreach (var scopes in scp.Split(' '))
-        {
-            var scopeParts = scopes.Split(':');
-            if (scopeParts[0] != "Actions.Results")
-            {
-                continue;
-            }
-
-            if (scopeParts.Length != 3)
-            {
-                break;
-            }
-
-            return new BackendIds
-            {
-                WorkflowRunBackendId = scopeParts[1],
-                WorkflowJobRunBackendId = scopeParts[2],
-            };
-        }
-
-        throw new ArgumentException("Failed to get backend IDs: The provided JWT token is invalid and/or missing claims", nameof(token));
-    }
-}
+/// <summary>
+/// The pair of opaque identifiers that the GitHub Actions results service
+/// requires on every Twirp RPC. They are encoded into the
+/// <c>Actions.Results</c> scope claim of the <c>ACTIONS_RUNTIME_TOKEN</c> JWT
+/// in the form <c>Actions.Results:&lt;workflow_run&gt;:&lt;workflow_job_run&gt;</c>.
+/// </summary>
+/// <param name="WorkflowRunBackendId">The backend identifier of the current
+/// workflow run.</param>
+/// <param name="WorkflowJobRunBackendId">The backend identifier of the
+/// current workflow job run.</param>
+internal sealed record BackendIds(
+    string WorkflowRunBackendId,
+    string WorkflowJobRunBackendId);
