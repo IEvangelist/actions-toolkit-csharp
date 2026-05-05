@@ -92,6 +92,16 @@ dotnet add package ActionsToolkitSharp.ToolCache
 
 For more information, see [📦 ActionsToolkitSharp.ToolCache](https://www.nuget.org/packages/ActionsToolkitSharp.ToolCache).
 
+:lock: [`ActionsToolkitSharp.Attest`](src/ActionsToolkitSharp.Attest)
+
+Provides functions for generating signed artifact attestations — Sigstore keyless signing of in-toto statements (including SLSA-style provenance) and persistence to GitHub's attestations REST endpoint. Read more [here](src/ActionsToolkitSharp.Attest).
+
+```bash
+dotnet add package ActionsToolkitSharp.Attest
+```
+
+For more information, see [📦 ActionsToolkitSharp.Attest](https://www.nuget.org/packages/ActionsToolkitSharp.Attest).
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
