@@ -21,7 +21,7 @@ The following table tracks the various packages' development progress. Each pack
 | `@actions/attest` | `ActionsToolkitSharp.Attest` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `@actions/cache` | `ActionsToolkitSharp.Cache` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
 | `@actions/core` | `ActionsToolkitSharp.Core` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
-| `@actions/artifact` | `ActionsToolkitSharp.Artifact` | ✅ | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
+| `@actions/artifact` | `ActionsToolkitSharp.Artifact` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `@actions/exec` | `ActionsToolkitSharp.Exec` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | `@actions/github` | `ActionsToolkitSharp.Octokit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
 | `@actions/glob` | `ActionsToolkitSharp.Glob` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |

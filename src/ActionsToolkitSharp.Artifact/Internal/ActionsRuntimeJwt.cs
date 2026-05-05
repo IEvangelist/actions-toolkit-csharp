@@ -1,7 +1,7 @@
 // Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
-namespace ActionsToolkitSharp.Artifact;
+namespace ActionsToolkitSharp.Artifact.Internal;
 
 /// <summary>
 /// AOT-clean parser for the GitHub Actions <c>ACTIONS_RUNTIME_TOKEN</c> JWT.

@@ -1,7 +1,7 @@
 // Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
-namespace ActionsToolkitSharp.Artifact;
+namespace ActionsToolkitSharp.Artifact.Internal;
 
 /// <summary>
 /// The pair of opaque identifiers that the GitHub Actions results service

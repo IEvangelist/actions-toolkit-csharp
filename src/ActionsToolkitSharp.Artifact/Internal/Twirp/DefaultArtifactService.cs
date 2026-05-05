@@ -1,7 +1,7 @@
 // Copyright (c) David Pine. All rights reserved.
 // Licensed under the MIT License.
 
-namespace ActionsToolkitSharp.Artifact;
+namespace ActionsToolkitSharp.Artifact.Internal.Twirp;
 
 /// <summary>
 /// Default <see cref="IArtifactService"/> that issues Twirp-over-HTTP RPCs
@@ -19,7 +19,7 @@ internal sealed class DefaultArtifactService : IArtifactService
 
     /// <summary>
     /// The named <see cref="IHttpClientFactory"/> client name used by
-    /// <see cref="ServiceCollectionExtensions.AddGitHubActionsArtifact(IServiceCollection)"/>.
+    /// <c>AddGitHubActionsArtifact</c> on <see cref="IServiceCollection"/>.
     /// </summary>
     internal const string HttpClientName = "ActionsToolkitSharp.Artifact";
 
@@ -102,7 +102,7 @@ internal sealed class DefaultArtifactService : IArtifactService
 
         if (!response.IsSuccessStatusCode)
         {
-            throw new ArtifactUploadException(
+            throw new InvalidArtifactResponseException(
                 $"{method}: backend returned {(int)response.StatusCode} {response.ReasonPhrase}.");
         }
 
@@ -110,7 +110,7 @@ internal sealed class DefaultArtifactService : IArtifactService
             responseJsonTypeInfo,
             cancellationToken).ConfigureAwait(false);
 
-        return result ?? throw new ArtifactUploadException(
+        return result ?? throw new InvalidArtifactResponseException(
             $"{method}: backend returned an empty response body.");
     }
 }
