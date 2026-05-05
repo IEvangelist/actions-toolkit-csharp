@@ -19,11 +19,11 @@ and is not itself a test project.
 
 The `build-and-test` workflow (and the shared `./.github/actions/build`
 composite action) runs `dotnet test` against the repository, which uses
-[`ActionsToolkitSharp.sln`](../ActionsToolkitSharp.sln) as the source of
+[`ActionsToolkitSharp.slnx`](../ActionsToolkitSharp.slnx) as the source of
 truth for the projects to build and execute.
 
 That means **the solution is the discovery mechanism**. Any test project
-that lives on disk but is not registered in the `.sln` would be silently
+that lives on disk but is not registered in the `.slnx` would be silently
 skipped by CI.
 
 ## Adding a new test project
@@ -38,11 +38,11 @@ When you add a new package (for example `ActionsToolkitSharp.Foo`):
 2. Register the new project(s) in the solution so CI picks them up:
 
    ```bash
-   dotnet sln ActionsToolkitSharp.sln add tests/ActionsToolkitSharp.Foo.Tests/ActionsToolkitSharp.Foo.Tests.csproj
+   dotnet sln ActionsToolkitSharp.slnx add tests/ActionsToolkitSharp.Foo.Tests/ActionsToolkitSharp.Foo.Tests.csproj
    ```
 
 3. **No workflow edit is required.** The `build-and-test` workflow has a
    `verify-test-projects` job that fails the build if any
    `tests/ActionsToolkitSharp.*.Tests/*.csproj` file exists on disk but is
-   not referenced from `ActionsToolkitSharp.sln`, which keeps this
+   not referenced from `ActionsToolkitSharp.slnx`, which keeps this
    convention enforced going forward.

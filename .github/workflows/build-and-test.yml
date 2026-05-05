@@ -23,12 +23,12 @@ jobs:
           fetch-depth: 1
           filter: tree:0
 
-      - name: Verify all test projects are registered in ActionsToolkitSharp.sln
+      - name: Verify all test projects are registered in ActionsToolkitSharp.slnx
         shell: bash
         run: |
           set -euo pipefail
 
-          # ActionsToolkitSharp.sln is the source of truth for the test
+          # ActionsToolkitSharp.slnx is the source of truth for the test
           # projects executed by `dotnet test`. Any test project on disk
           # under tests/ActionsToolkitSharp.*.Tests/ that is not in the
           # solution would be silently skipped by CI, so fail fast here.
@@ -41,8 +41,8 @@ jobs:
           while IFS= read -r proj; do
             found=$((found + 1))
             name=$(basename "$proj")
-            if ! grep -Fq "$name" ActionsToolkitSharp.sln; then
-              echo "::error file=$proj::Test project '$name' is not registered in ActionsToolkitSharp.sln. Run: dotnet sln add \"$proj\""
+            if ! grep -Fq "$name" ActionsToolkitSharp.slnx; then
+              echo "::error file=$proj::Test project '$name' is not registered in ActionsToolkitSharp.slnx. Run: dotnet sln add \"$proj\""
               missing=$((missing + 1))
             fi
           done < <(find tests -type f -name 'ActionsToolkitSharp.*.Tests.csproj' | sort)
@@ -53,11 +53,11 @@ jobs:
           fi
 
           if [ "$missing" -ne 0 ]; then
-            echo "::error::$missing test project(s) on disk are missing from ActionsToolkitSharp.sln. See tests/README.md for the convention."
+            echo "::error::$missing test project(s) on disk are missing from ActionsToolkitSharp.slnx. See tests/README.md for the convention."
             exit 1
           fi
 
-          echo "All $found test project(s) under tests/ActionsToolkitSharp.*.Tests/ are registered in ActionsToolkitSharp.sln."
+          echo "All $found test project(s) under tests/ActionsToolkitSharp.*.Tests/ are registered in ActionsToolkitSharp.slnx."
 
   build:
     name: build-${{matrix.os}}
