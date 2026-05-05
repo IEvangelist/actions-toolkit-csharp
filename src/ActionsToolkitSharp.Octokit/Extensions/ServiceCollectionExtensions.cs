@@ -29,6 +29,8 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton(Context.Current);
 
+        services.TryAddSingleton<IGitHubClientFactory, DefaultGitHubClientFactory>();
+
         return services;
     }
 }

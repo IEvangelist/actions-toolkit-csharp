@@ -14,6 +14,7 @@ global using GitHub.Octokit.Client.Authentication;
 global using GitHub.Octokit.Client;
 
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
 
 global using static System.Environment;
 global using static ActionsToolkitSharp.Core.EnvironmentVariables.Keys;
