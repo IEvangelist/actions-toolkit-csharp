@@ -7,11 +7,20 @@
 [![build-and-test](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/build-and-test.yml)
 [![code analysis](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/codeql-analysis.yml)
 [![publish nuget](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/publish.yml/badge.svg)](https://github.com/IEvangelist/dotnet-github-actions-sdk/actions/workflows/publish.yml)
-[![NuGet](https://img.shields.io/nuget/v/GitHub.Actions.Core.svg?style=flat)](https://www.nuget.org/packages/GitHub.Actions.Core) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![NuGet](https://img.shields.io/nuget/v/ActionsToolkitSharp.Core.svg?style=flat)](https://www.nuget.org/packages/ActionsToolkitSharp.Core) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 The .NET equivalent of the official GitHub [actions/toolkit](https://github.com/actions/toolkit) repository, and is currently a work in progress. While there isn't currently 100% feature complete compatibility between these two repositories, that is the eventual goal.
+
+> [!IMPORTANT]
+> This repository is in the middle of a rename and feature-parity initiative ([#5][issue-5]).
+> NuGet package IDs are moving from `GitHub.Actions.*` to `ActionsToolkitSharp.*`, and all ten
+> upstream `@actions/toolkit` packages will ship together as **v1.0.0** of `ActionsToolkitSharp.*`
+> once each row in [PACKAGES.md](PACKAGES.md) is fully ✅. Native AOT correctness is verified per
+> package via dedicated `tests/<pkg>.Aot.Tests` projects.
+
+[issue-5]: https://github.com/IEvangelist/dotnet-github-actions-sdk/issues/5
 
 ## Blog
 
@@ -23,49 +32,49 @@ The GitHub Actions .NET ToolKit provides a set of packages to make creating acti
 
 ## Packages
 
-:heavy_check_mark: [`GitHub.Actions.Core`](src/Actions.Core)
+:heavy_check_mark: [`ActionsToolkitSharp.Core`](src/ActionsToolkitSharp.Core)
 
-Provides functions for inputs, outputs, results, logging, secrets and variables. Read more [here](src/Actions.Core)
-
-```
-dotnet add package GitHub.Actions.Core
-```
-
-For more information, see [📦 GitHub.Actions.Core](https://www.nuget.org/packages/GitHub.Actions.Core).
-
-:ice_cream: [`GitHub.Actions.Glob`](src/Actions.Glob)
-
-Provides functions to search for files matching glob patterns. Read more [here](src/Actions.Glob)
+Provides functions for inputs, outputs, results, logging, secrets and variables. Read more [here](src/ActionsToolkitSharp.Core)
 
 ```
-dotnet add package GitHub.Actions.Glob
+dotnet add package ActionsToolkitSharp.Core
 ```
 
-For more information, see [📦 GitHub.Actions.Glob](https://www.nuget.org/packages/GitHub.Actions.Glob).
+For more information, see [📦 ActionsToolkitSharp.Core](https://www.nuget.org/packages/ActionsToolkitSharp.Core).
+
+:ice_cream: [`ActionsToolkitSharp.Glob`](src/ActionsToolkitSharp.Glob)
+
+Provides functions to search for files matching glob patterns. Read more [here](src/ActionsToolkitSharp.Glob)
+
+```
+dotnet add package ActionsToolkitSharp.Glob
+```
+
+For more information, see [📦 ActionsToolkitSharp.Glob](https://www.nuget.org/packages/ActionsToolkitSharp.Glob).
 
 <!--
 
-:pencil2: [`GitHub.Actions.IO`](src/Actions.IO)
+:pencil2: [`ActionsToolkitSharp.IO`](src/ActionsToolkitSharp.IO)
 
-Provides disk i/o functions like cp, mv, rmRF, which etc. Read more [here](src/Actions.IO)
+Provides disk i/o functions like cp, mv, rmRF, which etc. Read more [here](src/ActionsToolkitSharp.IO)
 
 ```
-dotnet add package GitHub.Actions.IO
+dotnet add package ActionsToolkitSharp.IO
 ```
 
-For more information, see [📦 GitHub.Actions.IO](https://www.nuget.org/packages/GitHub.Actions.IO).
+For more information, see [📦 ActionsToolkitSharp.IO](https://www.nuget.org/packages/ActionsToolkitSharp.IO).
 
 -->
 
-:octocat: [`GitHub.Actions.Octokit`](src/Actions.Octokit)
+:octocat: [`ActionsToolkitSharp.Octokit`](src/ActionsToolkitSharp.Octokit)
 
-Provides an Octokit client hydrated with the context that the current action is being run in. Read more [here](src/Actions.Octokit)
+Provides an Octokit client hydrated with the context that the current action is being run in. Read more [here](src/ActionsToolkitSharp.Octokit)
 
 ```bash
-dotnet add package GitHub.Actions.Octokit
+dotnet add package ActionsToolkitSharp.Octokit
 ```
 
-For more information, see [📦 GitHub.Actions.Octokit](https://www.nuget.org/packages/GitHub.Actions.Octokit).
+For more information, see [📦 ActionsToolkitSharp.Octokit](https://www.nuget.org/packages/ActionsToolkitSharp.Octokit).
 
 ## Contributors ✨
 

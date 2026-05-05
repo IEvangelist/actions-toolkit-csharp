@@ -1,9 +1,0 @@
-﻿name: 'Globs'
-description: 'Show how Actions.Glob works'
-inputs:
-  files:
-    description: 'Files to print'
-    required: true
-runs:
-  using: docker
-  image: docker://actions-glob-sample:latest

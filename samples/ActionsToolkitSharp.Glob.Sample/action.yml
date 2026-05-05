@@ -1,0 +1,9 @@
+﻿name: 'Globs'
+description: 'Show how ActionsToolkitSharp.Glob works'
+inputs:
+  files:
+    description: 'Files to print'
+    required: true
+runs:
+  using: docker
+  image: docker://actions-toolkit-sharp-glob-sample:latest

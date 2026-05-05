@@ -49,11 +49,11 @@ jobs:
 
       - name: Build
         run: |
-          docker build -f samples/Actions.Core.Sample/Dockerfile . -t actions-core-sample:latest
-          docker build -f samples/Actions.Glob.Sample/Dockerfile . -t actions-glob-sample:latest
+          docker build -f samples/ActionsToolkitSharp.Core.Sample/Dockerfile . -t actions-toolkit-sharp-core-sample:latest
+          docker build -f samples/ActionsToolkitSharp.Glob.Sample/Dockerfile . -t actions-toolkit-sharp-glob-sample:latest
 
-      - uses: ./samples/Actions.Core.Sample
+      - uses: ./samples/ActionsToolkitSharp.Core.Sample
 
-      - uses: ./samples/Actions.Glob.Sample
+      - uses: ./samples/ActionsToolkitSharp.Glob.Sample
         with:
           files: "**/*.cs"
