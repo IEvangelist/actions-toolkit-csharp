@@ -25,7 +25,13 @@ runs:
 
     - name: Build
       shell: bash
-      run: dotnet build --configuration Release --no-restore
+      # `-m:1` (single MSBuild worker) avoids a Windows-only file-lock race
+      # where multiple parallel workers all try to write the same shared
+      # `*.runtimeconfig.json` for an AotConsumer project that is
+      # `<ProjectReference>`d by several `*.Aot.Tests.csproj` parents. The
+      # contention only surfaces under Windows Defender's AV scan window
+      # but is deterministic enough to fail consistently in CI; see PR #49.
+      run: dotnet build --configuration Release --no-restore -m:1
 
     - uses: actions/upload-artifact@v4
       if: inputs.upload-artifacts == 'true'
@@ -36,4 +42,4 @@ runs:
     - name: Test
       if: inputs.run-tests == 'true'
       shell: bash
-      run: dotnet test --configuration Release --no-restore --filter "Category!=RequiresEnvVar"
+      run: dotnet test --configuration Release --no-restore --no-build --filter "Category!=RequiresEnvVar"

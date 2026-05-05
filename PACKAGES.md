@@ -1,30 +1,39 @@
-﻿# Toolkit Packages
+# Toolkit Packages
 
-The following table tracks the various packages development progress. Each package strives to provide functional equivalence with its corresponding `@actions/toolkit` package, but with the following additional features:
+The following table tracks the various packages' development progress. Each package strives to provide functional equivalence with its corresponding `@actions/toolkit` package, but with the following additional features:
 
 - **Testable**: The package is designed to be testable, with a clear separation between the core logic and the I/O operations. This allows for easier testing and mocking of the package's behavior.
 - **DI friendly**: The package is designed to be dependency injection friendly, allowing for easier mocking and testing of the package's behavior.
 - **README.md**: The package has a `README.md` file that describes its usage and behavior.
 - **Tests**: The package has a test suite that validates its behavior.
 - **Attribution**: The package has a clear attribution to the original `@actions/toolkit` package and any other 3rd party OSS packages that it depends on.
+- **AOT-tested**: The package has a dedicated AOT consumer test project (`tests/<pkg>.Aot.Tests`) that publishes a tiny consumer with `PublishAot=true` + `TreatWarningsAsErrors=true` and asserts on its native binary output, proving the SDK is Native AOT-clean for end consumers.
 
-| `@actions/toolkit` | Package | Exists? | Testable? | DI Friendly? | README? | Tests? | Attribution? |
-|--|--|:--:|:--:|:--:|:--:|:--:|:--:|
-| `@actions/attest` | `GitHubActions.Toolkit.Attest` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/cache` | `GitHubActions.Toolkit.Cache` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/core` | `GitHubActions.Toolkit.Core` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `@actions/download-artifact` | `GitHubActions.Toolkit.Artifact` | ✅ | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/exec` | `GitHubActions.Toolkit.Exec` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/github` | `GitHubActions.Toolkit.Octokit` | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
-| `@actions/http-client` | `GitHubActions.Toolkit.HttpClient` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/io` | `GitHubActions.Toolkit.IO` | ✅ | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/tool-cache` | `GitHubActions.Toolkit.ToolCache` | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
-| `@actions/upload-artifact` | `GitHubActions.Toolkit.Artifact` | ✅ | 🔳 | 🔳 | 🔳 | 🔳 | 🔳 |
+> [!NOTE]
+> The packages listed below are part of the in-progress rename to `ActionsToolkit.*` ([#5][issue-5]). The previously published packages
+> `GitHub.Actions.Core` and `GitHub.Actions.Glob` will receive a final v10.x release with `[Obsolete]` annotations,
+> and the new `ActionsToolkit.*` packages will ship together as **v1.0.0** once every row below is fully ✅.
+
+[issue-5]: https://github.com/IEvangelist/dotnet-github-actions-sdk/issues/5
+
+| `@actions/toolkit` | Package | Exists? | Testable? | DI Friendly? | README? | Tests? | Attribution? | AOT-tested? |
+|--|--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| `@actions/attest` | `ActionsToolkit.Attest` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/cache` | `ActionsToolkit.Cache` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/core` | `ActionsToolkit.Core` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/artifact` | `ActionsToolkit.Artifact` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/exec` | `ActionsToolkit.Exec` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `@actions/github` | `ActionsToolkit.Octokit` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/glob` | `ActionsToolkit.Glob` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/http-client` | `ActionsToolkit.HttpClient` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/io` | `ActionsToolkit.IO` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 🔳 |
+| `@actions/tool-cache` | `ActionsToolkit.ToolCache` | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 **Legend**
 
 - **✅**: Done
-- **🔳**: Not done
+- **🟡**: In progress (tracked by an open PR)
+- **🔳**: Not started or not done
 
 ## Testable
 
@@ -42,6 +51,18 @@ All packages require a `README.md` file that describes its usage and behavior. W
 
 All packages require a test suite that validates its behavior. This is a requirement for all packages, as it ensures that the package behaves as expected. Additionally, tests are a great way for consumers to learn how a bit of functionality is intended to behave.
 
+The test layout mirrors the upstream `actions/toolkit` `__tests__/*.test.ts` file organization, with each upstream `it('…')` description appearing verbatim as a `[Fact(DisplayName="…")]` on the C# side. This preserves grep-from-upstream traceability when the upstream test suite evolves.
+
 ## Attribution
 
 Each package is built atop various other packages, and it's important to give credit where credit is due. This includes the original `@actions/toolkit` package, as well as any other 3rd party OSS packages that the package depends on.
+
+## AOT-tested
+
+Each package ships a dedicated `tests/ActionsToolkit.<Pkg>.Aot.Tests` project that:
+
+1. Builds a tiny consumer console app with `<PublishAot>true</PublishAot>` + `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>` + `<TrimmerSingleWarn>false</TrimmerSingleWarn>`.
+2. Statically references every public API surface we want to validate from `Main` (the "dispatcher" pattern), so the trimmer roots all of them.
+3. Publishes the consumer for the current RID, runs the resulting native binary with controlled environment variables, and asserts on stdout / stderr / exit code.
+
+This catches IL2026 / IL3050 / IL3053 trim warnings, missing source-gen JSON contexts, dynamic reflection, and other AOT-incompatibilities that managed xUnit tests would never surface.

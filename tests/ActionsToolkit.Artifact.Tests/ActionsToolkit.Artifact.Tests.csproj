@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+        <NoWarn>$(NoWarn);IDE0005</NoWarn>
+        <RootNamespace>ActionsToolkit.Artifact.Tests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\ActionsToolkit.Artifact\ActionsToolkit.Artifact.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Update="xunit.runner.visualstudio">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+</Project>

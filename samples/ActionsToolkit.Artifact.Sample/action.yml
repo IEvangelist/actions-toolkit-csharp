@@ -1,0 +1,5 @@
+﻿name: 'Artifact'
+description: 'Show how Actions.Artifact works'
+runs:
+  using: docker
+  image: Dockerfile

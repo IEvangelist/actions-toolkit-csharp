@@ -2,7 +2,7 @@
     <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.targets, $(MSBuildThisFileDirectory)..))" />
 
     <PropertyGroup>
-        <PackageId>GitHub.$(AssemblyName)</PackageId>
+        <PackageId>$(AssemblyName)</PackageId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(BasedOn)' != ''">

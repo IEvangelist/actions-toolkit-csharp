@@ -1,0 +1,331 @@
+# Copyright (c) David Pine. All rights reserved.
+# Licensed under the MIT License.
+#
+# examples-smoketest
+#
+# Runs every `samples/ActionsToolkit.*.Sample/file-based/*.cs`
+# file-based example as a real GitHub Actions step on
+# (ubuntu-latest, windows-latest, macos-latest) and asserts each script
+# exits 0. This proves the file-based, single-file `#:package` flavor of
+# the SDK actually works inside a real runner environment -- the most
+# realistic smoke signal we can produce short of publishing to nuget.org.
+#
+# How it works:
+#   1. Pack the local `src/ActionsToolkit.*` projects to produce
+#      nupkgs in `artifacts/package/release/`. Their MinVer-derived
+#      version (e.g. `9.0.1-alpha.0.16`) drives the rewrite below.
+#   2. Stage each script in its own per-script temp directory outside
+#      the repo's central-package-management tree, drop a `NuGet.Config`
+#      that points at the local feed (plus nuget.org for transitive
+#      deps), and rewrite the script's `#:package <Pkg>@*` directives
+#      to the concrete locally-packed version. The rewrite is required
+#      because `@*` only resolves to *stable* versions on disk, and our
+#      MinVer build produces a prerelease string.
+#   3. Pre-create the file-command files (`GITHUB_OUTPUT`, `GITHUB_ENV`,
+#      `GITHUB_STEP_SUMMARY`, `GITHUB_PATH`, `GITHUB_STATE`) that the
+#      runner would normally provide, set sensible `INPUT_*` defaults,
+#      then run `dotnet run <script>.cs` and assert exit 0.
+#   4. Tee each script's stdout/stderr to a per-script log file and
+#      upload the lot as a workflow artifact when the job fails.
+#
+# Skip list (see `SKIP_LIST` below):
+#   * Attest examples need OIDC tokens + a real artifact + access to the
+#     `POST /repos/{owner}/{repo}/attestations` endpoint, none of which
+#     are present in a generic CI run.
+#   * `Octokit.Sample/get-octokit.cs` calls the live GitHub REST API
+#     and requires an authenticated token; the smoketest deliberately
+#     avoids depending on a real `GITHUB_TOKEN`.
+#   * `ToolCache.Sample/download-and-cache.cs` downloads a multi-MB
+#     archive from github.com on every run -- too slow and too flaky
+#     for a per-PR smoketest.
+#   * All `Cache.Sample/*.cs` scripts (`cross-os-archive`, `lookup-only`,
+#     `restore-and-save`, `with-options`) require both a positional
+#     `<cache-key>` argument and a real `ACTIONS_RUNTIME_TOKEN` JWT to
+#     authenticate against the cache service. Both are absent in a
+#     generic PR smoketest, so these scripts are exercised by the
+#     `Cache.Tests` + `Cache.Aot.Tests` projects (88 + 7 facts) instead.
+
+name: examples-smoketest
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/*'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoketest:
+    name: smoketest-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: '1'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: tree:0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Pack local NuGet packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Build once first; `GeneratePackageOnBuild=true` (set in src/Directory.Build.props)
+          # produces every src project's nupkg as a side effect of the Release build, so this
+          # is the source of truth. Running `dotnet pack` *without* `--no-build` here would
+          # collide with that build-time pack and trigger NU5026 ("dll to be packed not found").
+          dotnet build --configuration Release --nologo -m:1
+          # Defense-in-depth: explicitly re-pack each project with `--no-build` so that a
+          # missing nupkg is a hard failure rather than a silent pass.
+          for csproj in src/ActionsToolkit.*/ActionsToolkit.*.csproj; do
+            dotnet pack "$csproj" --configuration Release --no-build --nologo
+          done
+
+          echo "Produced nupkgs:"
+          ls -1 artifacts/package/release/*.nupkg
+
+      - name: Run file-based examples
+        id: smoketest
+        shell: bash
+        env:
+          # Inputs consumed by various scripts via core.GetInput("name").
+          # We provide the broadest defaults that satisfy every script;
+          # any script that does not read a particular input simply
+          # ignores it.
+          INPUT_INPUTNAME: 'ci-input'
+          INPUT_BOOLINPUTNAME: 'true'
+          INPUT_MULTILINEINPUTNAME: |
+            one
+            two
+            three
+          INPUT_INPUT: 'ci-input'
+          INPUT_FILES: '**/*.cs'
+          INPUT_NAME: 'ci'
+          INPUT_MYTOKEN: 'fake-token-for-ci'
+
+          # State the runner would inject for a `post:` step.
+          STATE_PIDTOKILL: '12345'
+
+          # GitHub context env that `Context.Current` reads.
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_WORKFLOW: ${{ github.workflow }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_API_URL: ${{ github.api_url }}
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_GRAPHQL_URL: ${{ github.graphql_url }}
+        run: |
+          # The runner sets `-eo pipefail` for `shell: bash`. Disable
+          # errexit because we run each script in a pipeline (`dotnet run
+          # ... | tee log`) and capture the exit code with PIPESTATUS so
+          # one failing script must not abort the whole loop.
+          set +e
+          set -uo pipefail
+
+          repo_root="$(pwd)"
+          feed_dir="$repo_root/artifacts/package/release"
+
+          # Derive the locally-built ActionsToolkit version from
+          # any ActionsToolkit.Core.*.nupkg in the feed directory.
+          core_pkg="$(ls -1 "$feed_dir"/ActionsToolkit.Core.*.nupkg | head -n1)"
+          version="${core_pkg##*/ActionsToolkit.Core.}"
+          version="${version%.nupkg}"
+          echo "Local feed:    $feed_dir"
+          echo "Local version: $version"
+
+          # Per-script staging area. Each script gets a fresh subdir so
+          # `dotnet run` does not see a parent project's CPM rules.
+          stage_root="${RUNNER_TEMP}/actions-toolkit-smoketest"
+          rm -rf "$stage_root"
+          mkdir -p "$stage_root"
+
+          log_dir="$stage_root/logs"
+          mkdir -p "$log_dir"
+          echo "log_dir=$log_dir" >> "$GITHUB_OUTPUT"
+
+          # Tool cache root used by the ToolCache examples.
+          export RUNNER_TOOL_CACHE="$stage_root/tool-cache"
+          mkdir -p "$RUNNER_TOOL_CACHE"
+
+          # NuGet.Config that prefers the local feed and falls back to
+          # nuget.org for transitive dependencies (DI, Octokit SDK, etc.).
+          # On Windows the bash shell is Git Bash and `$feed_dir` is in
+          # cygwin form (`/d/...`), which the native `dotnet.exe` does
+          # not understand -- convert to a Windows-style path with
+          # `cygpath -w` so NuGet can resolve the local source.
+          if [ "${RUNNER_OS:-}" = "Windows" ] && command -v cygpath >/dev/null 2>&1; then
+            feed_dir_native="$(cygpath -w "$feed_dir")"
+          else
+            feed_dir_native="$feed_dir"
+          fi
+          nuget_config_template=$(cat <<EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <clear />
+              <add key="local" value="$feed_dir_native" />
+              <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+            </packageSources>
+          </configuration>
+          EOF
+          )
+
+          # Scripts that cannot be smoketested without out-of-band
+          # secrets, network calls, or external artifacts. Keep this
+          # list paired with the comment block at the top of this file.
+          SKIP_LIST=(
+            "samples/ActionsToolkit.Attest.Sample/file-based/attest-custom.cs"
+            "samples/ActionsToolkit.Attest.Sample/file-based/attest-provenance.cs"
+            "samples/ActionsToolkit.Attest.Sample/file-based/attest-with-headers.cs"
+            "samples/ActionsToolkit.Cache.Sample/file-based/cross-os-archive.cs"
+            "samples/ActionsToolkit.Cache.Sample/file-based/lookup-only.cs"
+            "samples/ActionsToolkit.Cache.Sample/file-based/restore-and-save.cs"
+            "samples/ActionsToolkit.Cache.Sample/file-based/with-options.cs"
+            "samples/ActionsToolkit.Octokit.Sample/file-based/get-octokit.cs"
+            "samples/ActionsToolkit.ToolCache.Sample/file-based/download-and-cache.cs"
+          )
+
+          is_skipped() {
+            local needle="$1"
+            for s in "${SKIP_LIST[@]}"; do
+              if [ "$s" = "$needle" ]; then
+                return 0
+              fi
+            done
+            return 1
+          }
+
+          # Discover every file-based example. `find` is available on
+          # ubuntu, macos, *and* windows runners (via Git Bash) so a
+          # single bash leg covers all three matrix legs. We use a
+          # `while read` loop instead of `mapfile` because the system
+          # bash on macOS runners is still 3.2 and does not ship the
+          # bash-4 builtin.
+          scripts=()
+          while IFS= read -r path; do
+            scripts+=("$path")
+          done < <(find samples -type f -path '*/file-based/*.cs' | LC_ALL=C sort)
+          total="${#scripts[@]}"
+          if [ "$total" -eq 0 ]; then
+            echo "::error::No file-based examples discovered under samples/. Discovery glob is broken."
+            exit 1
+          fi
+
+          ran=0
+          passed=0
+          failed=0
+          skipped=0
+          failed_scripts=()
+
+          for script in "${scripts[@]}"; do
+            base="$(basename "$script")"
+            stem="${base%.cs}"
+            pkg_dir="$(basename "$(dirname "$(dirname "$script")")")"
+            label="$pkg_dir/$base"
+
+            if is_skipped "$script"; then
+              echo "::group::SKIP $label"
+              echo "Skipped per SKIP_LIST -- see workflow header for reason."
+              echo "::endgroup::"
+              skipped=$((skipped + 1))
+              continue
+            fi
+
+            ran=$((ran + 1))
+            work="$stage_root/$pkg_dir/$stem"
+            mkdir -p "$work"
+            cp "$script" "$work/$base"
+            printf '%s\n' "$nuget_config_template" > "$work/NuGet.Config"
+
+            # Rewrite `#:package ActionsToolkit.*@*` to the locally
+            # packed version. Other `#:package Foo@*` directives (DI,
+            # Microsoft.Extensions.Http, etc.) are left alone and resolve
+            # from nuget.org as normal.
+            sed -E -i.bak \
+              "s|(#:package ActionsToolkit\.[A-Za-z]+)@\*|\1@$version|g" \
+              "$work/$base"
+            rm -f "$work/$base.bak"
+
+            # Reset / pre-create the per-step file-command files.
+            export GITHUB_OUTPUT="$stage_root/github_output"
+            export GITHUB_ENV="$stage_root/github_env"
+            export GITHUB_STEP_SUMMARY="$stage_root/github_step_summary"
+            export GITHUB_PATH="$stage_root/github_path"
+            export GITHUB_STATE="$stage_root/github_state"
+            : > "$GITHUB_OUTPUT"
+            : > "$GITHUB_ENV"
+            : > "$GITHUB_STEP_SUMMARY"
+            : > "$GITHUB_PATH"
+            : > "$GITHUB_STATE"
+
+            log_file="$log_dir/${pkg_dir}__${stem}.log"
+            echo "::group::RUN $label"
+            (
+              cd "$work"
+              dotnet run "$base"
+            ) 2>&1 | tee "$log_file"
+            code="${PIPESTATUS[0]}"
+            echo "exit=$code"
+            echo "::endgroup::"
+
+            if [ "$code" -eq 0 ]; then
+              passed=$((passed + 1))
+            else
+              failed=$((failed + 1))
+              failed_scripts+=("$label (exit $code)")
+              echo "::error file=$script::$label exited with code $code"
+            fi
+          done
+
+          echo "----------------------------------------"
+          echo "Smoketest summary on ${RUNNER_OS}:"
+          echo "  total discovered: $total"
+          echo "  skipped         : $skipped"
+          echo "  ran             : $ran"
+          echo "  passed          : $passed"
+          echo "  failed          : $failed"
+          echo "----------------------------------------"
+
+          if [ "$failed" -ne 0 ]; then
+            echo "Failed scripts:"
+            for s in "${failed_scripts[@]}"; do
+              echo "  - $s"
+            done
+            exit 1
+          fi
+
+      - name: Upload smoketest logs
+        if: failure() && steps.smoketest.outputs.log_dir != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoketest-logs-${{ matrix.os }}
+          path: ${{ steps.smoketest.outputs.log_dir }}
+          if-no-files-found: ignore
+          retention-days: 7

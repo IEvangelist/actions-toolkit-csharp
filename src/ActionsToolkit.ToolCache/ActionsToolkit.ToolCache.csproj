@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+        <BasedOn>@actions/tool-cache</BasedOn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ActionsToolkit.HttpClient\ActionsToolkit.HttpClient.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Include="SharpCompress" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="actions-toolkit-toolcache-aot-consumer" />
+    </ItemGroup>
+</Project>

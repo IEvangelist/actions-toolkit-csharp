@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Actions.Octokit\Actions.Octokit.csproj" />
+        <ProjectReference Include="..\..\src\ActionsToolkit.Octokit\ActionsToolkit.Octokit.csproj" />
     </ItemGroup>
 
 </Project>
