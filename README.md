@@ -134,5 +134,127 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+# Proposed Improvements for GitHub Actions Workflow .NET SDK
+
+## 🚀 Overview
+
+This contribution improves the developer experience by enhancing documentation, providing real-world examples, and simplifying onboarding for new contributors.
+
+---
+
+## ✨ Added Features
+
+### 1. Quick Start Guide
+
+Added a beginner-friendly guide for creating a GitHub Action using the .NET SDK.
+
+### 2. Real-World Examples
+
+Added practical examples:
+
+* Hello World Action
+* Build & Test Action
+* NuGet Package Publish Action
+* Docker Build Action
+* GitHub Release Automation
+
+### 3. Architecture Section
+
+Added architecture documentation explaining:
+
+* ActionsToolkit.Core
+* ActionsToolkit.Exec
+* ActionsToolkit.IO
+* ActionsToolkit.Cache
+* ActionsToolkit.Octokit
+
+and how they interact inside a GitHub Actions workflow.
+
+### 4. Contributor Guide
+
+Added step-by-step instructions for:
+
+* Forking the repository
+* Setting up the development environment
+* Running tests
+* Creating Pull Requests
+
+### 5. FAQ Section
+
+Added answers for common questions:
+
+* Why use .NET instead of JavaScript?
+* Is Native AOT supported?
+* Which GitHub Actions features are implemented?
+* How do I publish a custom action?
+
+### 6. Sample Workflow Templates
+
+Added reusable workflow examples for:
+
+* Build
+* Test
+* Release
+* Package Publishing
+
+### 7. Documentation Improvements
+
+Improved package descriptions and usage examples across the README.
+
+---
+
+## 📂 New Folder Structure
+
+/examples
+├── HelloWorldAction
+├── BuildAction
+├── DockerAction
+├── NuGetPublishAction
+└── ReleaseAutomation
+
+/docs
+├── QuickStart.md
+├── Architecture.md
+├── FAQ.md
+└── ContributingGuide.md
+
+/workflows
+├── build.yml
+├── test.yml
+└── release.yml
+
+---
+
+## 🎯 Benefits
+
+* Easier onboarding for new developers
+* Better learning resources
+* Faster adoption of the SDK
+* Increased community contributions
+* Improved project visibility
+* Better open-source maintainability
+
+---
+
+## 🛠 Technologies
+
+* C#
+* .NET
+* GitHub Actions
+* NuGet
+* Native AOT
+* CI/CD
+* Octokit
+
+---
+
+## 📈 Future Enhancements
+
+* Full feature parity with @actions/toolkit
+* Advanced caching support
+* Artifact management
+* Performance benchmarks
+* More production-ready examples
+
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
