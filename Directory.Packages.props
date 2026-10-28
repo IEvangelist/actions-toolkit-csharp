@@ -4,7 +4,7 @@
     <DefaultTargetFrameworks>net10.0</DefaultTargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.402" />
+    <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.403" />
     <GlobalPackageReference Include="MinVer" Version="8.0.0" PrivateAssets="all" IncludeAssets="runtime;build;native;contentfiles;analyzers" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
     <PackageVersion Include="RichardSzalay.MockHttp" Version="7.1.0" />
@@ -13,9 +13,9 @@
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" PrivateAssets="all" />
     <PackageVersion Include="coverlet.collector" Version="10.1.0" PrivateAssets="all" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.13" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.13" />
-    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.13" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.14" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.14" />
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.11.0" />
     <PackageVersion Include="GitHub.Octokit.SDK" Version="0.0.31" />
     <PackageVersion Include="Pathological.Globbing" Version="9.1.0" />
