@@ -1,6 +1,6 @@
 # `ActionsToolkit.Core` — file-based examples
 
-These are single-file C# scripts you can run with .NET 10's
+These are single-file C# scripts you can run with .NET 10+'s
 [`dotnet run app.cs`](https://devblogs.microsoft.com/dotnet/announcing-dotnet-run-app/)
 support. Each one mirrors a section of the upstream
 [`@actions/core` README](https://github.com/actions/toolkit/tree/main/packages/core)

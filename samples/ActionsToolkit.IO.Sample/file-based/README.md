@@ -1,6 +1,6 @@
 # `ActionsToolkit.IO` — file-based examples
 
-These single-file scripts use .NET 10's
+These single-file scripts use .NET 10+'s
 [`dotnet run app.cs`](https://devblogs.microsoft.com/dotnet/announcing-dotnet-run-app/)
 support to demonstrate the `IOperations` API exposed by
 [`ActionsToolkit.IO`](https://www.nuget.org/packages/ActionsToolkit.IO).

@@ -131,11 +131,7 @@ internal sealed class DefaultCacheClient : ICacheClient
         CacheUtils.CheckPaths(paths);
         ArgumentException.ThrowIfNullOrEmpty(primaryKey);
 
-        var keys = new List<string>(1 + (restoreKeys?.Count ?? 0)) { primaryKey };
-        if (restoreKeys is not null)
-        {
-            keys.AddRange(restoreKeys);
-        }
+        List<string> keys = [with(capacity: 1 + (restoreKeys?.Count ?? 0)), primaryKey, .. restoreKeys ?? []];
 
         if (keys.Count > CacheUtils.MaxRestoreKeys)
         {

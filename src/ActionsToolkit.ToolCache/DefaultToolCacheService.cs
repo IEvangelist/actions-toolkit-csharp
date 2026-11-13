@@ -361,7 +361,7 @@ internal sealed class DefaultToolCacheService(
         ArgumentException.ThrowIfNullOrEmpty(repo);
 
         var treeUrl = $"https://api.github.com/repos/{owner}/{repo}/git/trees/{branch}";
-        var headers = new Dictionary<string, IEnumerable<string>>(StringComparer.Ordinal);
+        Dictionary<string, IEnumerable<string>> headers = [with(StringComparer.Ordinal)];
         if (!string.IsNullOrEmpty(authToken))
         {
             headers["Authorization"] = [authToken];

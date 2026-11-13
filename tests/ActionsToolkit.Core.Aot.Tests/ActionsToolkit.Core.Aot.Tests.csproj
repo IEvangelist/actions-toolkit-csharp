@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+        <TargetFramework>$(LatestTargetFramework)</TargetFramework>
         <NoWarn>$(NoWarn);IDE0005</NoWarn>
         <RootNamespace>ActionsToolkit.Core.Aot.Tests</RootNamespace>
     </PropertyGroup>

@@ -1,7 +1,8 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <DefaultTargetFrameworks>net10.0</DefaultTargetFrameworks>
+    <DefaultTargetFrameworks>net10.0;net11.0</DefaultTargetFrameworks>
+    <LatestTargetFramework>net11.0</LatestTargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="11.0.100" />

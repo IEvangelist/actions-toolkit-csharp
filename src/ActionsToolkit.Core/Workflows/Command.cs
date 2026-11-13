@@ -31,7 +31,7 @@ internal readonly record struct Command(
     {
         StringBuilder builder = new($"{CMD_STRING}{CommandName}");
 
-        if (CommandProperties?.Any() ?? false)
+        if (CommandProperties is { Count: > 0 })
         {
             builder.Append(' ');
             foreach (var (isNotFirst, key, value)

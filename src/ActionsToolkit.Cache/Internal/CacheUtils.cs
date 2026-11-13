@@ -214,8 +214,7 @@ internal static class CacheUtils
     {
         ArgumentNullException.ThrowIfNull(paths);
 
-        var components = new List<string>(paths.Count + 3);
-        components.AddRange(paths);
+        List<string> components = [with(capacity: paths.Count + 3), .. paths];
 
         if (compressionMethod.HasValue)
         {

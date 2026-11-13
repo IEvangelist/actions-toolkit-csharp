@@ -593,9 +593,9 @@ internal sealed class DefaultArtifactClient : IArtifactClient
 
     private static List<Artifact> FilterLatest(IReadOnlyList<Artifact> artifacts)
     {
-        var seen = new HashSet<string>(StringComparer.Ordinal);
+        HashSet<string> seen = [with(StringComparer.Ordinal)];
         var ordered = artifacts.OrderByDescending(static a => a.Id).ToArray();
-        var result = new List<Artifact>(artifacts.Count);
+        List<Artifact> result = [with(capacity: artifacts.Count)];
         foreach (var artifact in ordered)
         {
             if (seen.Add(artifact.Name))

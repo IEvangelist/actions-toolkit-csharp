@@ -13,7 +13,7 @@ Each package has two flavors of sample:
    container action. Existing examples live under
    `ActionsToolkit.Core.Sample` and `ActionsToolkit.Glob.Sample`.
 2. A new **file-based sample** under each package's `file-based/` sub-folder.
-   These are single-file C# scripts that take advantage of .NET 10's
+   These are single-file C# scripts that take advantage of .NET 10+'s
    [`dotnet run app.cs`](https://devblogs.microsoft.com/dotnet/announcing-dotnet-run-app/)
    feature and `#:package` directive for inline NuGet references — no
    `.csproj` required.

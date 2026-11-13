@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 10.x
+          dotnet-version: 11.x
 
       - name: Restore + save cache
         run: dotnet run samples/ActionsToolkit.Cache.Sample/file-based/restore-and-save.cs build-linux-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}

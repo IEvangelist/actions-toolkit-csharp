@@ -2,7 +2,7 @@
 
 These single-file C# scripts mirror the upstream
 [`@actions/cache`](https://github.com/actions/toolkit/tree/main/packages/cache)
-README code blocks. Each file uses .NET 10's `dotnet run app.cs` feature plus
+README code blocks. Each file uses .NET 10+'s `dotnet run app.cs` feature plus
 the `#:package` directive for inline NuGet references.
 
 | Example | Mirrors upstream section |
