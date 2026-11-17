@@ -1,6 +1,7 @@
 name: "C# showcase 10: Verified tool downloads"
 on:
   workflow_dispatch:
+  workflow_call:
 permissions:
   contents: read
 jobs:

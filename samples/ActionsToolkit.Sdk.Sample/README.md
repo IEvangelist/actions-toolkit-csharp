@@ -22,7 +22,9 @@ been run merely by checking out this source; inspect actual run results in Actio
 
 Find them by their `C# showcase` names in the repository's **Actions** tab.
 New manual workflows must be present on the default branch before GitHub exposes
-their dispatch trigger. The provenance workflow is restricted to that branch
+their dispatch trigger. Before then, dispatch `build-and-test` on the feature
+branch with `verify_sdk` enabled to call the SDK consumer and showcase workflows
+at that branch's commit. The provenance workflow is restricted to the default branch
 and needs `id-token: write` and `attestations: write`. GitHub/HTTP uses the job's
 read-only token. Other host examples need only `contents: read`. Tool downloads
 need outbound network access; all SDK restores need configured NuGet feeds.

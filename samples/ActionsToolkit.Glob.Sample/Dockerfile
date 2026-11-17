@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:11.0-noble AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:11.0.100 AS build
 ARG TARGETARCH
 WORKDIR /source
 
@@ -14,7 +14,7 @@ RUN dotnet restore "samples/ActionsToolkit.Glob.Sample/ActionsToolkit.Glob.Sampl
 COPY . .
 RUN dotnet publish "samples/ActionsToolkit.Glob.Sample/ActionsToolkit.Glob.Sample.csproj" -a $TARGETARCH --no-restore -o /app
 
-FROM mcr.microsoft.com/dotnet/runtime:11.0-noble-chiseled
+FROM mcr.microsoft.com/dotnet/runtime:11.0
 WORKDIR /app
 COPY --from=build /app .
 USER root

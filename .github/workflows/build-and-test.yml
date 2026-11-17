@@ -11,6 +11,10 @@ on:
         description: 'The reason for running a build?'
         required: true
         default: 'Manual build'
+      verify_sdk:
+        description: 'Run the C# SDK consumer and showcase workflows'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -107,3 +111,63 @@ jobs:
       - uses: ./samples/ActionsToolkit.Glob.Sample
         with:
           files: "**/*.cs"
+
+  sdk-consumers:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/sdk-consumers.yml
+
+  showcase-01:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-01-inline-csharp.yml
+
+  showcase-02:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-02-typed-inputs.yml
+
+  showcase-03:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-03-step-outputs.yml
+
+  showcase-04:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-04-environment-path.yml
+
+  showcase-05:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-05-diagnostics.yml
+
+  showcase-06:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-06-job-summary.yml
+
+  showcase-07:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-07-process-execution.yml
+
+  showcase-08:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-08-glob-filesystem.yml
+
+  showcase-09:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-09-github-http.yml
+
+  showcase-10:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-10-tool-cache.yml
+
+  showcase-11:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-11-cache-artifacts.yml
+
+  showcase-12:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    uses: ./.github/workflows/showcase-12-aot-attestation.yml
+
+  showcase-13:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_sdk }}
+    uses: ./.github/workflows/showcase-13-glob-file-stats.yml

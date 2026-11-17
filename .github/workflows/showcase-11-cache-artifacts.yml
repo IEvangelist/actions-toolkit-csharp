@@ -1,6 +1,7 @@
 name: "C# showcase 11: Cache and artifact round trips"
 on:
   workflow_dispatch:
+  workflow_call:
 permissions:
   contents: read
 jobs:

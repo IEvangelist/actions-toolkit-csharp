@@ -1,6 +1,7 @@
 name: "C# showcase 05: Annotations and grouped logs"
 on:
   workflow_dispatch:
+  workflow_call:
 permissions:
   contents: read
 jobs:

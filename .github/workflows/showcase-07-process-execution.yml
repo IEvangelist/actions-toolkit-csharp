@@ -1,6 +1,7 @@
 name: "C# showcase 07: Process execution"
 on:
   workflow_dispatch:
+  workflow_call:
 permissions:
   contents: read
 jobs:
