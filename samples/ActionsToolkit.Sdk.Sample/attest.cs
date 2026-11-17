@@ -15,5 +15,5 @@ await attest.AttestProvenanceAsync(new AttestProvenanceOptions
     Subjects = [new Subject { Name = "aot-app", Digest = new Dictionary<string, string> { ["sha256"] = digest } }]
 });
 await Core.SetOutputAsync("sha256", digest);
-await Core.Summary.AddHeading("Native executable attested")
-    .AddRaw($"Subject `aot-app`, SHA-256 `{digest}`. The next step independently verifies provenance.", true).WriteAsync();
+await Core.Summary.AddMarkdownHeading("Native executable attested").AddNewLine()
+    .AddRawMarkdown($"Subject `aot-app`, SHA-256 `{digest}`. The next step independently verifies provenance.", true).WriteAsync();

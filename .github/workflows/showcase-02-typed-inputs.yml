@@ -52,5 +52,5 @@ jobs:
               Core.GetBoolInput("enabled") != bool.Parse(Environment.GetEnvironmentVariable("EXPECTED_ENABLED")!) ||
               Core.GetInput("items") != "2")
               throw new InvalidOperationException("Validated inputs changed between steps.");
-          await Core.Summary.AddHeading("Typed inputs verified").AddRaw("String, Boolean, and multiline input values survived the handoff.", true).WriteAsync();
+          await Core.Summary.AddMarkdownHeading("Typed inputs verified").AddNewLine().AddRawMarkdown("String, Boolean, and multiline input values survived the handoff.", true).WriteAsync();
           CSHARP

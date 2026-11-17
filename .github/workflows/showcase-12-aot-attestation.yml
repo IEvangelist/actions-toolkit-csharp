@@ -57,5 +57,5 @@ jobs:
               throw new InvalidOperationException("Native executable or digest handoff mismatch.");
           if (new FileInfo("attestation-verification.json").Length == 0)
               throw new InvalidOperationException("Missing independent provenance verification.");
-          await Core.Summary.AddHeading("Provenance verified").AddRaw($"Native executable ran successfully; GitHub CLI verified signer identity and SHA-256 `{digest}`.", true).WriteAsync();
+          await Core.Summary.AddMarkdownHeading("Provenance verified").AddNewLine().AddRawMarkdown($"Native executable ran successfully; GitHub CLI verified signer identity and SHA-256 `{digest}`.", true).WriteAsync();
           CSHARP

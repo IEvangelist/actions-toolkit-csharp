@@ -35,5 +35,6 @@ else
         if (actual != parts[0])
             throw new InvalidOperationException($"Staged hash mismatch: {parts[1]}");
     }
-    await Core.Summary.AddHeading("Verified staged source").AddRaw($"{lines.Length} files match their SHA-256 manifest.", true).WriteAsync();
+    await Core.Summary.AddMarkdownHeading("Verified staged source").AddNewLine()
+        .AddRawMarkdown($"{lines.Length} files match their SHA-256 manifest.", true).WriteAsync();
 }

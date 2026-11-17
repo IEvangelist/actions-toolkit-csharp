@@ -117,6 +117,12 @@ clients reduce initialization, not restore cost. Network clients use normal
 `using` ownership. Summary buffers belong to one process and require an explicit
 `WriteAsync`; the next C# step does not inherit in-memory state.
 
+For Markdown summaries, use `AddMarkdownHeading`, `AddRawMarkdown`, and
+`AddMarkdownCodeBlock`, with blank lines between blocks. `AddHeading`,
+`AddTable`, and `AddCodeBlock` emit HTML instead; Markdown following an HTML
+block needs a blank-line boundary. `AddRawMarkdown` handles that mode change,
+whereas `AddRaw` appends text without selecting a format.
+
 Normal scripts need not native-publish first. File-based AOT publishing defaults
 remain intact; native builds require the platform C++/linker prerequisites.
 `aot-app.cs` demonstrates native includes, optional static imports, and C# 15

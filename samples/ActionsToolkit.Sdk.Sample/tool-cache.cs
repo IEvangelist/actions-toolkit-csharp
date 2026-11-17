@@ -29,6 +29,6 @@ else
     var output = await Exec.GetOutputAsync(Path.Combine(found, "jq"), ["--version"]);
     if (output.Stdout.Trim() != $"jq-{version}")
         throw new InvalidOperationException("Unexpected tool output.");
-    await Core.Summary.AddHeading("Verified tool cache")
-        .AddRaw($"Downloaded pinned jq {version}, verified SHA-256 `{expected}`, and reused it in a later C# step.", true).WriteAsync();
+    await Core.Summary.AddMarkdownHeading("Verified tool cache").AddNewLine()
+        .AddRawMarkdown($"Downloaded pinned jq {version}, verified SHA-256 `{expected}`, and reused it in a later C# step.", true).WriteAsync();
 }

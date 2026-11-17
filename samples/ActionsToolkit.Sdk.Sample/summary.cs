@@ -16,8 +16,8 @@ else
     if (count != Glob.Create("src/**/*.cs").GlobFiles(root).Count())
         throw new InvalidOperationException("Repository source count changed between steps.");
     var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "local";
-    await Core.Summary.AddHeading("Repository snapshot")
-        .AddRaw("| Metric | Measured value |\n| --- | ---: |\n" +
+    await Core.Summary.AddMarkdownHeading("Repository snapshot").AddNewLine()
+        .AddRawMarkdown("| Metric | Measured value |\n| --- | ---: |\n" +
             $"| C# source files | {count} |\n| Repository | {WebUtility.HtmlEncode(repository)} |", true)
         .WriteAsync();
 }

@@ -18,5 +18,6 @@ else
     var result = await Exec.GetOutputAsync(tool);
     if (result.Stdout.Trim() != "CSharpPathReady")
         throw new InvalidOperationException("The PATH tool did not produce the expected result.");
-    await Core.Summary.AddHeading("Environment and PATH").AddRaw($"Resolved `{tool}` in a later C# step.", true).WriteAsync();
+    await Core.Summary.AddMarkdownHeading("Environment and PATH").AddNewLine()
+        .AddRawMarkdown($"Resolved `{tool}` in a later C# step.", true).WriteAsync();
 }

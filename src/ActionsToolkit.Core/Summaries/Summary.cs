@@ -126,6 +126,8 @@ public sealed class Summary
     public Summary EmptyBuffer()
     {
         _buffer.Clear();
+        _previousMode = Mode.Unspecified;
+        _currentMode = Mode.Unspecified;
 
         return this;
     }
@@ -142,29 +144,26 @@ public sealed class Summary
             """, true);
     }
 
-    /// <summary>Adds raw text to the summary buffer</summary>
+    /// <summary>Adds raw text without changing the current HTML or Markdown mode.
+    /// Use <see cref="AddRawMarkdown"/> for Markdown following HTML content.</summary>
     /// <param name="text">text content to add</param>
     /// <param name="addNewLine">(optional) append a <see cref="NewLine"/> to the raw text (default: false)</param>
     /// <returns>The <c>Summary</c> instance</returns>
     public Summary AddRaw(string text, bool addNewLine = false)
     {
-        if (addNewLine)
+        // HTML blocks must end before GitHub can parse the next Markdown block.
+        if (_currentMode != _previousMode && _previousMode is not Mode.Unspecified)
         {
-            // Switching from HTML to Markdown (or vice versa) requires two newlines.
-            if (_currentMode != _previousMode && _previousMode is not Mode.Unspecified)
-            {
-                _buffer.Append(NewLine);
-                _buffer.Append(NewLine);
-            }
-
-            _previousMode = _currentMode;
-
-            _buffer.Append(text);
+            _buffer.Append(NewLine);
             _buffer.Append(NewLine);
         }
-        else
+
+        _previousMode = _currentMode;
+
+        _buffer.Append(text);
+        if (addNewLine)
         {
-            _buffer.Append(text);
+            _buffer.Append(NewLine);
         }
 
         return this;
@@ -418,7 +417,7 @@ public sealed class Summary
     /// <returns>The <c>Summary</c> instance</returns>
     public Summary AddSeparator()
     {
-        return AddRaw("<hr>", true);
+        return AddRaw(Wrap("hr", null), true);
     }
 
     /// <summary>Adds a markdown thematic break "<c>---</c>" to the summary buffer</summary>
@@ -432,7 +431,7 @@ public sealed class Summary
     /// <returns>The <c>Summary</c> instance</returns>
     public Summary AddBreak()
     {
-        return AddRaw("<br>", true);
+        return AddRaw(Wrap("br", null), true);
     }
 
     /// <summary>Adds an HTML blockquote to the summary buffer</summary>

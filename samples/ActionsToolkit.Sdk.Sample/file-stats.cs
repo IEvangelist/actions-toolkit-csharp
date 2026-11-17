@@ -48,7 +48,8 @@ else
         markdown.AppendLine($"| {Escape(file.Path)} | {file.Bytes:N0} |");
     if (report.Entries.Length == 0)
         markdown.AppendLine("| No matching files | 0 |");
-    await Core.Summary.AddHeading("Repository filesystem statistics").AddRaw(markdown.ToString(), true).WriteAsync();
+    await Core.Summary.AddMarkdownHeading("Repository filesystem statistics").AddNewLine()
+        .AddRawMarkdown(markdown.ToString(), true).WriteAsync();
 }
 
 static string Escape(string value) => WebUtility.HtmlEncode(value).Replace("|", "&#124;", StringComparison.Ordinal)

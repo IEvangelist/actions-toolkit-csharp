@@ -35,6 +35,6 @@ else
     var artifactHash = Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync(Path.Combine(downloaded, "result.txt"))));
     if (cachedHash != expected || artifactHash != expected)
         throw new InvalidOperationException("Cache/artifact content digest mismatch.");
-    await Core.Summary.AddHeading("Cache and artifact round trip")
-        .AddRaw($"Cache hit: `{hit}`. Artifact `{id}` and cache both match SHA-256 `{expected}`.", true).WriteAsync();
+    await Core.Summary.AddMarkdownHeading("Cache and artifact round trip").AddNewLine()
+        .AddRawMarkdown($"Cache hit: `{hit}`. Artifact `{id}` and cache both match SHA-256 `{expected}`.", true).WriteAsync();
 }

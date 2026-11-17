@@ -25,5 +25,5 @@ jobs:
           #:sdk ActionsToolkit.Sdk@${{ env.ACTIONS_TOOLKIT_SDK_VERSION }}
           if (Core.GetInput("notices") != "1" || Core.GetInput("warnings") != "1")
               throw new InvalidOperationException("Diagnostic results were not passed to this C# step.");
-          await Core.Summary.AddHeading("Actionable diagnostics").AddRaw("One source-linked notice and one intentional warning; inspect the grouped validation log.", true).WriteAsync();
+          await Core.Summary.AddMarkdownHeading("Actionable diagnostics").AddNewLine().AddRawMarkdown("One source-linked notice and one intentional warning; inspect the grouped validation log.", true).WriteAsync();
           CSHARP

@@ -15,8 +15,9 @@ else
     var report = JsonSerializer.Deserialize(Core.GetInput("report", required: true), ReportJson.Default.BuildReport);
     if (message != "C# step one\nC# step two" || report is not { Configuration: "Release", Projects: 3 })
         throw new InvalidOperationException("The C# output-to-input handoff changed the values.");
-    await Core.Summary.AddHeading("C# to C#").AddCodeBlock(message)
-        .AddRaw($"Verified typed report: {report.Configuration}, {report.Projects} projects.", true).WriteAsync();
+    await Core.Summary.AddMarkdownHeading("C# to C#").AddNewLine()
+        .AddMarkdownCodeBlock(message).AddNewLine()
+        .AddRawMarkdown($"Verified typed report: {report.Configuration}, {report.Projects} projects.", true).WriteAsync();
 }
 
 public sealed record BuildReport(string Configuration, int Projects);

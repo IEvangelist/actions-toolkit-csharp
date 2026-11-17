@@ -14,5 +14,5 @@ var failed = await Exec.GetOutputAsync("dotnet", ["--definitely-not-a-command"],
 if (failed.ExitCode == 0)
     throw new InvalidOperationException("Expected the negative process probe to fail.");
 await Core.SetOutputAsync("negativeExit", failed.ExitCode.ToString(CultureInfo.InvariantCulture));
-await Core.Summary.AddHeading("Typed process results")
-    .AddRaw($"SDK `{result.Stdout.Trim()}`; controlled negative command returned `{failed.ExitCode}`.", true).WriteAsync();
+await Core.Summary.AddMarkdownHeading("Typed process results").AddNewLine()
+    .AddRawMarkdown($"SDK `{result.Stdout.Trim()}`; controlled negative command returned `{failed.ExitCode}`.", true).WriteAsync();

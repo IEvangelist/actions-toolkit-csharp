@@ -490,6 +490,53 @@ public class CoreSummaryTests(CoreSummaryTestFixture fixture) : IClassFixture<Co
     });
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SeparatesHtmlFromMarkdownWithoutRequiringATrailingNewline(bool addNewLine)
+    {
+        var sut = new Summary();
+        const string markdown = "**Measured** `source` files\n\n| Files | Bytes |\n| ---: | ---: |\n| 2 | 42 |";
+
+        sut.AddHeading("Statistics").AddRawMarkdown(markdown, addNewLine);
+
+        var ending = addNewLine ? Environment.NewLine : "";
+        Assert.Equal($"<h1>Statistics</h1>{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}{markdown}{ending}",
+            sut.Stringify());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SeparatesHtmlBreaksFromMarkdown(bool separator)
+    {
+        var sut = new Summary().AddRawMarkdown("**Before**");
+
+        if (separator)
+        {
+            sut.AddSeparator();
+        }
+        else
+        {
+            sut.AddBreak();
+        }
+        sut.AddRawMarkdown("`After`");
+
+        var tag = separator ? "hr" : "br";
+        Assert.Equal($"**Before**{Environment.NewLine}{Environment.NewLine}<{tag}>{Environment.NewLine}{Environment.NewLine}{Environment.NewLine}`After`",
+            sut.Stringify());
+    }
+
+    [Fact]
+    public void ClearingTheBufferResetsTheFormattingMode()
+    {
+        var sut = new Summary().AddHeading("Discarded").AddRawMarkdown("Discarded", true);
+
+        sut.EmptyBuffer().AddHeading("Fresh");
+
+        Assert.Equal($"<h1>Fresh</h1>{Environment.NewLine}", sut.Stringify());
+    }
+
     [Fact]
     public Task AddsH1IfHeadingLevelNotSpecified()
     {

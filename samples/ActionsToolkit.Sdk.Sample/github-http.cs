@@ -16,7 +16,8 @@ var response = await http.GetAsync($"{server}/repos/{context.Repo.Owner}/{contex
 if (response.Result?.FullName != repository.FullName)
     throw new InvalidOperationException("GitHub and typed HTTP clients disagree.");
 await Core.SetOutputAsync("repository", repository.FullName ?? throw new InvalidOperationException("Missing repository name."));
-await Core.Summary.AddHeading("GitHub and typed HTTP").AddRaw($"Both clients identified `{repository.FullName}`.", true).WriteAsync();
+await Core.Summary.AddMarkdownHeading("GitHub and typed HTTP").AddNewLine()
+    .AddRawMarkdown($"Both clients identified `{repository.FullName}`.", true).WriteAsync();
 
 public sealed record RepositoryInfo([property: JsonPropertyName("full_name")] string FullName);
 [JsonSerializable(typeof(RepositoryInfo))]
