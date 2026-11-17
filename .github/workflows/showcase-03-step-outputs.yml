@@ -1,0 +1,21 @@
+name: "C# showcase 03: Step outputs and typed JSON"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  outputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Produce multiline and typed outputs
+        id: producer
+        working-directory: .showcase
+        run: dotnet run --file outputs.cs -- produce
+      - name: Read outputs as inputs in the next C# step
+        working-directory: .showcase
+        env:
+          INPUT_MESSAGE: ${{ steps.producer.outputs.message }}
+          INPUT_REPORT: ${{ steps.producer.outputs.report }}
+        run: dotnet run --file outputs.cs -- consume

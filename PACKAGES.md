@@ -35,6 +35,21 @@ The following table tracks the various packages' development progress. Each pack
 - **🟡**: In progress (tracked by an open PR)
 - **🔳**: Not started or not done
 
+## C# scripting packages
+
+`ActionsToolkit.Scripting` adds module-first helpers and explicitly owned network
+clients over all ten libraries. `ActionsToolkit.Sdk` is a NuGet `MSBuildSdk`
+package that supplies the matching facade and module aliases through `#:sdk`.
+These packages add an authoring layer; they do not replace the DI-friendly APIs
+or change the upstream parity table.
+
+The [showcase](samples/ActionsToolkit.Sdk.Sample/README.md) contains thirteen
+independent workflows. `eng/Test-SdkConsumers.ps1` exercises actual locally packed
+SDK consumers, including stdin and repository central-package configuration.
+`sdk-consumers.yml` adds a cross-platform consumer/native publishing matrix.
+Runtime credentials and attestation are verified by the corresponding trusted
+Linux showcase workflows, not by pretending local mocks prove backend support.
+
 ## Testable
 
 Each package should strive to be testable, such that consumers can test all aspects of an API surface area with ease.

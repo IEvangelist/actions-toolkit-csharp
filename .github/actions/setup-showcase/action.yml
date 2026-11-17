@@ -1,0 +1,23 @@
+name: Prepare C# showcase
+description: Pack this checkout and pin its SDK for examples, without requiring a published release.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
+      with:
+        global-json-file: global.json
+    - name: Pack and stage exact local SDK
+      shell: pwsh
+      run: |
+        ./eng/Stage-SdkShowcase.ps1
+        $stage = Join-Path (Get-Location) '.showcase'
+        $sdkVersion = (Get-Content (Join-Path $stage 'global.json') -Raw | ConvertFrom-Json).'msbuild-sdks'.'ActionsToolkit.Sdk'
+        $nugetConfig = [xml](Get-Content (Join-Path $stage 'NuGet.Config') -Raw)
+        $packageCache = $nugetConfig.configuration.config.add |
+          Where-Object { $_.key -eq 'globalPackagesFolder' } |
+          Select-Object -First 1 -ExpandProperty value
+        $env:NUGET_PACKAGES = [IO.Path]::GetFullPath((Join-Path $stage $packageCache))
+        Add-Content -Path $env:GITHUB_ENV -Value "ACTIONS_TOOLKIT_SDK_VERSION=$sdkVersion" -Encoding utf8
+        Add-Content -Path $env:GITHUB_ENV -Value "NUGET_PACKAGES=$env:NUGET_PACKAGES" -Encoding utf8
+        dotnet build (Join-Path $stage 'inputs.cs') --nologo --verbosity quiet
+        if ($LASTEXITCODE) { exit $LASTEXITCODE }

@@ -1,0 +1,22 @@
+name: "C# showcase 13: Filesystem statistics"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  statistics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Discover files and calculate statistics in C#
+        id: producer
+        working-directory: .showcase
+        run: dotnet run --file file-stats.cs -- scan
+      - name: Read the results and publish a rich filesystem summary
+        working-directory: .showcase
+        env:
+          INPUT_REPORT: ${{ steps.producer.outputs.report }}
+          INPUT_COUNT: ${{ steps.producer.outputs.count }}
+          INPUT_BYTES: ${{ steps.producer.outputs.bytes }}
+        run: dotnet run --file file-stats.cs -- summarize

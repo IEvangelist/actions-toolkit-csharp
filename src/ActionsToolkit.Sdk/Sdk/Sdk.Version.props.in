@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ActionsToolkitVersion Condition="'$(ActionsToolkitVersion)' == ''">0.0.0</ActionsToolkitVersion>
+  </PropertyGroup>
+</Project>

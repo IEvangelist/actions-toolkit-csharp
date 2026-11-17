@@ -1,0 +1,23 @@
+name: "C# showcase 11: Cache and artifact round trips"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  round-trip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Save a cache and upload an artifact with C#
+        id: producer
+        uses: ./actions/run-csharp
+        with:
+          script: .showcase/cache-artifacts.cs
+          args: '["produce"]'
+      - name: Restore and verify in a separate C# action step
+        uses: ./actions/run-csharp
+        with:
+          script: .showcase/cache-artifacts.cs
+          args: '["consume"]'
+          inputs: ${{ toJSON(steps.producer.outputs) }}

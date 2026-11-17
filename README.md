@@ -22,6 +22,32 @@ The .NET equivalent of the official GitHub [actions/toolkit](https://github.com/
 
 [issue-5]: https://github.com/IEvangelist/actions-toolkit-csharp/issues/5
 
+## File-based C# Actions
+
+Use the .NET SDK installed by `actions/setup-dotnet`, then run a checked-in C#
+file or pipe inline source to `dotnet run -`. Our MSBuild SDK supplies all ten
+toolkit libraries and clean module imports:
+
+```csharp
+#:sdk ActionsToolkit.Sdk@<version>
+
+var name = Core.GetInput("name", required: true);
+Core.Info($"Hello, {name}!");
+await Core.SetOutputAsync("greeting", $"Hello, {name}!");
+```
+
+Replace `<version>` with an actual toolkit release. To try the unreleased SDK
+from this checkout, run `pwsh ./eng/Stage-SdkShowcase.ps1`, then
+`cd .showcase`; its generated `global.json` pins the exact locally packed version.
+No NuGet publication is required.
+
+The [13 independent showcase workflows](samples/ActionsToolkit.Sdk.Sample/README.md)
+demonstrate inline scripts, C#-to-C# step outputs, summaries, verified files,
+typed clients, caching, native AOT, and provenance. The optional
+[native .NET Docker action](actions/run-csharp/README.md) provides the runner
+runtime environment for credential-dependent operations on Linux. It does not
+replace cross-platform host execution or reuse a host-installed SDK.
+
 ## Blog
 
 [🔗 Hello from the GitHub Actions: Core .NET SDK](https://davidpine.net/blog/github-actions-sdk)

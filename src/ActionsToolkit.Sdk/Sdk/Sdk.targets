@@ -1,0 +1,21 @@
+<Project>
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <ItemGroup Condition="'$(ManagePackageVersionsCentrally)' != 'true'">
+    <PackageReference Include="ActionsToolkit.Scripting" Exclude="@(PackageReference)" Version="$(ActionsToolkitVersion)" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ManagePackageVersionsCentrally)' == 'true'">
+    <PackageReference Include="ActionsToolkit.Scripting" Exclude="@(PackageReference)" VersionOverride="$(ActionsToolkitVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="ActionsToolkit.Scripting.Core" Alias="Core" />
+    <Using Include="ActionsToolkit.Scripting.Exec" Alias="Exec" />
+    <Using Include="ActionsToolkit.Scripting.IO" Alias="IO" />
+    <Using Include="ActionsToolkit.Scripting.Glob" Alias="Glob" />
+    <Using Include="ActionsToolkit.Scripting.Http" Alias="Http" />
+    <Using Include="ActionsToolkit.Scripting.GitHubApi" Alias="GitHubApi" />
+    <Using Include="ActionsToolkit.Scripting.ToolCache" Alias="ToolCache" />
+    <Using Include="ActionsToolkit.Scripting.Cache" Alias="Cache" />
+    <Using Include="ActionsToolkit.Scripting.Artifact" Alias="Artifact" />
+    <Using Include="ActionsToolkit.Scripting.Attest" Alias="Attest" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,39 @@
+name: C# SDK consumer compatibility
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'eng/**'
+      - 'samples/ActionsToolkit.Sdk.Sample/**'
+      - '.github/actions/setup-showcase/**'
+      - '.github/workflows/sdk-consumers.yml'
+      - 'Directory.*'
+      - 'global.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  consumers:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Verify packaged C# consumers and stdin
+        shell: pwsh
+        run: ./eng/Test-SdkConsumers.ps1
+      - name: Publish and run native SDK consumer
+        shell: pwsh
+        working-directory: .showcase
+        run: |
+          foreach ($app in @('aot-app', 'aot-surface')) {
+            dotnet publish "$app.cs" -o "native-$app" --nologo -p:TreatWarningsAsErrors=true
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+            $binary = if ($IsWindows) { "./native-$app/$app.exe" } else { "./native-$app/$app" }
+            & $binary
+            if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          }

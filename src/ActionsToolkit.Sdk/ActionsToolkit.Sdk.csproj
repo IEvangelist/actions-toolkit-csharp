@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(LatestTargetFramework)</TargetFramework>
+    <PackageType>MSBuildSdk</PackageType>
+    <Description>Write GitHub Actions automation as file-based C# apps with one SDK directive.</Description>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <IsAotCompatible>false</IsAotCompatible>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="..\build\Common.props" />
+    <None Include="Sdk\*.props;Sdk\*.targets" Pack="true" PackagePath="Sdk" />
+  </ItemGroup>
+  <Target Name="StampActionsToolkitSdkVersion" BeforeTargets="_GetPackageFiles" DependsOnTargets="MinVer">
+    <Copy SourceFiles="Sdk\Sdk.Version.props.in" DestinationFiles="$(IntermediateOutputPath)Sdk.Version.props" />
+    <XmlPoke XmlInputPath="$(IntermediateOutputPath)Sdk.Version.props"
+             Query="/Project/PropertyGroup/ActionsToolkitVersion" Value="$(PackageVersion)" />
+    <ItemGroup>
+      <None Include="$(IntermediateOutputPath)Sdk.Version.props" Pack="true" PackagePath="Sdk" />
+    </ItemGroup>
+  </Target>
+</Project>

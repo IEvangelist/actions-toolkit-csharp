@@ -19,6 +19,7 @@
     <PackageVersion Include="Microsoft.Extensions.Http" Version="11.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="11.0.0" />
     <PackageVersion Include="GitHub.Octokit.SDK" Version="0.0.31" />
+    <PackageVersion Include="Microsoft.Kiota.Abstractions" Version="1.22.0" />
     <PackageVersion Include="Pathological.Globbing" Version="9.1.0" />
     <PackageVersion Include="System.Text.Json" Version="10.0.7" />
     <PackageVersion Include="SharpCompress" Version="0.50.8" />

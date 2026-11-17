@@ -1,0 +1,21 @@
+name: "C# showcase 10: Verified tool downloads"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tool-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Download jq and verify its pinned SHA-256
+        id: producer
+        working-directory: .showcase
+        run: dotnet run --file tool-cache.cs -- install
+      - name: Resolve the cached tool in the next C# process
+        working-directory: .showcase
+        env:
+          INPUT_VERSION: ${{ steps.producer.outputs.version }}
+          INPUT_PATH: ${{ steps.producer.outputs.path }}
+        run: dotnet run --file tool-cache.cs -- consume

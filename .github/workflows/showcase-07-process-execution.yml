@@ -1,0 +1,32 @@
+name: "C# showcase 07: Process execution"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  processes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Build a tool and capture command results
+        id: producer
+        working-directory: .showcase
+        run: dotnet run --file process.cs
+      - name: Consume command results and execute the built assembly
+        working-directory: .showcase
+        env:
+          INPUT_SDK: ${{ steps.producer.outputs.sdk }}
+          INPUT_EXIT: ${{ steps.producer.outputs.negativeExit }}
+        shell: bash
+        run: |
+          dotnet run - <<'CSHARP'
+          #:sdk ActionsToolkit.Sdk@${{ env.ACTIONS_TOOLKIT_SDK_VERSION }}
+          if (!Core.GetInput("sdk", required: true).StartsWith("11.", StringComparison.Ordinal) ||
+              Core.GetInput("exit", required: true) == "0")
+              throw new InvalidOperationException("Incorrect process results.");
+          var tool = await Exec.GetOutputAsync("dotnet", ["process-build/path-tool.dll"]);
+          if (tool.Stdout.Trim() != "CSharpPathReady")
+              throw new InvalidOperationException("The built tool returned the wrong result.");
+          Core.Info("The next C# step verified and executed the previous step's build.");
+          CSHARP

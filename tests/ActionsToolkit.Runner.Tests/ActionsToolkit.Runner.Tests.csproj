@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net11.0</TargetFramework>
+        <EnableTestSdk>true</EnableTestSdk>
+        <IsPackable>false</IsPackable>
+        <NoWarn>$(NoWarn);IDE0005</NoWarn>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\actions\run-csharp\launcher\ActionsToolkit.Runner.csproj"
+                          AdditionalProperties="EnableTestSdk=false" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,4 @@
+launcher/bin/
+launcher/obj/
+**/bin/
+**/obj/

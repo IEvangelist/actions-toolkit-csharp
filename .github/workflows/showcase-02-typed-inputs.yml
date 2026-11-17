@@ -1,0 +1,48 @@
+name: "C# showcase 02: Typed inputs"
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: A name to validate
+        default: CSharp
+        required: true
+      enabled:
+        description: Enable the example
+        type: boolean
+        default: true
+permissions:
+  contents: read
+jobs:
+  inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Validate typed inputs
+        id: producer
+        working-directory: .showcase
+        env:
+          INPUT_NAME: ${{ inputs.name }}
+          INPUT_ENABLED: ${{ inputs.enabled }}
+          INPUT_ITEMS: |
+            alpha
+            beta
+        run: dotnet run --file inputs.cs
+      - name: Consume validated outputs in C#
+        working-directory: .showcase
+        env:
+          INPUT_NAME: ${{ steps.producer.outputs.name }}
+          INPUT_ENABLED: ${{ steps.producer.outputs.enabled }}
+          INPUT_ITEMS: ${{ steps.producer.outputs.items }}
+          EXPECTED_NAME: ${{ inputs.name }}
+          EXPECTED_ENABLED: ${{ inputs.enabled }}
+        shell: bash
+        run: |
+          dotnet run - <<'CSHARP'
+          #:sdk ActionsToolkit.Sdk@${{ env.ACTIONS_TOOLKIT_SDK_VERSION }}
+          if (Core.GetInput("name") != Environment.GetEnvironmentVariable("EXPECTED_NAME")?.Trim() ||
+              Core.GetBoolInput("enabled") != bool.Parse(Environment.GetEnvironmentVariable("EXPECTED_ENABLED")!) ||
+              Core.GetInput("items") != "2")
+              throw new InvalidOperationException("Validated inputs changed between steps.");
+          await Core.Summary.AddHeading("Typed inputs verified").AddRaw("String, Boolean, and multiline input values survived the handoff.", true).WriteAsync();
+          CSHARP

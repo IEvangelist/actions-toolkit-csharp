@@ -1,0 +1,33 @@
+name: "C# showcase 01: Inline scripts"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Produce an output from stdin
+        id: producer
+        working-directory: .showcase
+        shell: bash
+        run: |
+          dotnet run - <<'CSHARP'
+          #:sdk ActionsToolkit.Sdk@${{ env.ACTIONS_TOOLKIT_SDK_VERSION }}
+          await Core.SetOutputAsync("message", "Inline C# is ready");
+          CSHARP
+      - name: Read it in another C# process
+        working-directory: .showcase
+        env:
+          INPUT_MESSAGE: ${{ steps.producer.outputs.message }}
+        shell: bash
+        run: |
+          dotnet run - <<'CSHARP'
+          #:sdk ActionsToolkit.Sdk@${{ env.ACTIONS_TOOLKIT_SDK_VERSION }}
+          var message = Core.GetInput("message", required: true);
+          if (message != "Inline C# is ready")
+              throw new InvalidOperationException("Step handoff failed.");
+          await Core.Summary.AddHeading("Inline C#").AddRaw(message, true).WriteAsync();
+          CSHARP

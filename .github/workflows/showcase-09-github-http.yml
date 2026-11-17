@@ -1,0 +1,29 @@
+name: "C# showcase 09: GitHub and typed HTTP"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  clients:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Query GitHub using two typed clients
+        id: producer
+        working-directory: .showcase
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: dotnet run --file github-http.cs
+      - name: Assert the returned repository in C#
+        working-directory: .showcase
+        env:
+          INPUT_REPOSITORY: ${{ steps.producer.outputs.repository }}
+        shell: bash
+        run: |
+          dotnet run - <<'CSHARP'
+          #:sdk ActionsToolkit.Sdk@${{ env.ACTIONS_TOOLKIT_SDK_VERSION }}
+          if (Core.GetInput("repository", required: true) != Environment.GetEnvironmentVariable("GITHUB_REPOSITORY"))
+              throw new InvalidOperationException("The API returned an unexpected repository.");
+          Core.Info("GitHub API identity verified by the receiving C# step.");
+          CSHARP

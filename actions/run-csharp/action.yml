@@ -1,0 +1,29 @@
+name: Run C#
+description: Run a checked-in C# file-based app with the .NET 11 SDK and GitHub Docker action runtime capabilities.
+author: David Pine
+branding:
+  icon: terminal
+  color: purple
+inputs:
+  script:
+    description: Workspace-relative path to an existing .cs file (checkout required).
+    required: true
+  args:
+    description: JSON array of string arguments, passed without shell expansion.
+    required: false
+    default: '[]'
+  inputs:
+    description: JSON object of string script inputs, exposed as normalized INPUT_* variables.
+    required: false
+    default: '{}'
+  github-token:
+    description: Optional explicit GitHub API token, masked and passed only to the script environment.
+    required: false
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    ACTIONS_TOOLKIT_SCRIPT: ${{ inputs.script }}
+    ACTIONS_TOOLKIT_ARGS: ${{ inputs.args }}
+    ACTIONS_TOOLKIT_INPUTS: ${{ inputs.inputs }}
+    ACTIONS_TOOLKIT_GITHUB_TOKEN: ${{ inputs.github-token }}

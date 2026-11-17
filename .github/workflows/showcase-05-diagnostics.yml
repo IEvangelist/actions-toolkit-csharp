@@ -1,0 +1,28 @@
+name: "C# showcase 05: Annotations and grouped logs"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnostics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Validate source and emit diagnostics
+        id: producer
+        working-directory: .showcase
+        run: dotnet run --file diagnostics.cs
+      - name: Check diagnostic results in C#
+        working-directory: .showcase
+        env:
+          INPUT_NOTICES: ${{ steps.producer.outputs.notices }}
+          INPUT_WARNINGS: ${{ steps.producer.outputs.warnings }}
+        shell: bash
+        run: |
+          dotnet run - <<'CSHARP'
+          #:sdk ActionsToolkit.Sdk@${{ env.ACTIONS_TOOLKIT_SDK_VERSION }}
+          if (Core.GetInput("notices") != "1" || Core.GetInput("warnings") != "1")
+              throw new InvalidOperationException("Diagnostic results were not passed to this C# step.");
+          await Core.Summary.AddHeading("Actionable diagnostics").AddRaw("One source-linked notice and one intentional warning; inspect the grouped validation log.", true).WriteAsync();
+          CSHARP

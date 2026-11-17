@@ -1,0 +1,20 @@
+name: "C# showcase 04: Environment and PATH"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  environment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Publish a C# tool and export its directory
+        id: producer
+        working-directory: .showcase
+        run: dotnet run --file environment.cs -- produce
+      - name: Resolve the tool and environment in the next C# step
+        working-directory: .showcase
+        env:
+          INPUT_EXPECTED: ${{ steps.producer.outputs.expected }}
+        run: dotnet run --file environment.cs -- consume

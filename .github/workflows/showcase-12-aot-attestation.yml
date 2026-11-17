@@ -1,0 +1,60 @@
+name: "C# showcase 12: Native AOT and verified provenance"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  provenance:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Install native publishing prerequisites
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y clang zlib1g-dev
+      - name: Publish and run native C#
+        id: native
+        working-directory: .showcase
+        run: |
+          dotnet publish aot-app.cs -r linux-x64 -o native --nologo
+          ./native/aot-app
+      - name: Attest the native executable with C#
+        id: attestation
+        uses: ./actions/run-csharp
+        with:
+          script: .showcase/attest.cs
+          github-token: ${{ github.token }}
+      - name: Independently verify provenance with GitHub CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh attestation verify .showcase/native/aot-app \
+            --repo "$GITHUB_REPOSITORY" \
+            --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/showcase-12-aot-attestation.yml" \
+            --signer-digest "$GITHUB_SHA" \
+            --format json > .showcase/attestation-verification.json
+      - name: Verify the digest and native step output in C#
+        working-directory: .showcase
+        env:
+          # Script-defined action outputs are dynamic, unlike declared action metadata.
+          INPUT_SHA256: ${{ fromJSON(toJSON(steps.attestation.outputs)).sha256 }}
+          INPUT_MESSAGE: ${{ steps.native.outputs.message }}
+        shell: bash
+        run: |
+          dotnet run - <<'CSHARP'
+          #:sdk ActionsToolkit.Sdk@${{ env.ACTIONS_TOOLKIT_SDK_VERSION }}
+          using System.Security.Cryptography;
+          var digest = Convert.ToHexString(SHA256.HashData(await File.ReadAllBytesAsync("native/aot-app"))).ToLowerInvariant();
+          if (digest != Core.GetInput("sha256", required: true) ||
+              Core.GetInput("message", required: true) != "Native C# Actions ready")
+              throw new InvalidOperationException("Native executable or digest handoff mismatch.");
+          if (new FileInfo("attestation-verification.json").Length == 0)
+              throw new InvalidOperationException("Missing independent provenance verification.");
+          await Core.Summary.AddHeading("Provenance verified").AddRaw($"Native executable ran successfully; GitHub CLI verified signer identity and SHA-256 `{digest}`.", true).WriteAsync();
+          CSHARP

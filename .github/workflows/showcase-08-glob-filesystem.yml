@@ -1,0 +1,20 @@
+name: "C# showcase 08: Globs and filesystem staging"
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: ./.github/actions/setup-showcase
+      - name: Discover and stage source with a SHA-256 manifest
+        id: producer
+        working-directory: .showcase
+        run: dotnet run --file filesystem.cs -- stage
+      - name: Verify each staged file in a later C# step
+        working-directory: .showcase
+        env:
+          INPUT_COUNT: ${{ steps.producer.outputs.count }}
+        run: dotnet run --file filesystem.cs -- verify

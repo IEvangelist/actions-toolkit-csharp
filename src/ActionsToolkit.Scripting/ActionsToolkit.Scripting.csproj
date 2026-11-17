@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>$(DefaultTargetFrameworks)</TargetFrameworks>
+        <Description>Simple, typed scripting helpers for GitHub Actions.</Description>
+    </PropertyGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="ActionsToolkit.Scripting.Tests" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <ProjectReference Include="..\ActionsToolkit.Core\ActionsToolkit.Core.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.Exec\ActionsToolkit.Exec.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.IO\ActionsToolkit.IO.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.Glob\ActionsToolkit.Glob.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.HttpClient\ActionsToolkit.HttpClient.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.Octokit\ActionsToolkit.Octokit.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.ToolCache\ActionsToolkit.ToolCache.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.Cache\ActionsToolkit.Cache.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.Artifact\ActionsToolkit.Artifact.csproj" />
+        <ProjectReference Include="..\ActionsToolkit.Attest\ActionsToolkit.Attest.csproj" />
+    </ItemGroup>
+</Project>
